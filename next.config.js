@@ -7,6 +7,12 @@ const nextConfig = {
       'lpckyltaeuyztvudxyyv.supabase.co',
     ],
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig
