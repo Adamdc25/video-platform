@@ -5,11 +5,8 @@ const config: CapacitorConfig = {
   appName: 'Discover TMJ',
   webDir: 'out',
   server: {
-    // For development, you can use your local server
-    // url: 'http://localhost:3000',
-    // cleartext: true,
-
-    // For production, comment out the above and use the bundled app
+    // Load from Vercel (always up-to-date, requires internet)
+    url: 'https://discover-tmj-streaming.vercel.app',
     androidScheme: 'https'
   },
   plugins: {
