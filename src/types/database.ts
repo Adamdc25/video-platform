@@ -241,6 +241,35 @@ export interface Database {
           category_id?: string
         }
       }
+      video_views: {
+        Row: {
+          id: string
+          video_id: string
+          user_id: string | null
+          watched_seconds: number
+          completed: boolean
+          device_type: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          video_id: string
+          user_id?: string | null
+          watched_seconds?: number
+          completed?: boolean
+          device_type?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          video_id?: string
+          user_id?: string | null
+          watched_seconds?: number
+          completed?: boolean
+          device_type?: string | null
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
@@ -262,3 +291,4 @@ export type WatchProgress = Database['public']['Tables']['watch_progress']['Row'
 export type Watchlist = Database['public']['Tables']['watchlist']['Row']
 export type Category = Database['public']['Tables']['categories']['Row']
 export type AdminInvite = Database['public']['Tables']['admin_invites']['Row']
+export type VideoView = Database['public']['Tables']['video_views']['Row']

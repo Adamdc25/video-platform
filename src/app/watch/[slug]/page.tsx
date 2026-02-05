@@ -58,10 +58,22 @@ export default function WatchPage() {
         setRelatedVideos(related)
       }
 
+      // Update basic view count
       await supabase
         .from('videos')
         .update({ view_count: (videoData.view_count || 0) + 1 })
         .eq('id', videoData.id)
+
+      // Log detailed view for analytics
+      const deviceType = /Mobile|Android|iPhone|iPad/i.test(navigator.userAgent)
+        ? /iPad|Tablet/i.test(navigator.userAgent) ? 'tablet' : 'mobile'
+        : 'desktop'
+
+      await supabase.from('video_views').insert({
+        video_id: videoData.id,
+        user_id: currentUser?.id || null,
+        device_type: deviceType,
+      })
 
       if (currentUser) {
         const { data: progress } = await supabase

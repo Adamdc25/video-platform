@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LayoutDashboard, Upload, Video, Settings, Home, Users, Trophy, FolderUp } from 'lucide-react'
+import { LayoutDashboard, Upload, Video, Settings, Home, Users, Trophy, FolderUp, BarChart3 } from 'lucide-react'
 
 export default function AdminLayout({
   children,
@@ -33,6 +33,9 @@ export default function AdminLayout({
             </NavLink>
             <NavLink href="/admin/team" icon={<Users className="w-5 h-5" />}>
               Team
+            </NavLink>
+            <NavLink href="/admin/analytics" icon={<BarChart3 className="w-5 h-5" />}>
+              Analytics
             </NavLink>
             <NavLink href="/admin/settings" icon={<Settings className="w-5 h-5" />}>
               Settings
