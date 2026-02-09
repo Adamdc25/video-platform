@@ -61,8 +61,7 @@ export default function SeriesDetailPage() {
               published_at
             )
           `)
-          .eq('slug', slug)
-          .eq('videos.is_published', true)
+          .ilike('title', slug.replace(/-/g, ' '))          .eq('videos.is_published', true)
           .single()
 
         if (error) throw error
