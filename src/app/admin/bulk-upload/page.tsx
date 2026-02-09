@@ -1,8 +1,6 @@
 'use client'
-
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-
 interface CSVRow {
   title: string
   description: string
@@ -15,12 +13,10 @@ interface CSVRow {
   episode_number?: string
   is_published?: string
 }
-
 interface ImportRow extends CSVRow {
   status: 'pending' | 'importing' | 'success' | 'error'
   error?: string
 }
-
 interface UploadItem {
   id: string
   file: File
@@ -30,7 +26,6 @@ interface UploadItem {
   error?: string
   videoUrl?: string
 }
-
 export default function BulkUploadPage() {
   const supabase = createClient()
   const [csvData, setCsvData] = useState<ImportRow[]>([])
@@ -38,19 +33,15 @@ export default function BulkUploadPage() {
   const [importing, setImporting] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [importComplete, setImportComplete] = useState(false)
-
   function parseCSV(text: string): CSVRow[] {
     const lines = text.split('\n').filter(line => line.trim())
     if (lines.length < 2) return []
-
     const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/\s+/g, '_'))
     const rows: CSVRow[] = []
-
     for (let i = 1; i < lines.length; i++) {
       const values: string[] = []
       let current = ''
       let inQuotes = false
-
       for (const char of lines[i]) {
         if (char === '"') {
           inQuotes = !inQuotes
@@ -62,7 +53,6 @@ export default function BulkUploadPage() {
         }
       }
       values.push(current.trim())
-
       const row: any = {}
       headers.forEach((header, index) => {
         row[header] = values[index] || ''
@@ -71,11 +61,9 @@ export default function BulkUploadPage() {
     }
     return rows
   }
-
   function handleCSVUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
-
     const reader = new FileReader()
     reader.onload = (event) => {
       const text = event.target?.result as string
@@ -83,31 +71,25 @@ export default function BulkUploadPage() {
       setCsvData(parsed.map(row => ({ ...row, status: 'pending' as const })))
       setImportComplete(false)
     }
-
     reader.readAsText(file)
   }
-
   function generateSlug(title: string): string {
     return title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '') + '-' + Date.now().toString().slice(-6)
   }
-
   // UPDATED FUNCTION: Now handles series creation/lookup
   async function importCSVData() {
     setImporting(true)
     const updatedData = [...csvData]
     const seriesCache: Record<string, string> = {} // Cache for series lookups
-
     for (let i = 0; i < updatedData.length; i++) {
       const row = updatedData[i]
       updatedData[i] = { ...row, status: 'importing' }
       setCsvData([...updatedData])
-
       try {
         let seriesId: string | null = null
-
         // Handle series creation/lookup if series_name is provided
         if (row.series_name) {
           if (seriesCache[row.series_name]) {
@@ -120,7 +102,6 @@ export default function BulkUploadPage() {
               .select('id')
               .eq('title', row.series_name)
               .single()
-
             if (existingSeries) {
               seriesId = existingSeries.id
               seriesCache[row.series_name] = seriesId
@@ -135,7 +116,6 @@ export default function BulkUploadPage() {
                 })
                 .select('id')
                 .single()
-
               if (seriesError) throw new Error(`Failed to create series: ${seriesError.message}`)
               if (newSeries) {
                 seriesId = newSeries.id
@@ -144,7 +124,6 @@ export default function BulkUploadPage() {
             }
           }
         }
-
         // Insert video to database
         const { error } = await supabase.from('videos').insert({
           title: row.title,
@@ -160,48 +139,39 @@ export default function BulkUploadPage() {
           slug: generateSlug(row.title),
           published_at: row.is_published?.toLowerCase() === 'true' ? new Date().toISOString() : null
         })
-
         if (error) throw error
         updatedData[i] = { ...row, status: 'success' }
       } catch (err: any) {
         updatedData[i] = { ...row, status: 'error', error: err.message }
       }
     }
-
     setCsvData([...updatedData])
     setImporting(false)
     setImportComplete(true)
   }
-
   async function uploadFileToStorage(item: UploadItem): Promise<string> {
     const formData = new FormData()
     formData.append('file', item.file)
-
     const BUNNY_STORAGE_URL = process.env.NEXT_PUBLIC_BUNNY_STORAGE_URL || 'https://uk.storage.bunnycdn.com/your-zone'
     const fileName = `${Date.now()}-${item.file.name.replace(/\s+/g, '-')}`
     const CDN_URL = process.env.NEXT_PUBLIC_BUNNY_CDN_URL || 'https://video-stream-cdn.b-cdn.net'
-    
+
     return `${CDN_URL}/videos/${fileName}`
   }
-
   async function startUploadQueue() {
     setIsUploading(true)
     const updatedQueue = [...uploadQueue]
-
     for (let i = 0; i < updatedQueue.length; i++) {
       const item = updatedQueue[i]
       if (item.status !== 'pending') continue
-
       updatedQueue[i] = { ...item, status: 'uploading', progress: 0 }
       setUploadQueue([...updatedQueue])
-
       try {
         for (let p = 0; p <= 80; p += 20) {
           updatedQueue[i] = { ...item, status: 'uploading', progress: p }
           setUploadQueue([...updatedQueue])
           await new Promise(r => setTimeout(r, 500))
         }
-
         const videoUrl = await uploadFileToStorage(item)
         updatedQueue[i] = { ...item, status: 'uploading', progress: 90 }
         updatedQueue[i] = { ...item, status: 'success', progress: 100, videoUrl }
@@ -209,20 +179,17 @@ export default function BulkUploadPage() {
         updatedQueue[i] = { ...item, status: 'error', error: err.message }
       }
     }
-
     setUploadQueue([...updatedQueue])
     setIsUploading(false)
   }
-
   return (
     <div className="max-w-6xl mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">Bulk Upload</h1>
-
       <div className="space-y-8">
         {/* CSV Import Section */}
         <div className="border rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-4">Import from CSV</h2>
-          
+
           <div className="space-y-4">
             <input
               type="file"
@@ -230,7 +197,6 @@ export default function BulkUploadPage() {
               onChange={handleCSVUpload}
               className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700"
             />
-
             {csvData.length > 0 && (
               <div>
                 <div className="mb-4 overflow-x-auto">
@@ -263,7 +229,6 @@ export default function BulkUploadPage() {
                     </tbody>
                   </table>
                 </div>
-
                 <button
                   onClick={importCSVData}
                   disabled={importing}
