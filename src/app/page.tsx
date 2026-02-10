@@ -1,142 +1,313 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Navbar from '@/components/layout/Navbar'
-import HeroSection from '@/components/video/HeroSection'
-import ContentRow from '@/components/video/ContentRow'
-import VideoCard from '@/components/video/VideoCard'
-import Top10Card from '@/components/video/Top10Card'
+import Link from 'next/link'
+import { ChevronLeft, ChevronRight, Play, ArrowRight } from 'lucide-react'
 import type { Video } from '@/types/database'
-import Logo from '@/components/ui/Logo'
 import Footer from '@/components/layout/Footer'
 
+interface SeriesWithEpisodes {
+  id: string
+  title: string
+  description?: string
+  thumbnail_url?: string
+  cover_art_url?: string
+  backdrop_url?: string
+  trailer_url?: string
+  featured: boolean
+  slug: string
+  created_at: string
+  updated_at: string
+  videos?: Video[]
+}
+
 export default function HomePage() {
-  const [videos, setVideos] = useState<Video[]>([])
-  const [top10Videos, setTop10Videos] = useState<Video[]>([])
-  const [featuredVideo, setFeaturedVideo] = useState<Video | null>(null)
-  const [user, setUser] = useState<any>(null)
-  const [watchlistIds, setWatchlistIds] = useState<string[]>([])
+  const [allSeries, setAllSeries] = useState<SeriesWithEpisodes[]>([])
+  const [featuredSeries, setFeaturedSeries] = useState<SeriesWithEpisodes[]>([])
+  const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0)
   const [loading, setLoading] = useState(true)
+  const [isHoveringTrailer, setIsHoveringTrailer] = useState(false)
 
   const supabase = createClient()
 
   useEffect(() => {
-    async function fetchData() {
-      // Get current user
-      const { data: { user: currentUser } } = await supabase.auth.getUser()
-      setUser(currentUser)
+    async function fetchSeries() {
+      try {
+        // Fetch all series with their episodes
+        const { data, error } = await supabase
+          .from('series')
+          .select(`
+            id,
+            title,
+            description,
+            thumbnail_url,
+            cover_art_url,
+            backdrop_url,
+            trailer_url,
+            featured,
+            slug,
+            created_at,
+            updated_at,
+            videos (
+              id,
+              title,
+              episode_number,
+              season_number,
+              video_url,
+              thumbnail_url,
+              duration,
+              slug,
+              view_count,
+              is_published,
+              published_at
+            )
+          `)
+          .eq('videos.is_published', true)
 
-      // Fetch published videos
-      const { data: videosData } = await supabase
-        .from('videos')
-        .select('*')
-        .eq('is_published', true)
-        .order('published_at', { ascending: false })
+        if (error) throw error
 
-      if (videosData && videosData.length > 0) {
-        setVideos(videosData)
-        // Set the most recent as featured
-        setFeaturedVideo(videosData[0])
+        // Filter to only series with published episodes
+        const seriesWithEpisodes = (data || []).filter(
+          s => s.videos && s.videos.length > 0
+        ) as SeriesWithEpisodes[]
+
+        // Sort episodes within each series
+        const sortedSeries = seriesWithEpisodes.map(s => ({
+          ...s,
+          videos: (s.videos || []).sort(
+            (a: Video, b: Video) =>
+              (a.season_number || 0) - (b.season_number || 0) ||
+              (a.episode_number || 0) - (b.episode_number || 0)
+          )
+        }))
+
+        // Separate featured and regular series
+        const featured = sortedSeries.filter(s => s.featured).slice(0, 5)
+        setFeaturedSeries(featured)
+        setAllSeries(sortedSeries)
+      } catch (error) {
+        console.error('Error fetching series:', error)
+      } finally {
+        setLoading(false)
       }
-
-      // Fetch Top 10 videos (those with top_10_rank set, ordered by rank)
-      const { data: top10Data } = await supabase
-        .from('videos')
-        .select('*')
-        .eq('is_published', true)
-        .not('top_10_rank', 'is', null)
-        .order('top_10_rank', { ascending: true })
-        .limit(10)
-
-      if (top10Data) {
-        setTop10Videos(top10Data)
-      }
-
-      // Get user's watchlist if logged in
-      if (currentUser) {
-        const { data: watchlistData } = await supabase
-          .from('watchlist')
-          .select('video_id')
-          .eq('user_id', currentUser.id)
-
-        if (watchlistData) {
-          setWatchlistIds(watchlistData.map(w => w.video_id))
-        }
-      }
-
-      setLoading(false)
     }
 
-    fetchData()
+    fetchSeries()
   }, [])
+
+  // Auto-rotate featured carousel every 5 seconds
+  useEffect(() => {
+    if (featuredSeries.length === 0) return
+
+    const interval = setInterval(() => {
+      setCurrentFeaturedIndex(prev => (prev + 1) % featuredSeries.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [featuredSeries.length])
+
+  const handlePrevFeatured = () => {
+    setCurrentFeaturedIndex(prev =>
+      prev === 0 ? featuredSeries.length - 1 : prev - 1
+    )
+  }
+
+  const handleNextFeatured = () => {
+    setCurrentFeaturedIndex(prev => (prev + 1) % featuredSeries.length)
+  }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+      <div className="min-h-screen bg-black">
+        <Navbar />
+        <div className="flex items-center justify-center h-[500px]">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        </div>
+        <Footer />
       </div>
     )
   }
 
-  // Get videos for different sections
-  const latestVideos = videos.slice(0, 10)
-  const moreVideos = videos.slice(0, 10)
+  const currentFeatured = featuredSeries[currentFeaturedIndex]
+  const heroImage = currentFeatured?.backdrop_url || currentFeatured?.cover_art_url || currentFeatured?.videos?.[0]?.thumbnail_url || ''
 
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
 
-      {/* Hero Section */}
-      {featuredVideo ? (
-        <HeroSection
-          video={featuredVideo}
-          userId={user?.id}
-          inWatchlist={watchlistIds.includes(featuredVideo.id)}
-        />
-      ) : (
-        <div className="h-[70vh] min-h-[500px] max-h-[700px] bg-gradient-to-br from-gray-900 to-black flex items-center justify-center pt-16">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <Logo size="lg" showText={true} />
-            </div>
-            <h1 className="text-4xl font-bold text-white mb-4">Welcome to Discover TMJ</h1>
-            <p className="text-gray-400 mb-8">No videos published yet. Check back soon!</p>
+      {/* Featured Carousel */}
+      {featuredSeries.length > 0 && currentFeatured && (
+        <div className="relative h-[550px] overflow-hidden group">
+          {/* Background Image */}
+          <div className="absolute inset-0">
+            {!isHoveringTrailer ? (
+              <img
+                src={heroImage}
+                alt={currentFeatured.title}
+                className="w-full h-full object-cover"
+              />
+            ) : currentFeatured.trailer_url ? (
+              <video
+                src={currentFeatured.trailer_url}
+                autoPlay
+                muted
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <img
+                src={heroImage}
+                alt={currentFeatured.title}
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
+
+          {/* Gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+
+          {/* Hero Content */}
+          <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
+            {/* Featured Badge */}
+            <div className="pt-8">
+              <span className="inline-block bg-teal-500 text-black px-4 py-2 rounded-full text-sm font-semibold">
+                Featured Series
+              </span>
+            </div>
+
+            {/* Series Title and Info */}
+            <div className="max-w-2xl pb-12">
+              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
+                {currentFeatured.title}
+              </h1>
+
+              <p className="text-gray-300 mb-4">
+                2026 · Highly Rated · {currentFeatured.videos?.length || 0} Episodes
+              </p>
+
+              {currentFeatured.description && (
+                <p className="text-gray-300 text-lg mb-8 max-w-xl">
+                  {currentFeatured.description}
+                </p>
+              )}
+
+              {/* Watch Now Button */}
+              {currentFeatured.videos && currentFeatured.videos.length > 0 && (
+                <Link
+                  href={`/watch/${currentFeatured.videos[0].slug}`}
+                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  <Play className="w-6 h-6 fill-black" />
+                  Watch Now
+                </Link>
+              )}
+            </div>
+          </div>
+
+          {/* Carousel Controls */}
+          {featuredSeries.length > 1 && (
+            <>
+              <button
+                onClick={handlePrevFeatured}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition-colors z-10"
+              >
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button
+                onClick={handleNextFeatured}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition-colors z-10"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                {featuredSeries.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentFeaturedIndex(index)}
+                    className={`w-2 h-2 rounded-full transition-all ${
+                      index === currentFeaturedIndex ? 'bg-teal-500 w-8' : 'bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Trailer Hover Indicator */}
+          {currentFeatured.trailer_url && (
+            <button
+              onMouseEnter={() => setIsHoveringTrailer(true)}
+              onMouseLeave={() => setIsHoveringTrailer(false)}
+              className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity z-10"
+            >
+              <div className="text-center">
+                <Play className="w-16 h-16 text-white fill-white mx-auto mb-4" />
+                <p className="text-white font-semibold">Play Trailer</p>
+              </div>
+            </button>
+          )}
         </div>
       )}
 
-      {/* Content Sections */}
-      <div className="pb-16 -mt-20 relative z-10">
-        {/* Watch the Latest */}
-        {latestVideos.length > 0 && (
-          <ContentRow title="Watch the Latest" moreLink="/series">
-            {latestVideos.map((video) => (
-              <VideoCard key={video.id} video={video} />
-            ))}
-          </ContentRow>
-        )}
+      {/* All Series Grid */}
+      <div className="relative bg-black pb-16 pt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-white mb-2">All Series</h2>
+            <p className="text-gray-400">Browse all available series and episodes</p>
+          </div>
 
-        {/* Top 10 */}
-        {top10Videos.length > 0 && (
-          <ContentRow title="Top 10" moreLink="/series">
-            {top10Videos.map((video) => (
-              <Top10Card key={video.id} video={video} rank={video.top_10_rank || 1} />
-            ))}
-          </ContentRow>
-        )}
+          {allSeries.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {allSeries.map(series => (
+                <Link
+                  key={series.id}
+                  href={`/series/${series.slug}`}
+                  className="group"
+                >
+                  <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[3/4] mb-3">
+                    {/* Series Cover/Thumbnail */}
+                    <img
+                      src={series.cover_art_url || series.thumbnail_url || ''}
+                      alt={series.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
 
-        {/* Watch More */}
-        {moreVideos.length > 0 && (
-          <ContentRow title="Watch More" moreLink="/series">
-            {moreVideos.map((video) => (
-              <VideoCard key={video.id} video={video} />
-            ))}
-          </ContentRow>
-        )}
+                    {/* Overlay */}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <Play className="w-12 h-12 text-white fill-white" />
+                    </div>
+
+                    {/* Episode Count Badge */}
+                    <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
+                      {series.videos?.length || 0} Episodes
+                    </div>
+                  </div>
+
+                  {/* Series Info */}
+                  <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-2">
+                    {series.title}
+                  </h3>
+                  {series.description && (
+                    <p className="text-xs text-gray-400 line-clamp-2 mt-1">
+                      {series.description}
+                    </p>
+                  )}
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-16">
+              <p className="text-gray-400">No series available yet</p>
+            </div>
+          )}
+        </div>
       </div>
 
-      {/* Footer */}
       <Footer />
     </div>
   )
