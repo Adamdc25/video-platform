@@ -15,6 +15,9 @@ interface SeriesWithEpisodes {
   title: string
   description?: string
   thumbnail_url?: string
+  cover_art_url?: string
+  backdrop_url?: string
+  trailer_url?: string
   slug: string
   created_at: string
   updated_at: string
@@ -43,6 +46,9 @@ export default function SeriesDetailPage() {
             title,
             description,
             thumbnail_url,
+            cover_art_url,
+            backdrop_url,
+            trailer_url,
             slug,
             created_at,
             updated_at,
@@ -133,13 +139,17 @@ export default function SeriesDetailPage() {
         <div className="relative h-[550px] overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0">
-            {seriesData.videos && seriesData.videos.length > 0 && (
-              <img
-                src={seriesData.videos[0].thumbnail_url || ''}
-                alt={seriesData.title}
-                className="w-full h-full object-cover"
-              />
-            )}
+            {/* Use backdrop_url first, then cover_art, then first video thumbnail */}
+            <img
+              src={
+                seriesData.backdrop_url ||
+                seriesData.cover_art_url ||
+                seriesData.videos?.[0]?.thumbnail_url ||
+                ''
+              }
+              alt={seriesData.title}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           {/* Gradient overlays */}
