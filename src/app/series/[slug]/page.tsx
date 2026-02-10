@@ -168,7 +168,7 @@ export default function SeriesDetailPage() {
 
               {/* Metadata */}
               <p className="text-gray-300 mb-4">
-                2026 · 18+ · {Object.keys(episodesByseason).length} Season · English
+                2026 · Highly Rated · {Object.keys(episodesBySeason).length} Season · English
               </p>
 
               {/* Description */}
@@ -198,7 +198,7 @@ export default function SeriesDetailPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {seriesData.videos && seriesData.videos.length > 0 ? (
             <div className="space-y-12">
-              {Object.entries(episodesByseason).map(([season, episodes]) => (
+              {Object.entries(episodesBySeason).map(([season, episodes]) => (
                 <section key={season}>
                   <h2 className="text-2xl font-semibold text-white mb-6">
                     Season {season}
