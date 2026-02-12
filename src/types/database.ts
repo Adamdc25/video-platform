@@ -83,6 +83,7 @@ export interface Database {
           description: string | null
           thumbnail_url: string | null
           slug: string
+          hero_image_url: string | null
           created_at: string
           updated_at: string
         }
@@ -92,6 +93,7 @@ export interface Database {
           description?: string | null
           thumbnail_url?: string | null
           slug: string
+          hero_image_url?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -101,6 +103,7 @@ export interface Database {
           description?: string | null
           thumbnail_url?: string | null
           slug?: string
+          hero_image_url?: string | null
           created_at?: string
           updated_at?: string
         }

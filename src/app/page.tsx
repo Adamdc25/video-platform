@@ -195,7 +195,7 @@ export default function HomePage() {
   }
 
   const currentFeatured = featuredSeries[currentFeaturedIndex]
-  const heroImage = currentFeatured?.backdrop_url || currentFeatured?.cover_art_url || currentFeatured?.videos?.[0]?.thumbnail_url || ''
+  const heroImage = currentFeatured?.hero_image_url || currentFeatured?.backdrop_url || currentFeatured?.cover_art_url || currentFeatured?.videos?.[0]?.thumbnail_url || ''
 
   return (
     <div className="min-h-screen bg-black">

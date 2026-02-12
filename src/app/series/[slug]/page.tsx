@@ -144,6 +144,7 @@ export default function SeriesDetailPage() {
   })
 
   const heroImage =
+    seriesData.hero_image_url ||
     seriesData.backdrop_url ||
     seriesData.cover_art_url ||
     seriesData.videos?.[0]?.thumbnail_url ||
