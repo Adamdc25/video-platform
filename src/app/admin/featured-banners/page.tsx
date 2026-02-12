@@ -85,7 +85,7 @@ export default function FeaturedBannersPage() {
       const { error: clearError } = await supabase
         .from('series')
         .update({ featured: false, featured_order: null })
-        .not('featured', 'is', false)
+        .eq('featured', true)
 
       if (clearError) throw clearError
 
