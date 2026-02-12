@@ -4,12 +4,11 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Navbar from '@/components/layout/Navbar'
 import Link from 'next/link'
-import { ArrowLeft, Play } from 'lucide-react'
+import { ArrowLeft, Play, Volume2, VolumeX } from 'lucide-react'
 import type { Video } from '@/types/database'
 import Footer from '@/components/layout/Footer'
 import { useParams } from 'next/navigation'
 
-// Type for series with episodes
 interface SeriesWithEpisodes {
   id: string
   title: string
@@ -30,6 +29,8 @@ export default function SeriesDetailPage() {
 
   const [seriesData, setSeriesData] = useState<SeriesWithEpisodes | null>(null)
   const [loading, setLoading] = useState(true)
+  const [showTrailer, setShowTrailer] = useState(false)
+  const [trailerMuted, setTrailerMuted] = useState(false)
 
   const supabase = createClient()
 
@@ -38,7 +39,10 @@ export default function SeriesDetailPage() {
       if (!slug) return
 
       try {
-        // Fetch specific series with its episodes
+        // Extract slug without trailing number: "the-rise-of-tech-261267" → "the-rise-of-tech"
+        const slugWithoutNumber = slug.split('-').slice(0, -1).join('-') || slug
+        const titleQuery = slugWithoutNumber.replace(/-/g, ' ')
+
         const { data, error } = await supabase
           .from('series')
           .select(`
@@ -67,12 +71,12 @@ export default function SeriesDetailPage() {
               published_at
             )
           `)
-          .ilike('title', slug.replace(/-/g, ' '))          .eq('videos.is_published', true)
+          .ilike('title', titleQuery)
+          .eq('videos.is_published', true)
           .single()
 
         if (error) throw error
 
-        // Sort episodes by season and episode number
         const sortedData = {
           ...data,
           videos: (data.videos || []).sort(
@@ -92,6 +96,16 @@ export default function SeriesDetailPage() {
 
     fetchSeriesDetail()
   }, [slug])
+
+  // Auto-play trailer after 3-5 seconds if available
+  useEffect(() => {
+    if (!seriesData?.trailer_url || showTrailer) return
+
+    const delay = 3000 + Math.random() * 2000 // 3-5 seconds
+    const timer = setTimeout(() => setShowTrailer(true), delay)
+
+    return () => clearTimeout(timer)
+  }, [seriesData?.trailer_url, showTrailer])
 
   if (loading) {
     return (
@@ -120,7 +134,6 @@ export default function SeriesDetailPage() {
     )
   }
 
-  // Group episodes by season
   const episodesBySeason: { [key: number]: Video[] } = {}
   seriesData.videos?.forEach(episode => {
     const season = episode.season_number || 1
@@ -130,76 +143,115 @@ export default function SeriesDetailPage() {
     episodesBySeason[season].push(episode)
   })
 
+  const heroImage =
+    seriesData.backdrop_url ||
+    seriesData.cover_art_url ||
+    seriesData.videos?.[0]?.thumbnail_url ||
+    ''
+
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
 
-      {/* Hero Section */}
+      {/* Hero Section - Netflix Style */}
       {seriesData && (
-        <div className="relative h-[550px] overflow-hidden">
-          {/* Background Image */}
-          <div className="absolute inset-0">
-            {/* Use backdrop_url first, then cover_art, then first video thumbnail */}
-            <img
-              src={
-                seriesData.backdrop_url ||
-                seriesData.cover_art_url ||
-                seriesData.videos?.[0]?.thumbnail_url ||
-                ''
-              }
-              alt={seriesData.title}
-              className="w-full h-full object-cover"
-            />
-          </div>
+        <div className="relative h-[550px] overflow-hidden bg-gray-900">
+          {/* Thumbnail/Backdrop (shows initially, fades to trailer) */}
+          {!showTrailer ? (
+            <div className="relative w-full h-full">
+              {/* Background Image */}
+              <img
+                src={heroImage}
+                alt={seriesData.title}
+                className="w-full h-full object-cover"
+              />
 
-          {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+              {/* Gradient overlays */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
-          {/* Hero Content */}
-          <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
-            {/* Back Button */}
-            <div className="pt-8">
-              <Link
-                href="/series"
-                className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors mb-8"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Back to Series
-              </Link>
-            </div>
-
-            {/* Series Title and Info */}
-            <div className="max-w-2xl">
-              {/* Series Title - Styled */}
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
-                {seriesData.title}
-              </h1>
-
-              {/* Metadata */}
-              <p className="text-gray-300 mb-4">
-                2026 · Highly Rated · {Object.keys(episodesBySeason).length} Season · English
-              </p>
-
-              {/* Description */}
-              {seriesData.description && (
-                <p className="text-gray-300 text-lg mb-8 max-w-xl">
-                  {seriesData.description}
-                </p>
-              )}
-
-              {/* Watch Now Button */}
-              {seriesData.videos && seriesData.videos.length > 0 && (
-                <Link
-                  href={`/watch/${seriesData.videos[0].slug}`}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+              {/* Play Button Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <button
+                  onClick={() => setShowTrailer(true)}
+                  className="group relative w-20 h-20 flex items-center justify-center bg-white/30 hover:bg-white/50 rounded-full transition-all duration-300 backdrop-blur-sm"
                 >
-                  <Play className="w-6 h-6 fill-black" />
-                  Watch Now
+                  <Play className="w-8 h-8 text-white fill-white ml-1" />
+                  <span className="absolute text-xs text-white mt-24 opacity-0 group-hover:opacity-100 transition">
+                    Play Trailer
+                  </span>
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="absolute inset-0 flex flex-col justify-between p-8">
+                <Link
+                  href="/series"
+                  className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors w-fit"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                  Back to Series
                 </Link>
-              )}
+
+                <div className="max-w-2xl">
+                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
+                    {seriesData.title}
+                  </h1>
+                  <p className="text-gray-300 mb-4">
+                    2026 · Highly Rated · {Object.keys(episodesBySeason).length} Season · English
+                  </p>
+                  {seriesData.description && (
+                    <p className="text-gray-300 text-lg mb-8 max-w-xl">
+                      {seriesData.description}
+                    </p>
+                  )}
+                  {seriesData.videos && seriesData.videos.length > 0 && (
+                    <Link
+                      href={`/watch/${seriesData.videos[0].slug}`}
+                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+                    >
+                      <Play className="w-6 h-6 fill-black" />
+                      Watch Now
+                    </Link>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
+          ) : (
+            /* Trailer Video Player */
+            <div className="relative w-full h-full bg-black flex items-center justify-center">
+              <video
+                src={seriesData.trailer_url}
+                autoPlay
+                muted={trailerMuted}
+                className="w-full h-full object-cover"
+              />
+
+              {/* Video Controls Overlay */}
+              <div className="absolute top-8 right-8 flex gap-3 z-10">
+                <button
+                  onClick={() => setTrailerMuted(!trailerMuted)}
+                  className="p-3 bg-white/20 hover:bg-white/40 rounded-full transition backdrop-blur-sm text-white"
+                  title={trailerMuted ? 'Unmute' : 'Mute'}
+                >
+                  {trailerMuted ? (
+                    <VolumeX className="w-5 h-5" />
+                  ) : (
+                    <Volume2 className="w-5 h-5" />
+                  )}
+                </button>
+                <button
+                  onClick={() => setShowTrailer(false)}
+                  className="px-4 py-3 bg-white/20 hover:bg-white/40 rounded-lg transition backdrop-blur-sm text-white font-semibold"
+                >
+                  ✕ Close
+                </button>
+              </div>
+
+              {/* Gradient overlay at bottom */}
+              <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+            </div>
+          )}
         </div>
       )}
 
@@ -220,20 +272,17 @@ export default function SeriesDetailPage() {
                         href={`/watch/${episode.slug}`}
                         className="group flex gap-4 p-4 rounded-lg hover:bg-gray-800/50 transition-colors"
                       >
-                        {/* Episode Thumbnail */}
                         <div className="relative w-40 h-24 flex-shrink-0 rounded-lg overflow-hidden">
                           <img
                             src={episode.thumbnail_url || ''}
                             alt={episode.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
-                          {/* Play Icon Overlay */}
                           <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
                             <Play className="w-8 h-8 text-white fill-white" />
                           </div>
                         </div>
 
-                        {/* Episode Info */}
                         <div className="flex-1">
                           <div className="flex items-start justify-between mb-2">
                             <p className="text-gray-400 text-sm">

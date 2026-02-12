@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LayoutDashboard, Upload, Video, Settings, Home, Users, Trophy, FolderUp, BarChart3 } from 'lucide-react'
+import { LayoutDashboard, Upload, Video, Settings, Home, Users, Trophy, FolderUp, BarChart3, Film } from 'lucide-react'
 
 export default function AdminLayout({
   children,
@@ -21,6 +21,9 @@ export default function AdminLayout({
             </NavLink>
             <NavLink href="/admin/videos" icon={<Video className="w-5 h-5" />}>
               Videos
+            </NavLink>
+            <NavLink href="/admin/series" icon={<Film className="w-5 h-5" />}>
+              Series
             </NavLink>
             <NavLink href="/admin/upload" icon={<Upload className="w-5 h-5" />}>
               Upload

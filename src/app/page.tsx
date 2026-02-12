@@ -26,7 +26,10 @@ interface SeriesWithEpisodes {
 export default function HomePage() {
   const [allSeries, setAllSeries] = useState<SeriesWithEpisodes[]>([])
   const [featuredSeries, setFeaturedSeries] = useState<SeriesWithEpisodes[]>([])
+  const [topSeriesByViews, setTopSeriesByViews] = useState<SeriesWithEpisodes[]>([])
   const [currentFeaturedIndex, setCurrentFeaturedIndex] = useState(0)
+  const [allSeriesCarouselIndex, setAllSeriesCarouselIndex] = useState(0)
+  const [topSeriesCarouselIndex, setTopSeriesCarouselIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [isHoveringTrailer, setIsHoveringTrailer] = useState(false)
 
@@ -86,6 +89,48 @@ export default function HomePage() {
         // Separate featured and regular series
         const featured = sortedSeries.filter(s => s.featured).slice(0, 5)
         setFeaturedSeries(featured)
+
+        // Fetch manually-ranked top 10 series
+        const { data: top10Data, error: top10Error } = await supabase
+          .from('series')
+          .select(`
+            id,
+            title,
+            description,
+            thumbnail_url,
+            cover_art_url,
+            backdrop_url,
+            trailer_url,
+            featured,
+            slug,
+            created_at,
+            updated_at,
+            top_10_rank,
+            videos (
+              id,
+              title,
+              episode_number,
+              season_number,
+              video_url,
+              thumbnail_url,
+              duration,
+              slug,
+              view_count,
+              is_published,
+              published_at
+            )
+          `)
+          .not('top_10_rank', 'is', null)
+          .order('top_10_rank')
+
+        let top10 = [] as SeriesWithEpisodes[]
+        if (top10Data && !top10Error) {
+          top10 = (top10Data as SeriesWithEpisodes[]).filter(
+            s => s.videos && s.videos.length > 0
+          ) as SeriesWithEpisodes[]
+        }
+
+        setTopSeriesByViews(top10)
         setAllSeries(sortedSeries)
       } catch (error) {
         console.error('Error fetching series:', error)
@@ -116,6 +161,24 @@ export default function HomePage() {
 
   const handleNextFeatured = () => {
     setCurrentFeaturedIndex(prev => (prev + 1) % featuredSeries.length)
+  }
+
+  const handlePrevAllSeries = () => {
+    setAllSeriesCarouselIndex(prev => Math.max(0, prev - 4))
+  }
+
+  const handleNextAllSeries = () => {
+    const maxIndex = Math.max(0, allSeries.length - 12)
+    setAllSeriesCarouselIndex(prev => Math.min(maxIndex, prev + 4))
+  }
+
+  const handlePrevTopSeries = () => {
+    setTopSeriesCarouselIndex(prev => Math.max(0, prev - 5))
+  }
+
+  const handleNextTopSeries = () => {
+    const maxIndex = Math.max(0, topSeriesByViews.length - 5)
+    setTopSeriesCarouselIndex(prev => Math.min(maxIndex, prev + 5))
   }
 
   if (loading) {
@@ -253,7 +316,79 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* All Series Grid */}
+      {/* Top 10 Series (Vertical Layout - Carousel) */}
+      {topSeriesByViews.length > 0 && (
+        <div className="relative bg-black pb-16 pt-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mb-8">
+              <h2 className="text-3xl font-bold text-white mb-2">Top 10 Series</h2>
+              <p className="text-gray-400">Most episodes and latest releases</p>
+            </div>
+
+            <div className="relative">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 5).map((series, index) => (
+                  <Link
+                    key={series.id}
+                    href={`/series/${series.slug}`}
+                    className="group"
+                  >
+                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[3/4] mb-3">
+                      {/* Series Cover/Thumbnail */}
+                      <img
+                        src={series.cover_art_url || series.thumbnail_url || ''}
+                        alt={series.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Play className="w-12 h-12 text-white fill-white" />
+                      </div>
+
+                      {/* Rank Badge */}
+                      <div className="absolute top-2 left-2 bg-teal-500 text-black px-3 py-1 rounded-full text-lg font-bold">
+                        #{topSeriesCarouselIndex + index + 1}
+                      </div>
+
+                      {/* Episode Count Badge */}
+                      <div className="absolute bottom-2 right-2 bg-gray-900/80 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                        {series.videos?.length || 0}
+                      </div>
+                    </div>
+
+                    {/* Series Info */}
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-2 text-sm">
+                      {series.title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Carousel Controls */}
+              {topSeriesCarouselIndex > 0 && (
+                <button
+                  onClick={handlePrevTopSeries}
+                  className="absolute -left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+              )}
+
+              {topSeriesCarouselIndex < topSeriesByViews.length - 5 && (
+                <button
+                  onClick={handleNextTopSeries}
+                  className="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* All Series Grid (Horizontal Layout) */}
       <div className="relative bg-black pb-16 pt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
@@ -262,44 +397,106 @@ export default function HomePage() {
           </div>
 
           {allSeries.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {allSeries.map(series => (
-                <Link
-                  key={series.id}
-                  href={`/series/${series.slug}`}
-                  className="group"
-                >
-                  <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[3/4] mb-3">
-                    {/* Series Cover/Thumbnail */}
-                    <img
-                      src={series.cover_art_url || series.thumbnail_url || ''}
-                      alt={series.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+            <>
+              {/* Main Grid - First 12 Series */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
+                {allSeries.slice(0, 12).map(series => (
+                  <Link
+                    key={series.id}
+                    href={`/series/${series.slug}`}
+                    className="group"
+                  >
+                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
+                      {/* Series Cover/Thumbnail */}
+                      <img
+                        src={series.cover_art_url || series.thumbnail_url || ''}
+                        alt={series.title}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
 
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <Play className="w-12 h-12 text-white fill-white" />
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Play className="w-12 h-12 text-white fill-white" />
+                      </div>
+
+                      {/* Episode Count Badge */}
+                      <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
+                        {series.videos?.length || 0}
+                      </div>
                     </div>
 
-                    {/* Episode Count Badge */}
-                    <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                      {series.videos?.length || 0} Episodes
-                    </div>
+                    {/* Series Info */}
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
+                      {series.title}
+                    </h3>
+                  </Link>
+                ))}
+              </div>
+
+              {/* Carousel for remaining series (13+) */}
+              {allSeries.length > 12 && (
+                <div>
+                  <div className="mb-6">
+                    <h3 className="text-2xl font-bold text-white mb-2">More Series</h3>
                   </div>
 
-                  {/* Series Info */}
-                  <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-2">
-                    {series.title}
-                  </h3>
-                  {series.description && (
-                    <p className="text-xs text-gray-400 line-clamp-2 mt-1">
-                      {series.description}
-                    </p>
-                  )}
-                </Link>
-              ))}
-            </div>
+                  <div className="relative">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                      {allSeries.slice(12 + allSeriesCarouselIndex, 12 + allSeriesCarouselIndex + 4).map(series => (
+                        <Link
+                          key={series.id}
+                          href={`/series/${series.slug}`}
+                          className="group"
+                        >
+                          <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
+                            {/* Series Cover/Thumbnail */}
+                            <img
+                              src={series.cover_art_url || series.thumbnail_url || ''}
+                              alt={series.title}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            />
+
+                            {/* Overlay */}
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                              <Play className="w-12 h-12 text-white fill-white" />
+                            </div>
+
+                            {/* Episode Count Badge */}
+                            <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
+                              {series.videos?.length || 0}
+                            </div>
+                          </div>
+
+                          {/* Series Info */}
+                          <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
+                            {series.title}
+                          </h3>
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Carousel Controls */}
+                    {allSeriesCarouselIndex > 0 && (
+                      <button
+                        onClick={handlePrevAllSeries}
+                        className="absolute -left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                      >
+                        <ChevronLeft className="w-6 h-6" />
+                      </button>
+                    )}
+
+                    {allSeriesCarouselIndex < allSeries.length - 16 && (
+                      <button
+                        onClick={handleNextAllSeries}
+                        className="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                      >
+                        <ChevronRight className="w-6 h-6" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <div className="text-center py-16">
               <p className="text-gray-400">No series available yet</p>
