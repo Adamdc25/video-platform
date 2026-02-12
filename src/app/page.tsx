@@ -339,7 +339,7 @@ export default function HomePage() {
                       <img
                         src={series.top_10_thumbnail_url || series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
 
                       {/* Overlay */}
