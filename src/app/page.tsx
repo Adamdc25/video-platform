@@ -15,8 +15,10 @@ interface SeriesWithEpisodes {
   thumbnail_url?: string
   cover_art_url?: string
   backdrop_url?: string
+  hero_image_url?: string
   trailer_url?: string
   featured: boolean
+  featured_order?: number | null
   slug: string
   created_at: string
   updated_at: string
@@ -48,8 +50,10 @@ export default function HomePage() {
             thumbnail_url,
             cover_art_url,
             backdrop_url,
+            hero_image_url,
             trailer_url,
             featured,
+            featured_order,
             slug,
             created_at,
             updated_at,
@@ -86,8 +90,11 @@ export default function HomePage() {
           )
         }))
 
-        // Separate featured and regular series
-        const featured = sortedSeries.filter(s => s.featured).slice(0, 5)
+        // Get featured banners (4 series ordered by featured_order)
+        const featured = sortedSeries
+          .filter(s => s.featured)
+          .sort((a, b) => (a.featured_order || 999) - (b.featured_order || 999))
+          .slice(0, 4)
         setFeaturedSeries(featured)
 
         // Fetch manually-ranked top 10 series

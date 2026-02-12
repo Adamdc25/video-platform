@@ -31,6 +31,9 @@ export default function AdminLayout({
             <NavLink href="/admin/bulk-upload" icon={<FolderUp className="w-5 h-5" />}>
               Bulk Upload
             </NavLink>
+            <NavLink href="/admin/featured-banners" icon={<ImageIcon className="w-5 h-5" />}>
+              Home Banners
+            </NavLink>
             <NavLink href="/admin/top10" icon={<Trophy className="w-5 h-5" />}>
               Top 10
             </NavLink>
