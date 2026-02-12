@@ -334,7 +334,7 @@ export default function HomePage() {
                     href={`/series/${series.slug}`}
                     className="group"
                   >
-                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[3/4] mb-3">
+                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
                         src={series.top_10_thumbnail_url || series.cover_art_url || series.thumbnail_url || ''}
