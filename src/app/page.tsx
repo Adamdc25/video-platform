@@ -359,7 +359,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm mt-2"></>
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm mt-2">
                       {series.title}
                     </h3>
                   </Link>
