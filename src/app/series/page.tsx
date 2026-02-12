@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import Navbar from '@/components/layout/Navbar'
 import Link from 'next/link'
-import { PlaysquareIcon, Play } from 'lucide-react'
+import { Play } from 'lucide-react'
 import type { Video } from '@/types/database'
 import Footer from '@/components/layout/Footer'
 
