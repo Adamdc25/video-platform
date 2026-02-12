@@ -159,7 +159,7 @@ export default function SeriesPage() {
           {series.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-center py-16 px-4">
-                <PlaysquareIcon className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+                <Play className="w-16 h-16 text-gray-600 mx-auto mb-4" />
                 <h2 className="text-xl font-semibold text-white mb-2">No series created yet</h2>
                 <p className="text-gray-400">
                   Check back soon for new series and videos
