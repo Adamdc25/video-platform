@@ -106,6 +106,7 @@ export default function HomePage() {
             created_at,
             updated_at,
             top_10_rank,
+            top_10_thumbnail_url,
             videos (
               id,
               title,
@@ -336,9 +337,9 @@ export default function HomePage() {
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[3/4] mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
-                        src={series.cover_art_url || series.thumbnail_url || ''}
+                        src={series.top_10_thumbnail_url || series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-300"
                       />
 
                       {/* Overlay */}
@@ -358,7 +359,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-2 text-sm">
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm mt-2"></>
                       {series.title}
                     </h3>
                   </Link>
