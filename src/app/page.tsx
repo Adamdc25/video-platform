@@ -94,6 +94,15 @@ export default function HomePage() {
           .filter(s => s.featured)
           .sort((a, b) => (a.featured_order || 999) - (b.featured_order || 999))
           .slice(0, 4)
+
+        // Debug logging
+        console.log('Featured banners:', featured.map(f => ({
+          title: f.title,
+          featured_order: f.featured_order,
+          hero_image_url: f.hero_image_url,
+          backdrop_url: f.backdrop_url
+        })))
+
         setFeaturedSeries(featured)
 
         // Fetch manually-ranked top 10 series
