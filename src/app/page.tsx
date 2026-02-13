@@ -71,7 +71,6 @@ export default function HomePage() {
               published_at
             )
           `)
-          .eq('videos.is_published', true)
 
         if (error) throw error
 
