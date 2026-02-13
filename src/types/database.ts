@@ -82,10 +82,15 @@ export interface Database {
           title: string
           description: string | null
           thumbnail_url: string | null
+          cover_art_url: string | null
+          backdrop_url: string | null
+          trailer_url: string | null
           slug: string
           hero_image_url: string | null
           featured: boolean
           featured_order: number | null
+          top_10_rank: number | null
+          top_10_thumbnail_url: string | null
           created_at: string
           updated_at: string
         }
@@ -94,10 +99,15 @@ export interface Database {
           title: string
           description?: string | null
           thumbnail_url?: string | null
+          cover_art_url?: string | null
+          backdrop_url?: string | null
+          trailer_url?: string | null
           slug: string
           hero_image_url?: string | null
           featured?: boolean
           featured_order?: number | null
+          top_10_rank?: number | null
+          top_10_thumbnail_url?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -106,10 +116,15 @@ export interface Database {
           title?: string
           description?: string | null
           thumbnail_url?: string | null
+          cover_art_url?: string | null
+          backdrop_url?: string | null
+          trailer_url?: string | null
           slug?: string
           hero_image_url?: string | null
           featured?: boolean
           featured_order?: number | null
+          top_10_rank?: number | null
+          top_10_thumbnail_url?: string | null
           created_at?: string
           updated_at?: string
         }
