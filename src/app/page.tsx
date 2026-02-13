@@ -34,6 +34,7 @@ export default function HomePage() {
   const [topSeriesCarouselIndex, setTopSeriesCarouselIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [isHoveringTrailer, setIsHoveringTrailer] = useState(false)
+  const [autoRotateDisabled, setAutoRotateDisabled] = useState(false)
 
   const supabase = createClient()
 
@@ -158,25 +159,31 @@ export default function HomePage() {
     fetchSeries()
   }, [])
 
-  // Auto-rotate featured carousel every 5 seconds
+  // Auto-rotate featured carousel every 4 seconds (unless disabled)
   useEffect(() => {
-    if (featuredSeries.length === 0) return
+    if (featuredSeries.length === 0 || autoRotateDisabled) return
 
     const interval = setInterval(() => {
       setCurrentFeaturedIndex(prev => (prev + 1) % featuredSeries.length)
-    }, 5000)
+    }, 4000)
 
     return () => clearInterval(interval)
-  }, [featuredSeries.length])
+  }, [featuredSeries.length, autoRotateDisabled])
 
   const handlePrevFeatured = () => {
     setCurrentFeaturedIndex(prev =>
       prev === 0 ? featuredSeries.length - 1 : prev - 1
     )
+    // Pause auto-rotation for 6 seconds after manual click
+    setAutoRotateDisabled(true)
+    setTimeout(() => setAutoRotateDisabled(false), 6000)
   }
 
   const handleNextFeatured = () => {
     setCurrentFeaturedIndex(prev => (prev + 1) % featuredSeries.length)
+    // Pause auto-rotation for 6 seconds after manual click
+    setAutoRotateDisabled(true)
+    setTimeout(() => setAutoRotateDisabled(false), 6000)
   }
 
   const handlePrevAllSeries = () => {
@@ -218,7 +225,7 @@ export default function HomePage() {
 
       {/* Featured Carousel */}
       {featuredSeries.length > 0 && currentFeatured && (
-        <div className="relative h-[550px] overflow-hidden group">
+        <div className="relative h-[650px] overflow-hidden group">
           {/* Background Image */}
           <div className="absolute inset-0">
             {!isHoveringTrailer ? (
@@ -242,6 +249,11 @@ export default function HomePage() {
               />
             )}
           </div>
+
+          {/* Background Audio */}
+          <audio autoPlay loop muted className="hidden">
+            <source src="https://example.com/audio/banner-music.mp3" type="audio/mpeg" />
+          </audio>
 
           {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-br from-gray-800/40 to-gray-900/40" />
