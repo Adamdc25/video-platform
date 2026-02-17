@@ -314,7 +314,7 @@ export default function HomePage() {
               </div>
 
               {/* Thumbnail Carousel - Bottom Right */}
-              <div className="absolute bottom-80 right-4 flex flex-nowrap gap-2 z-20 w-max">
+              <div className="absolute bottom-20 right-4 flex flex-nowrap gap-2 z-20 w-max">
                 {featuredSeries.map((series, index) => (
                   <button
                     key={series.id}
