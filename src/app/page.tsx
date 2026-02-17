@@ -34,6 +34,9 @@ export default function HomePage() {
   const [topSeriesCarouselIndex, setTopSeriesCarouselIndex] = useState(0)
   const [loading, setLoading] = useState(true)
   const [autoRotateDisabled, setAutoRotateDisabled] = useState(false)
+  const [hoveredTopSeriesId, setHoveredTopSeriesId] = useState<string | null>(null)
+  const [hoveredAllSeriesId, setHoveredAllSeriesId] = useState<string | null>(null)
+  const [hoveredMoreSeriesId, setHoveredMoreSeriesId] = useState<string | null>(null)
 
   const supabase = createClient()
 
@@ -346,17 +349,18 @@ export default function HomePage() {
             <div className="relative">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 5).map((series, index) => (
-                  <Link
+                  <div
                     key={series.id}
-                    href={`/series/${series.slug}`}
-                    className="group"
+                    onMouseEnter={() => setHoveredTopSeriesId(series.id)}
+                    onMouseLeave={() => setHoveredTopSeriesId(null)}
+                    className="group cursor-pointer"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
                         src={series.top_10_thumbnail_url || series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-full object-cover transition-transform duration-300"
                       />
 
                       {/* Overlay */}
@@ -374,7 +378,42 @@ export default function HomePage() {
                     <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm mt-2">
                       {series.title}
                     </h3>
-                  </Link>
+
+                    {/* Hover Preview Card */}
+                    {hoveredTopSeriesId === series.id && (
+                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                          {/* Preview Image */}
+                          <div className="relative h-64 bg-gray-800">
+                            <img
+                              src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
+                              alt={series.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          {/* Preview Info */}
+                          <div className="p-6">
+                            <h2 className="text-2xl font-bold text-white mb-2">{series.title}</h2>
+                            {series.description && (
+                              <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
+                            )}
+
+                            {/* Watch Now Button */}
+                            {series.videos && series.videos.length > 0 && (
+                              <Link
+                                href={`/watch/${series.videos[0].slug}`}
+                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                              >
+                                <Play className="w-5 h-5 fill-black" />
+                                Watch Now
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
 
@@ -414,17 +453,18 @@ export default function HomePage() {
               {/* Main Grid - First 12 Series */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
                 {allSeries.slice(0, 12).map(series => (
-                  <Link
+                  <div
                     key={series.id}
-                    href={`/series/${series.slug}`}
-                    className="group"
+                    onMouseEnter={() => setHoveredAllSeriesId(series.id)}
+                    onMouseLeave={() => setHoveredAllSeriesId(null)}
+                    className="group cursor-pointer"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
                         src={series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        className="w-full h-full object-cover transition-transform duration-300"
                       />
 
                       {/* Overlay */}
@@ -437,7 +477,42 @@ export default function HomePage() {
                     <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
                       {series.title}
                     </h3>
-                  </Link>
+
+                    {/* Hover Preview Card */}
+                    {hoveredAllSeriesId === series.id && (
+                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                          {/* Preview Image */}
+                          <div className="relative h-64 bg-gray-800">
+                            <img
+                              src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
+                              alt={series.title}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+
+                          {/* Preview Info */}
+                          <div className="p-6">
+                            <h2 className="text-2xl font-bold text-white mb-2">{series.title}</h2>
+                            {series.description && (
+                              <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
+                            )}
+
+                            {/* Watch Now Button */}
+                            {series.videos && series.videos.length > 0 && (
+                              <Link
+                                href={`/watch/${series.videos[0].slug}`}
+                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                              >
+                                <Play className="w-5 h-5 fill-black" />
+                                Watch Now
+                              </Link>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </div>
 
@@ -451,17 +526,18 @@ export default function HomePage() {
                   <div className="relative">
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                       {allSeries.slice(12 + allSeriesCarouselIndex, 12 + allSeriesCarouselIndex + 4).map(series => (
-                        <Link
+                        <div
                           key={series.id}
-                          href={`/series/${series.slug}`}
-                          className="group"
+                          onMouseEnter={() => setHoveredMoreSeriesId(series.id)}
+                          onMouseLeave={() => setHoveredMoreSeriesId(null)}
+                          className="group cursor-pointer"
                         >
                           <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                             {/* Series Cover/Thumbnail */}
                             <img
                               src={series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
-                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="w-full h-full object-cover transition-transform duration-300"
                             />
 
                             {/* Overlay */}
@@ -474,7 +550,42 @@ export default function HomePage() {
                           <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
                             {series.title}
                           </h3>
-                        </Link>
+
+                          {/* Hover Preview Card */}
+                          {hoveredMoreSeriesId === series.id && (
+                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
+                              <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                                {/* Preview Image */}
+                                <div className="relative h-64 bg-gray-800">
+                                  <img
+                                    src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
+                                    alt={series.title}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+
+                                {/* Preview Info */}
+                                <div className="p-6">
+                                  <h2 className="text-2xl font-bold text-white mb-2">{series.title}</h2>
+                                  {series.description && (
+                                    <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
+                                  )}
+
+                                  {/* Watch Now Button */}
+                                  {series.videos && series.videos.length > 0 && (
+                                    <Link
+                                      href={`/watch/${series.videos[0].slug}`}
+                                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                    >
+                                      <Play className="w-5 h-5 fill-black" />
+                                      Watch Now
+                                    </Link>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       ))}
                     </div>
 
