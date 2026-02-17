@@ -353,7 +353,7 @@ export default function HomePage() {
                     key={series.id}
                     onMouseEnter={() => setHoveredTopSeriesId(series.id)}
                     onMouseLeave={() => setHoveredTopSeriesId(null)}
-                    className="group cursor-pointer"
+                    className="group cursor-pointer relative"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
@@ -381,8 +381,8 @@ export default function HomePage() {
 
                     {/* Hover Preview Card */}
                     {hoveredTopSeriesId === series.id && (
-                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                      <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-64 bg-gray-800">
                             <img
@@ -457,7 +457,7 @@ export default function HomePage() {
                     key={series.id}
                     onMouseEnter={() => setHoveredAllSeriesId(series.id)}
                     onMouseLeave={() => setHoveredAllSeriesId(null)}
-                    className="group cursor-pointer"
+                    className="group cursor-pointer relative"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                       {/* Series Cover/Thumbnail */}
@@ -480,8 +480,8 @@ export default function HomePage() {
 
                     {/* Hover Preview Card */}
                     {hoveredAllSeriesId === series.id && (
-                      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                      <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-64 bg-gray-800">
                             <img
@@ -530,7 +530,7 @@ export default function HomePage() {
                           key={series.id}
                           onMouseEnter={() => setHoveredMoreSeriesId(series.id)}
                           onMouseLeave={() => setHoveredMoreSeriesId(null)}
-                          className="group cursor-pointer"
+                          className="group cursor-pointer relative"
                         >
                           <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                             {/* Series Cover/Thumbnail */}
@@ -553,8 +553,8 @@ export default function HomePage() {
 
                           {/* Hover Preview Card */}
                           {hoveredMoreSeriesId === series.id && (
-                            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 pointer-events-none">
-                              <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl pointer-events-auto">
+                            <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                              <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                                 {/* Preview Image */}
                                 <div className="relative h-64 bg-gray-800">
                                   <img
