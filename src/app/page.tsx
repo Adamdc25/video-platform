@@ -309,6 +309,27 @@ export default function HomePage() {
                   />
                 ))}
               </div>
+
+              {/* Thumbnail Carousel - Bottom Right */}
+              <div className="absolute bottom-4 right-4 flex gap-3 z-20">
+                {featuredSeries.map((series, index) => (
+                  <button
+                    key={series.id}
+                    onClick={() => setCurrentFeaturedIndex(index)}
+                    className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
+                      index === currentFeaturedIndex
+                        ? 'w-24 h-32 ring-2 ring-teal-500'
+                        : 'w-20 h-28 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <img
+                      src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
+                      alt={series.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             </>
           )}
         </div>
