@@ -311,7 +311,7 @@ export default function HomePage() {
               </div>
 
               {/* Thumbnail Carousel - Bottom Right */}
-              <div className="absolute bottom-4 right-4 flex flex-nowrap gap-3 z-20 items-end">
+              <div className="absolute bottom-40 right-4 flex flex-row flex-nowrap gap-3 z-20">
                 {featuredSeries.map((series, index) => (
                   <button
                     key={series.id}
@@ -337,11 +337,10 @@ export default function HomePage() {
 
       {/* Top 10 Series (Vertical Layout - Carousel) */}
       {topSeriesByViews.length > 0 && (
-        <div className="relative bg-transparent pb-16 pt-12 mt-[-180px] z-20">
+        <div className="relative bg-transparent pb-16 pt-0 mt-[-220px] z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-8">
               <h2 className="text-3xl font-bold text-white mb-2">Top 10 Series</h2>
-              <p className="text-gray-400">Most episodes and latest releases</p>
             </div>
 
             <div className="relative">
