@@ -33,7 +33,6 @@ export default function HomePage() {
   const [allSeriesCarouselIndex, setAllSeriesCarouselIndex] = useState(0)
   const [topSeriesCarouselIndex, setTopSeriesCarouselIndex] = useState(0)
   const [loading, setLoading] = useState(true)
-  const [isHoveringTrailer, setIsHoveringTrailer] = useState(false)
   const [autoRotateDisabled, setAutoRotateDisabled] = useState(false)
 
   const supabase = createClient()
@@ -225,29 +224,14 @@ export default function HomePage() {
 
       {/* Featured Carousel */}
       {featuredSeries.length > 0 && currentFeatured && (
-        <div className="relative h-[650px] overflow-hidden group">
+        <div className="relative h-screen overflow-hidden group">
           {/* Background Image */}
           <div className="absolute inset-0">
-            {!isHoveringTrailer ? (
-              <img
-                src={heroImage}
-                alt={currentFeatured.title}
-                className="w-full h-full object-cover"
-              />
-            ) : currentFeatured.trailer_url ? (
-              <video
-                src={currentFeatured.trailer_url}
-                autoPlay
-                muted
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              <img
-                src={heroImage}
-                alt={currentFeatured.title}
-                className="w-full h-full object-cover"
-              />
-            )}
+            <img
+              src={heroImage}
+              alt={currentFeatured.title}
+              className="w-full h-full object-cover"
+            />
           </div>
 
           {/* Background Audio */}
@@ -275,7 +259,7 @@ export default function HomePage() {
               </h1>
 
               <p className="text-gray-300 mb-4">
-                2026 · Highly Rated · {currentFeatured.videos?.length || 0} Episodes
+                2026 · Highly Rated
               </p>
 
               {currentFeatured.description && (
@@ -327,20 +311,6 @@ export default function HomePage() {
               </div>
             </>
           )}
-
-          {/* Trailer Hover Indicator */}
-          {currentFeatured.trailer_url && (
-            <button
-              onMouseEnter={() => setIsHoveringTrailer(true)}
-              onMouseLeave={() => setIsHoveringTrailer(false)}
-              className="absolute inset-0 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity z-10"
-            >
-              <div className="text-center">
-                <Play className="w-16 h-16 text-white fill-white mx-auto mb-4" />
-                <p className="text-white font-semibold">Play Trailer</p>
-              </div>
-            </button>
-          )}
         </div>
       )}
 
@@ -377,11 +347,6 @@ export default function HomePage() {
                       {/* Rank Badge */}
                       <div className="absolute top-2 left-2 bg-teal-500 text-black px-3 py-1 rounded-full text-lg font-bold">
                         #{topSeriesCarouselIndex + index + 1}
-                      </div>
-
-                      {/* Episode Count Badge */}
-                      <div className="absolute bottom-2 right-2 bg-gray-900/80 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        {series.videos?.length || 0}
                       </div>
                     </div>
 
@@ -446,11 +411,6 @@ export default function HomePage() {
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                         <Play className="w-12 h-12 text-white fill-white" />
                       </div>
-
-                      {/* Episode Count Badge */}
-                      <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                        {series.videos?.length || 0}
-                      </div>
                     </div>
 
                     {/* Series Info */}
@@ -487,11 +447,6 @@ export default function HomePage() {
                             {/* Overlay */}
                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                               <Play className="w-12 h-12 text-white fill-white" />
-                            </div>
-
-                            {/* Episode Count Badge */}
-                            <div className="absolute bottom-2 right-2 bg-teal-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
-                              {series.videos?.length || 0}
                             </div>
                           </div>
 
