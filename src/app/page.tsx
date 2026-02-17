@@ -314,15 +314,15 @@ export default function HomePage() {
               </div>
 
               {/* Thumbnail Carousel - Bottom Right */}
-              <div className="absolute bottom-48 right-4 flex flex-nowrap gap-2 z-20 w-max">
+              <div className="absolute bottom-80 right-4 flex flex-nowrap gap-2 z-20 w-max">
                 {featuredSeries.map((series, index) => (
                   <button
                     key={series.id}
                     onClick={() => setCurrentFeaturedIndex(index)}
                     className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
                       index === currentFeaturedIndex
-                        ? 'w-48 h-27 ring-2 ring-teal-500'
-                        : 'w-40 h-22 opacity-70 hover:opacity-100'
+                        ? 'w-24 h-14 ring-2 ring-teal-500'
+                        : 'w-20 h-11 opacity-70 hover:opacity-100'
                     }`}
                   >
                     <img
