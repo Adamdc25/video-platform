@@ -253,7 +253,7 @@ export default function HomePage() {
             </div>
 
             {/* Series Title and Info */}
-            <div className="max-w-2xl pb-48">
+            <div className="max-w-2xl pb-80">
               <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
                 {currentFeatured.title}
               </h1>
@@ -311,7 +311,7 @@ export default function HomePage() {
               </div>
 
               {/* Thumbnail Carousel - Bottom Right */}
-              <div className="absolute bottom-40 right-4 flex flex-row flex-nowrap gap-3 z-20">
+              <div className="absolute bottom-40 right-4 flex flex-nowrap gap-2 z-20 w-max">
                 {featuredSeries.map((series, index) => (
                   <button
                     key={series.id}
