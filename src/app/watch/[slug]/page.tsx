@@ -15,8 +15,9 @@ export default function WatchPage() {
   const videoPlayerRef = useRef<HTMLDivElement>(null)
 
   const [video, setVideo] = useState<Video | null>(null)
-  const [relatedVideos, setRelatedVideos] = useState<Video[]>([])
+  const [seriesEpisodes, setSeriesEpisodes] = useState<Video[]>([])
   const [watchProgress, setWatchProgress] = useState<WatchProgress | null>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
   const [inWatchlist, setInWatchlist] = useState(false)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
@@ -46,16 +47,36 @@ export default function WatchPage() {
 
       setVideo(videoData)
 
-      const { data: related } = await supabase
-        .from('videos')
-        .select('*')
-        .eq('is_published', true)
-        .neq('id', videoData.id)
-        .order('created_at', { ascending: false })
-        .limit(8)
+      // Fetch all episodes from the same series
+      const { data: seriesData } = await supabase
+        .from('series')
+        .select(`
+          videos (
+            id,
+            title,
+            description,
+            video_url,
+            thumbnail_url,
+            duration_seconds,
+            episode_number,
+            season_number,
+            slug,
+            view_count,
+            is_published,
+            published_at
+          )
+        `)
+        .eq('id', videoData.series_id)
+        .single()
 
-      if (related) {
-        setRelatedVideos(related)
+      if (seriesData?.videos) {
+        // Sort episodes by season and episode number
+        const sorted = (seriesData.videos as Video[]).sort(
+          (a: Video, b: Video) =>
+            (a.season_number || 0) - (b.season_number || 0) ||
+            (a.episode_number || 0) - (b.episode_number || 0)
+        )
+        setSeriesEpisodes(sorted)
       }
 
       // Update basic view count
@@ -174,12 +195,10 @@ export default function WatchPage() {
   const handleWatchNow = () => {
     setShowPlayer(true)
     setPlayTrailerBackground(false) // Stop background trailer
+    setIsFullscreen(true) // Go fullscreen
     if (trailerRef.current) {
       trailerRef.current.pause()
     }
-    setTimeout(() => {
-      videoPlayerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }, 100)
   }
 
   const formatDuration = (seconds: number | null) => {
@@ -312,7 +331,26 @@ export default function WatchPage() {
       </div>
 
       {/* Video Player (shown when Watch Now is clicked) */}
-      {showPlayer && (
+      {showPlayer && isFullscreen ? (
+        <div className="fixed inset-0 z-50 bg-black">
+          <button
+            onClick={() => setIsFullscreen(false)}
+            className="absolute top-4 right-4 z-50 bg-gray-900/80 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors"
+          >
+            Exit Fullscreen
+          </button>
+          <div ref={videoPlayerRef} className="w-full h-full">
+            <VideoPlayer
+              src={video.video_url}
+              poster={video.thumbnail_url || undefined}
+              title={video.title}
+              startTime={watchProgress?.progress_seconds || 0}
+              onTimeUpdate={handleTimeUpdate}
+              onEnded={handleVideoEnded}
+            />
+          </div>
+        </div>
+      ) : showPlayer ? (
         <div ref={videoPlayerRef} className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <VideoPlayer
             src={video.video_url}
@@ -323,7 +361,7 @@ export default function WatchPage() {
             onEnded={handleVideoEnded}
           />
         </div>
-      )}
+      ) : null}
 
       {/* Tabs */}
       <div className="border-b border-gray-800">
@@ -427,18 +465,18 @@ export default function WatchPage() {
               )}
             </div>
 
-            {/* Related Videos */}
-            {relatedVideos.map((relatedVideo, index) => (
+            {/* Series Episodes */}
+            {seriesEpisodes.filter(ep => ep.id !== video.id).map((episode, index) => (
               <Link
-                key={relatedVideo.id}
-                href={`/watch/${relatedVideo.slug}`}
+                key={episode.id}
+                href={`/watch/${episode.slug}`}
                 className="group"
               >
                 <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-3">
-                  {relatedVideo.thumbnail_url ? (
+                  {episode.thumbnail_url ? (
                     <img
-                      src={relatedVideo.thumbnail_url}
-                      alt={relatedVideo.title}
+                      src={episode.thumbnail_url}
+                      alt={episode.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                   ) : (
@@ -454,13 +492,13 @@ export default function WatchPage() {
                   </div>
                 </div>
                 <h3 className="text-white font-semibold mb-1 group-hover:text-teal-400 transition-colors">
-                  {relatedVideo.episode_number ? `E${relatedVideo.episode_number}. ` : ''}{relatedVideo.title}
+                  {episode.season_number ? `S${episode.season_number} ` : ''}{episode.episode_number ? `E${episode.episode_number}. ` : ''}{episode.title}
                 </h3>
-                {relatedVideo.description && (
-                  <p className="text-gray-400 text-sm line-clamp-2 mb-1">{relatedVideo.description}</p>
+                {episode.description && (
+                  <p className="text-gray-400 text-sm line-clamp-2 mb-1">{episode.description}</p>
                 )}
-                {relatedVideo.duration_seconds && (
-                  <p className="text-gray-500 text-sm">{formatDuration(relatedVideo.duration_seconds)}</p>
+                {episode.duration_seconds && (
+                  <p className="text-gray-500 text-sm">{formatDuration(episode.duration_seconds)}</p>
                 )}
               </Link>
             ))}
@@ -496,16 +534,6 @@ export default function WatchPage() {
                   <p className="text-white">{Math.floor(video.duration_seconds / 60)} minutes</p>
                 </div>
               )}
-              {video.published_at && (
-                <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Published</h3>
-                  <p className="text-white">{new Date(video.published_at).toLocaleDateString()}</p>
-                </div>
-              )}
-              <div>
-                <h3 className="text-gray-400 font-semibold mb-1">Views</h3>
-                <p className="text-white">{video.view_count?.toLocaleString() || 0}</p>
-              </div>
             </div>
           </div>
         )}
