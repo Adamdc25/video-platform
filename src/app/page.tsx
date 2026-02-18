@@ -233,7 +233,7 @@ export default function HomePage() {
             <img
               src={heroImage}
               alt={currentFeatured.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
             />
           </div>
 
@@ -328,7 +328,7 @@ export default function HomePage() {
                     <img
                       src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                       alt={series.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}
@@ -360,7 +360,7 @@ export default function HomePage() {
                       <img
                         src={series.top_10_thumbnail_url || series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-cover transition-transform duration-300"
+                        className="w-full h-full object-contain transition-transform duration-300"
                       />
 
                       {/* Overlay */}
@@ -388,7 +388,7 @@ export default function HomePage() {
                             <img
                               src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                             />
                           </div>
 
@@ -441,7 +441,7 @@ export default function HomePage() {
       )}
 
       {/* All Series Grid (Horizontal Layout) */}
-      <div className="relative bg-black pb-16 pt-12">
+      <div className="relative bg-black pb-4 pt-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-white mb-2">All Series</h2>
@@ -464,7 +464,7 @@ export default function HomePage() {
                       <img
                         src={series.cover_art_url || series.thumbnail_url || ''}
                         alt={series.title}
-                        className="w-full h-full object-cover transition-transform duration-300"
+                        className="w-full h-full object-contain transition-transform duration-300"
                       />
 
                       {/* Overlay */}
@@ -487,7 +487,7 @@ export default function HomePage() {
                             <img
                               src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                             />
                           </div>
 
@@ -537,7 +537,7 @@ export default function HomePage() {
                             <img
                               src={series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
-                              className="w-full h-full object-cover transition-transform duration-300"
+                              className="w-full h-full object-contain transition-transform duration-300"
                             />
 
                             {/* Overlay */}
@@ -560,7 +560,7 @@ export default function HomePage() {
                                   <img
                                     src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                                     alt={series.title}
-                                    className="w-full h-full object-cover"
+                                    className="w-full h-full object-contain"
                                   />
                                 </div>
 
