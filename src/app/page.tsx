@@ -384,7 +384,7 @@ export default function HomePage() {
                       <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
                         <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
-                          <div className="relative h-64 bg-gray-800">
+                          <div className="relative h-54 bg-gray-800">
                             <img
                               src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
@@ -483,7 +483,7 @@ export default function HomePage() {
                       <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
                         <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
-                          <div className="relative h-64 bg-gray-800">
+                          <div className="relative h-54 bg-gray-800">
                             <img
                               src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                               alt={series.title}
@@ -556,7 +556,7 @@ export default function HomePage() {
                             <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
                               <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                                 {/* Preview Image */}
-                                <div className="relative h-64 bg-gray-800">
+                                <div className="relative h-54 bg-gray-800">
                                   <img
                                     src={series.hero_image_url || series.cover_art_url || series.thumbnail_url || ''}
                                     alt={series.title}
