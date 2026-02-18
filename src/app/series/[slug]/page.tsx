@@ -156,7 +156,7 @@ export default function SeriesDetailPage() {
 
       {/* Hero Section - Netflix Style */}
       {seriesData && (
-        <div className="relative h-[550px] overflow-hidden bg-gray-900">
+        <div className="relative h-screen overflow-hidden bg-gray-900">
           {/* Thumbnail/Backdrop (shows initially, fades to trailer) */}
           {!showTrailer ? (
             <div className="relative w-full h-full">
