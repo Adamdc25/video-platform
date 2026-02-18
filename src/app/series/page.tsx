@@ -38,6 +38,9 @@ export default function SeriesPage() {
             title,
             description,
             thumbnail_url,
+            hero_image_url,
+            backdrop_url,
+            cover_art_url,
             slug,
             created_at,
             updated_at,
@@ -107,12 +110,12 @@ export default function SeriesPage() {
 
       {/* Hero Section */}
       {featuredSeries && (
-        <div className="relative h-[550px] overflow-hidden">
+        <div className="relative h-screen overflow-hidden">
           {/* Background Image */}
           <div className="absolute inset-0">
             {featuredSeries.videos && featuredSeries.videos.length > 0 && (
               <img
-                src={featuredSeries.videos[0].thumbnail_url || ''}
+                src={featuredSeries.hero_image_url || featuredSeries.backdrop_url || featuredSeries.cover_art_url || featuredSeries.videos[0].thumbnail_url || ''}
                 alt={featuredSeries.title}
                 className="w-full h-full object-cover"
               />
@@ -171,7 +174,6 @@ export default function SeriesPage() {
               {/* View All Series Section */}
               <div className="space-y-12">
                 <section>
-                  <h2 className="text-2xl font-semibold text-white mb-6">View all Series</h2>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {series.map((seriesItem) => (
                       <Link
@@ -198,10 +200,6 @@ export default function SeriesPage() {
                                 <Play className="w-12 h-12 text-white fill-white" />
                               </div>
 
-                              {/* Episode Count Badge */}
-                              <div className="absolute bottom-2 right-2 bg-teal-500/80 text-black text-xs font-semibold px-2 py-1 rounded">
-                                {seriesItem.videos.length} {seriesItem.videos.length === 1 ? 'Episode' : 'Episodes'}
-                              </div>
                             </>
                           )}
                         </div>
