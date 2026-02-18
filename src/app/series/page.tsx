@@ -249,4 +249,14 @@ export default function SeriesPage() {
       </div>
     )}
   </div>
-))}
+                  </div>
+                </section>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+      <Footer />
+    </div>
+  )
+}
