@@ -118,7 +118,7 @@ export default function SeriesPage() {
               <img
                 src={featuredSeries.hero_image_url || featuredSeries.backdrop_url || featuredSeries.cover_art_url || featuredSeries.videos[0].thumbnail_url || ''}
                 alt={featuredSeries.title}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-cover"
               />
             )}
           </div>
