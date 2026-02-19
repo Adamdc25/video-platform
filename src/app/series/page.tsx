@@ -14,7 +14,11 @@ interface SeriesWithEpisodes {
   title: string
   description?: string
   thumbnail_url?: string
+  hero_image_url?: string
+  backdrop_url?: string
+  cover_art_url?: string
   slug: string
+  featured?: boolean
   created_at: string
   updated_at: string
   videos?: Video[]
@@ -43,6 +47,7 @@ export default function SeriesPage() {
             backdrop_url,
             cover_art_url,
             slug,
+            featured,
             created_at,
             updated_at,
             videos (
@@ -80,8 +85,11 @@ export default function SeriesPage() {
 
         setSeries(sortedSeries)
 
-        // Set first series as featured
-        if (sortedSeries.length > 0) {
+        // Set featured series from database or fall back to first series
+        const featured = sortedSeries.find(s => s.featured)
+        if (featured) {
+          setFeaturedSeries(featured)
+        } else if (sortedSeries.length > 0) {
           setFeaturedSeries(sortedSeries[0])
         }
       } catch (error) {
