@@ -118,15 +118,15 @@ export default function SeriesPage() {
               <img
                 src={featuredSeries.hero_image_url || featuredSeries.backdrop_url || featuredSeries.cover_art_url || featuredSeries.videos[0].thumbnail_url || ''}
                 alt={featuredSeries.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
             )}
           </div>
 
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800/40 to-gray-900/40" />
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent" />
 
           {/* Hero Content */}
           <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
