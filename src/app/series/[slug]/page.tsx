@@ -16,6 +16,7 @@ interface SeriesWithEpisodes {
   thumbnail_url?: string
   cover_art_url?: string
   backdrop_url?: string
+  hero_image_url?: string
   trailer_url?: string
   slug: string
   created_at: string
@@ -52,6 +53,7 @@ export default function SeriesDetailPage() {
             thumbnail_url,
             cover_art_url,
             backdrop_url,
+            hero_image_url,
             trailer_url,
             slug,
             created_at,
