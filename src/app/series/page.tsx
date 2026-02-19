@@ -176,7 +176,7 @@ export default function SeriesPage() {
               <div className="space-y-12">
                 <section>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-{series.map((seriesItem) => (
+                    {series.map((seriesItem) => (
   <div
     key={seriesItem.id}
     onMouseEnter={() => setHoveredSeriesId(seriesItem.id)}
