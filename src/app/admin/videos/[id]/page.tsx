@@ -7,6 +7,11 @@ import Link from 'next/link'
 import { ArrowLeft, Save, Upload, Trash2, Eye, EyeOff, PlayCircle, X } from 'lucide-react'
 import type { Video } from '@/types/database'
 
+interface Series {
+  id: string
+  title: string
+}
+
 export default function EditVideoPage() {
   const params = useParams()
   const router = useRouter()
@@ -17,6 +22,7 @@ export default function EditVideoPage() {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [series, setSeries] = useState<Series[]>([])
 
   // Form fields
   const [title, setTitle] = useState('')
@@ -27,6 +33,7 @@ export default function EditVideoPage() {
   const [seasonNumber, setSeasonNumber] = useState<number | ''>('')
   const [episodeNumber, setEpisodeNumber] = useState<number | ''>('')
   const [isPublished, setIsPublished] = useState(false)
+  const [seriesId, setSeriesId] = useState<string | null>(null)
 
   // Upload states
   const [uploadingThumbnail, setUploadingThumbnail] = useState(false)
@@ -36,32 +43,42 @@ export default function EditVideoPage() {
   const supabase = createClient()
 
   useEffect(() => {
-    async function fetchVideo() {
-      const { data, error } = await supabase
+    async function fetchData() {
+      // Fetch video
+      const { data: videoData, error: videoError } = await supabase
         .from('videos')
         .select('*')
         .eq('id', videoId)
         .single()
 
-      if (error || !data) {
+      if (videoError || !videoData) {
         setError('Video not found')
         setLoading(false)
         return
       }
 
-      setVideo(data)
-      setTitle(data.title)
-      setDescription(data.description || '')
-      setThumbnailUrl(data.thumbnail_url || '')
-      setVerticalThumbnailUrl(data.vertical_thumbnail_url || '')
-      setTrailerUrl(data.trailer_url || '')
-      setSeasonNumber(data.season_number || '')
-      setEpisodeNumber(data.episode_number || '')
-      setIsPublished(data.is_published)
+      setVideo(videoData)
+      setTitle(videoData.title)
+      setDescription(videoData.description || '')
+      setThumbnailUrl(videoData.thumbnail_url || '')
+      setVerticalThumbnailUrl(videoData.vertical_thumbnail_url || '')
+      setTrailerUrl(videoData.trailer_url || '')
+      setSeasonNumber(videoData.season_number || '')
+      setEpisodeNumber(videoData.episode_number || '')
+      setIsPublished(videoData.is_published)
+      setSeriesId(videoData.series_id || null)
+
+      // Fetch all series
+      const { data: seriesData } = await supabase
+        .from('series')
+        .select('id, title')
+        .order('title')
+
+      setSeries(seriesData || [])
       setLoading(false)
     }
 
-    fetchVideo()
+    fetchData()
   }, [videoId])
 
   const handleThumbnailUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,6 +190,7 @@ export default function EditVideoPage() {
         trailer_url: trailerUrl || null,
         season_number: seasonNumber || null,
         episode_number: episodeNumber || null,
+        series_id: seriesId || null,
         is_published: isPublished,
         published_at: isPublished && !video?.published_at ? new Date().toISOString() : video?.published_at,
       })
@@ -456,6 +474,25 @@ export default function EditVideoPage() {
                 />
               </div>
             )}
+          </div>
+
+          {/* Series */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Series (optional)
+            </label>
+            <select
+              value={seriesId || ''}
+              onChange={(e) => setSeriesId(e.target.value || null)}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            >
+              <option value="">No Series</option>
+              {series.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.title}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Season & Episode */}
