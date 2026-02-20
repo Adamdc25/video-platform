@@ -47,7 +47,6 @@ export default function AdminSeriesPage() {
   const [success, setSuccess] = useState(false)
   const [allVideos, setAllVideos] = useState<Video[]>([])
   const [seriesEpisodes, setSeriesEpisodes] = useState<SeriesEpisode[]>([])
-  const [editTab, setEditTab] = useState<'info' | 'episodes'>('info')
   const [loadingEpisodes, setLoadingEpisodes] = useState(false)
 
   const supabase = createClient()
@@ -116,7 +115,6 @@ export default function AdminSeriesPage() {
       cover_art_url: s.cover_art_url || '',
       trailer_url: s.trailer_url || '',
     })
-    setEditTab('info')
     setError(null)
     setSuccess(false)
     fetchEpisodes(s.id)
@@ -125,7 +123,6 @@ export default function AdminSeriesPage() {
   const closeEdit = () => {
     setEditingId(null)
     setEditingData(null)
-    setEditTab('info')
     setError(null)
     setSuccess(false)
     setSeriesEpisodes([])
@@ -366,40 +363,14 @@ export default function AdminSeriesPage() {
         <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4">
           <div className="bg-gray-900 rounded-lg border border-teal-500 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Header */}
-            <div className="sticky top-0 bg-gray-950 border-b border-gray-700 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-white">Edit Series</h2>
-                  <p className="text-gray-400 mt-1">{editingData?.title}</p>
-                </div>
-                <button onClick={closeEdit} className="text-gray-400 hover:text-white transition">
-                  <X className="w-6 h-6" />
-                </button>
+            <div className="sticky top-0 bg-gray-950 border-b border-gray-700 p-6 flex items-center justify-between">
+              <div>
+                <h2 className="text-2xl font-bold text-white">Edit Series</h2>
+                <p className="text-gray-400 mt-1">{editingData?.title}</p>
               </div>
-
-              {/* Tabs */}
-              <div className="flex gap-4 border-t border-gray-700 pt-4">
-                <button
-                  onClick={() => setEditTab('info')}
-                  className={`px-4 py-2 font-semibold transition ${
-                    editTab === 'info'
-                      ? 'text-teal-400 border-b-2 border-teal-400'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  Series Info
-                </button>
-                <button
-                  onClick={() => setEditTab('episodes')}
-                  className={`px-4 py-2 font-semibold transition ${
-                    editTab === 'episodes'
-                      ? 'text-teal-400 border-b-2 border-teal-400'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  Episodes ({seriesEpisodes.length})
-                </button>
-              </div>
+              <button onClick={closeEdit} className="text-gray-400 hover:text-white transition">
+                <X className="w-6 h-6" />
+              </button>
             </div>
 
             {/* Content */}
@@ -416,94 +387,91 @@ export default function AdminSeriesPage() {
                 </div>
               )}
 
-              {editTab === 'info' && (
-                <>
-                  {/* Series Name */}
-                  <div>
-                    <label className="block text-white font-semibold mb-2">Series Name *</label>
-                    <input
-                      type="text"
-                      value={editingData.title}
-                      onChange={e => setEditingData({ ...editingData, title: e.target.value })}
-                      placeholder="Enter series name"
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+              {/* Series Name */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Series Name *</label>
+                <input
+                  type="text"
+                  value={editingData.title}
+                  onChange={e => setEditingData({ ...editingData, title: e.target.value })}
+                  placeholder="Enter series name"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+
+              {/* Description */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Description</label>
+                <textarea
+                  value={editingData.description}
+                  onChange={e => setEditingData({ ...editingData, description: e.target.value })}
+                  placeholder="Enter series description"
+                  rows={3}
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                />
+              </div>
+
+              {/* Backdrop URL */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Hero Image (Backdrop)</label>
+                <p className="text-gray-400 text-sm mb-2">Large landscape image for hero section</p>
+                <input
+                  type="url"
+                  value={editingData.backdrop_url}
+                  onChange={e => setEditingData({ ...editingData, backdrop_url: e.target.value })}
+                  placeholder="https://..."
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                />
+                {editingData.backdrop_url && (
+                  <div className="mt-3 border border-gray-700 rounded overflow-hidden h-32">
+                    <img
+                      src={editingData.backdrop_url}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={() => setError('Invalid hero image URL')}
                     />
                   </div>
+                )}
+              </div>
 
-                  {/* Description */}
-                  <div>
-                    <label className="block text-white font-semibold mb-2">Description</label>
-                    <textarea
-                      value={editingData.description}
-                      onChange={e => setEditingData({ ...editingData, description: e.target.value })}
-                      placeholder="Enter series description"
-                      rows={3}
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+              {/* Cover Art URL */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Cover Art</label>
+                <p className="text-gray-400 text-sm mb-2">Poster image for series card</p>
+                <input
+                  type="url"
+                  value={editingData.cover_art_url}
+                  onChange={e => setEditingData({ ...editingData, cover_art_url: e.target.value })}
+                  placeholder="https://..."
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                />
+                {editingData.cover_art_url && (
+                  <div className="mt-3 border border-gray-700 rounded overflow-hidden h-40 w-32">
+                    <img
+                      src={editingData.cover_art_url}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                      onError={() => setError('Invalid cover art URL')}
                     />
                   </div>
+                )}
+              </div>
 
-                  {/* Backdrop URL */}
-                  <div>
-                    <label className="block text-white font-semibold mb-2">Hero Image (Backdrop)</label>
-                    <p className="text-gray-400 text-sm mb-2">Large landscape image for hero section</p>
-                    <input
-                      type="url"
-                      value={editingData.backdrop_url}
-                      onChange={e => setEditingData({ ...editingData, backdrop_url: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                    />
-                    {editingData.backdrop_url && (
-                      <div className="mt-3 border border-gray-700 rounded overflow-hidden h-32">
-                        <img
-                          src={editingData.backdrop_url}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                          onError={() => setError('Invalid hero image URL')}
-                        />
-                      </div>
-                    )}
-                  </div>
+              {/* Trailer URL */}
+              <div>
+                <label className="block text-white font-semibold mb-2">Trailer Video</label>
+                <p className="text-gray-400 text-sm mb-2">Video URL for auto-playing trailer</p>
+                <input
+                  type="url"
+                  value={editingData.trailer_url}
+                  onChange={e => setEditingData({ ...editingData, trailer_url: e.target.value })}
+                  placeholder="https://..."
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                />
+              </div>
 
-                  {/* Cover Art URL */}
-                  <div>
-                    <label className="block text-white font-semibold mb-2">Cover Art</label>
-                    <p className="text-gray-400 text-sm mb-2">Poster image for series card</p>
-                    <input
-                      type="url"
-                      value={editingData.cover_art_url}
-                      onChange={e => setEditingData({ ...editingData, cover_art_url: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                    />
-                    {editingData.cover_art_url && (
-                      <div className="mt-3 border border-gray-700 rounded overflow-hidden h-40 w-32">
-                        <img
-                          src={editingData.cover_art_url}
-                          alt="Preview"
-                          className="w-full h-full object-cover"
-                          onError={() => setError('Invalid cover art URL')}
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Trailer URL */}
-                  <div>
-                    <label className="block text-white font-semibold mb-2">Trailer Video</label>
-                    <p className="text-gray-400 text-sm mb-2">Video URL for auto-playing trailer</p>
-                    <input
-                      type="url"
-                      value={editingData.trailer_url}
-                      onChange={e => setEditingData({ ...editingData, trailer_url: e.target.value })}
-                      placeholder="https://..."
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
-                    />
-                  </div>
-                </>
-              )}
-
-              {editTab === 'episodes' && (
+              {/* Episodes Section */}
+              <div className="border-t border-gray-700 pt-6">(
                 <div className="space-y-6">
                   {loadingEpisodes ? (
                     <div className="flex items-center justify-center py-8">
@@ -602,7 +570,7 @@ export default function AdminSeriesPage() {
                     </>
                   )}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Footer */}
@@ -613,15 +581,13 @@ export default function AdminSeriesPage() {
               >
                 Close
               </button>
-              {editTab === 'info' && (
-                <button
-                  onClick={handleSave}
-                  disabled={saving}
-                  className="px-6 py-2 bg-teal-600 text-white rounded font-semibold hover:bg-teal-700 disabled:opacity-50 transition"
-                >
-                  {saving ? 'Saving...' : 'Save Changes'}
-                </button>
-              )}
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-6 py-2 bg-teal-600 text-white rounded font-semibold hover:bg-teal-700 disabled:opacity-50 transition"
+              >
+                {saving ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>
