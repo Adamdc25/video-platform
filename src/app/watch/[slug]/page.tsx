@@ -70,8 +70,9 @@ export default function WatchPage() {
         .single()
 
       if (seriesData?.videos) {
-        // Sort episodes by season and episode number
-        const sorted = (seriesData.videos as Video[]).sort(
+        // Filter to only published episodes and sort by season and episode number
+        const published = (seriesData.videos as Video[]).filter(ep => ep.is_published)
+        const sorted = published.sort(
           (a: Video, b: Video) =>
             (a.season_number || 0) - (b.season_number || 0) ||
             (a.episode_number || 0) - (b.episode_number || 0)
