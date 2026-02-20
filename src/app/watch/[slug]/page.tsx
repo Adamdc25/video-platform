@@ -446,107 +446,152 @@ export default function WatchPage() {
             </p>
           </div>
         ) : activeTab === 'episodes' ? (
-          /* Episodes Grid */
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {/* Current Video Card */}
-            <div className="group">
-              <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-3">
-                {video.thumbnail_url ? (
-                  <img
-                    src={video.thumbnail_url}
-                    alt={video.title}
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Play className="w-12 h-12 text-gray-600" />
+          /* Episodes List */
+          <div>
+            <h2 className="text-2xl font-bold text-white mb-6">Episodes</h2>
+            <div className="space-y-4">
+              {/* Current Video */}
+              <div className="bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden hover:border-teal-500/50 transition-colors">
+                <div className="flex gap-4 p-4">
+                  <div className="flex-shrink-0 w-32 h-20">
+                    <div className="relative aspect-video bg-gray-800 rounded overflow-hidden h-full w-full">
+                      {video.thumbnail_url ? (
+                        <img
+                          src={video.thumbnail_url}
+                          alt={video.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <Play className="w-6 h-6 text-gray-600" />
+                        </div>
+                      )}
+                      <div className="absolute inset-0 bg-teal-500/30 flex items-center justify-center">
+                        <div className="w-8 h-8 bg-teal-500 rounded-full flex items-center justify-center">
+                          <Play className="w-4 h-4 text-black ml-0.5" fill="black" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
-                {/* Now Playing Badge */}
-                <div className="absolute top-2 left-2 bg-teal-500 text-white text-xs font-semibold px-2 py-1 rounded">
-                  Now Playing
+                  <div className="flex-1 flex flex-col justify-center">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-semibold text-teal-500 bg-teal-500/20 px-2 py-1 rounded">Now Playing</span>
+                      {video.season_number && <span className="text-sm text-gray-400">S{video.season_number}</span>}
+                      {video.episode_number && <span className="text-sm text-gray-400">E{video.episode_number}</span>}
+                    </div>
+                    <h3 className="text-white font-semibold text-lg">{video.title}</h3>
+                    {video.description && (
+                      <p className="text-gray-400 text-sm line-clamp-2 mt-1">{video.description}</p>
+                    )}
+                    {video.duration_seconds && (
+                      <p className="text-gray-500 text-sm mt-1">{formatDuration(video.duration_seconds)}</p>
+                    )}
+                  </div>
                 </div>
               </div>
-              <h3 className="text-white font-semibold mb-1">
-                {video.episode_number ? `E${video.episode_number}. ` : ''}{video.title}
-              </h3>
-              {video.description && (
-                <p className="text-gray-400 text-sm line-clamp-2 mb-1">{video.description}</p>
-              )}
-              {video.duration_seconds && (
-                <p className="text-gray-500 text-sm">{formatDuration(video.duration_seconds)}</p>
+
+              {/* Series Episodes */}
+              {seriesEpisodes.length > 0 && (
+                <>
+                  {seriesEpisodes.filter(ep => ep.id !== video.id).map((episode) => (
+                    <Link
+                      key={episode.id}
+                      href={`/watch/${episode.slug}`}
+                      className="block bg-gray-900/50 border border-gray-800 rounded-lg overflow-hidden hover:border-teal-500/50 transition-colors group"
+                    >
+                      <div className="flex gap-4 p-4">
+                        <div className="flex-shrink-0 w-32 h-20">
+                          <div className="relative aspect-video bg-gray-800 rounded overflow-hidden h-full w-full">
+                            {episode.thumbnail_url ? (
+                              <img
+                                src={episode.thumbnail_url}
+                                alt={episode.title}
+                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center">
+                                <Play className="w-6 h-6 text-gray-600" />
+                              </div>
+                            )}
+                            {/* Hover Play Button */}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                              <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center">
+                                <Play className="w-4 h-4 text-black ml-0.5" fill="black" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex-1 flex flex-col justify-center">
+                          <div className="flex items-center gap-2 mb-1">
+                            {episode.season_number && <span className="text-sm text-gray-400">S{episode.season_number}</span>}
+                            {episode.episode_number && <span className="text-sm text-gray-400">E{episode.episode_number}</span>}
+                          </div>
+                          <h3 className="text-white font-semibold text-lg group-hover:text-teal-400 transition-colors">{episode.title}</h3>
+                          {episode.description && (
+                            <p className="text-gray-400 text-sm line-clamp-2 mt-1">{episode.description}</p>
+                          )}
+                          {episode.duration_seconds && (
+                            <p className="text-gray-500 text-sm mt-1">{formatDuration(episode.duration_seconds)}</p>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+                  ))}
+                </>
               )}
             </div>
-
-            {/* Series Episodes */}
-            {seriesEpisodes.filter(ep => ep.id !== video.id).map((episode, index) => (
-              <Link
-                key={episode.id}
-                href={`/watch/${episode.slug}`}
-                className="group"
-              >
-                <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-3">
-                  {episode.thumbnail_url ? (
-                    <img
-                      src={episode.thumbnail_url}
-                      alt={episode.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Play className="w-12 h-12 text-gray-600" />
-                    </div>
-                  )}
-                  {/* Hover Play Button */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center">
-                      <Play className="w-6 h-6 text-black ml-1" fill="black" />
-                    </div>
-                  </div>
-                </div>
-                <h3 className="text-white font-semibold mb-1 group-hover:text-teal-400 transition-colors">
-                  {episode.season_number ? `S${episode.season_number} ` : ''}{episode.episode_number ? `E${episode.episode_number}. ` : ''}{episode.title}
-                </h3>
-                {episode.description && (
-                  <p className="text-gray-400 text-sm line-clamp-2 mb-1">{episode.description}</p>
-                )}
-                {episode.duration_seconds && (
-                  <p className="text-gray-500 text-sm">{formatDuration(episode.duration_seconds)}</p>
-                )}
-              </Link>
-            ))}
           </div>
         ) : (
-          /* Details Tab */
-          <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold text-white mb-4">{video.title}</h2>
-
-            {video.description && (
-              <div className="mb-6">
-                <h3 className="text-gray-400 font-semibold mb-2">Description</h3>
-                <p className="text-gray-300 whitespace-pre-wrap">{video.description}</p>
+          /* Details Tab with Trailer */
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Trailer on the left */}
+            {video.trailer_url && (
+              <div className="lg:col-span-2">
+                <h3 className="text-xl font-bold text-white mb-4">Trailer</h3>
+                <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
+                  <video
+                    src={video.trailer_url}
+                    controls
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full"
+                    poster={video.thumbnail_url || undefined}
+                  />
+                </div>
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-6">
-              {video.season_number && (
-                <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Season</h3>
-                  <p className="text-white">{video.season_number}</p>
+            {/* Details on the right */}
+            <div className={video.trailer_url ? 'lg:col-span-1' : 'lg:col-span-3'}>
+              <h2 className="text-2xl font-bold text-white mb-4">{video.title}</h2>
+
+              {video.description && (
+                <div className="mb-6">
+                  <h3 className="text-gray-400 font-semibold mb-2">Description</h3>
+                  <p className="text-gray-300 text-sm whitespace-pre-wrap">{video.description}</p>
                 </div>
               )}
-              {video.episode_number && (
-                <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Episode</h3>
-                  <p className="text-white">{video.episode_number}</p>
-                </div>
-              )}
-              {video.duration_seconds && (
-                <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Duration</h3>
-                  <p className="text-white">{Math.floor(video.duration_seconds / 60)} minutes</p>
-                </div>
-              )}
+
+              <div className="space-y-4">
+                {video.season_number && (
+                  <div>
+                    <h3 className="text-gray-400 font-semibold mb-1">Season</h3>
+                    <p className="text-white">{video.season_number}</p>
+                  </div>
+                )}
+                {video.episode_number && (
+                  <div>
+                    <h3 className="text-gray-400 font-semibold mb-1">Episode</h3>
+                    <p className="text-white">{video.episode_number}</p>
+                  </div>
+                )}
+                {video.duration_seconds && (
+                  <div>
+                    <h3 className="text-gray-400 font-semibold mb-1">Duration</h3>
+                    <p className="text-white">{Math.floor(video.duration_seconds / 60)} minutes</p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
