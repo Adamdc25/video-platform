@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { Edit2, Image as ImageIcon, PlayCircle, Trash2, X } from 'lucide-react'
+import { Edit2, Image as ImageIcon, PlayCircle, Trash2, X, GripVertical, Plus, ChevronDown } from 'lucide-react'
 
 interface Series {
   id: string
@@ -14,6 +14,14 @@ interface Series {
   featured: boolean
 }
 
+interface Video {
+  id: string
+  title: string
+  episode_number?: number
+  season_number?: number
+  series_id?: string
+}
+
 interface EditingSeriesData {
   id: string
   title: string
@@ -21,6 +29,7 @@ interface EditingSeriesData {
   backdrop_url: string
   cover_art_url: string
   trailer_url: string
+  episodes: Video[]
 }
 
 export default function AdminSeriesPage() {
@@ -32,11 +41,15 @@ export default function AdminSeriesPage() {
   const [deleting, setDeleting] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [allVideos, setAllVideos] = useState<Video[]>([])
+  const [selectedVideoId, setSelectedVideoId] = useState<string>('')
+  const [draggedEpisode, setDraggedEpisode] = useState<number | null>(null)
 
   const supabase = createClient()
 
   useEffect(() => {
     fetchSeries()
+    fetchAllVideos()
   }, [])
 
   const fetchSeries = async () => {
@@ -55,8 +68,31 @@ export default function AdminSeriesPage() {
     setLoading(false)
   }
 
-  const openEdit = (s: Series) => {
+  const fetchAllVideos = async () => {
+    const { data, error: err } = await supabase
+      .from('videos')
+      .select('id, title, episode_number, season_number, series_id')
+      .order('title', { ascending: true })
+
+    if (err) {
+      console.error('Error fetching videos:', err)
+    } else {
+      setAllVideos(data || [])
+    }
+  }
+
+  const openEdit = async (s: Series) => {
     setEditingId(s.id)
+
+    // Fetch episodes for this series
+    const { data: episodesData, error: err } = await supabase
+      .from('videos')
+      .select('id, title, episode_number, season_number, series_id')
+      .eq('series_id', s.id)
+      .order('season_number, episode_number', { ascending: true })
+
+    const episodes = episodesData || []
+
     setEditingData({
       id: s.id,
       title: s.title,
@@ -64,7 +100,9 @@ export default function AdminSeriesPage() {
       backdrop_url: s.backdrop_url || '',
       cover_art_url: s.cover_art_url || '',
       trailer_url: s.trailer_url || '',
+      episodes: episodes,
     })
+    setSelectedVideoId('')
     setError(null)
     setSuccess(false)
   }
@@ -74,6 +112,50 @@ export default function AdminSeriesPage() {
     setEditingData(null)
     setError(null)
     setSuccess(false)
+    setSelectedVideoId('')
+    setDraggedEpisode(null)
+  }
+
+  const addEpisode = (videoId: string) => {
+    if (!editingData || !videoId) return
+
+    const video = allVideos.find(v => v.id === videoId)
+    if (!video) return
+
+    // Check if already added
+    if (editingData.episodes.some(e => e.id === videoId)) {
+      setError('This episode is already added')
+      return
+    }
+
+    setEditingData({
+      ...editingData,
+      episodes: [...editingData.episodes, video],
+    })
+    setSelectedVideoId('')
+    setError(null)
+  }
+
+  const removeEpisode = (videoId: string) => {
+    if (!editingData) return
+
+    setEditingData({
+      ...editingData,
+      episodes: editingData.episodes.filter(e => e.id !== videoId),
+    })
+  }
+
+  const moveEpisode = (fromIndex: number, toIndex: number) => {
+    if (!editingData || toIndex < 0 || toIndex >= editingData.episodes.length) return
+
+    const newEpisodes = [...editingData.episodes]
+    const [movedEpisode] = newEpisodes.splice(fromIndex, 1)
+    newEpisodes.splice(toIndex, 0, movedEpisode)
+
+    setEditingData({
+      ...editingData,
+      episodes: newEpisodes,
+    })
   }
 
   const handleSave = async () => {
@@ -88,7 +170,8 @@ export default function AdminSeriesPage() {
     setError(null)
     setSuccess(false)
 
-    const { error: err } = await supabase
+    // Update series metadata
+    const { error: seriesErr } = await supabase
       .from('series')
       .update({
         title: editingData.title.trim(),
@@ -99,27 +182,70 @@ export default function AdminSeriesPage() {
       })
       .eq('id', editingData.id)
 
-    if (err) {
-      setError('Failed to save: ' + err.message)
-      console.error(err)
-    } else {
-      setSuccess(true)
-      setSeries(
-        series.map(s =>
-          s.id === editingData.id
-            ? {
-                ...s,
-                title: editingData.title,
-                description: editingData.description || undefined,
-                backdrop_url: editingData.backdrop_url || undefined,
-                cover_art_url: editingData.cover_art_url || undefined,
-                trailer_url: editingData.trailer_url || undefined,
-              }
-            : s
-        )
-      )
-      setTimeout(() => closeEdit(), 1500)
+    if (seriesErr) {
+      setError('Failed to save series: ' + seriesErr.message)
+      console.error(seriesErr)
+      setSaving(false)
+      return
     }
+
+    // Get currently assigned episodes for this series to know which ones to unassign
+    const { data: currentEpisodes } = await supabase
+      .from('videos')
+      .select('id')
+      .eq('series_id', editingData.id)
+
+    const currentEpisodeIds = new Set((currentEpisodes || []).map(e => e.id))
+    const newEpisodeIds = new Set(editingData.episodes.map(e => e.id))
+
+    // Unassign episodes that were removed
+    const toUnassign = Array.from(currentEpisodeIds).filter(id => !newEpisodeIds.has(id))
+    if (toUnassign.length > 0) {
+      const { error: unassignErr } = await supabase
+        .from('videos')
+        .update({ series_id: null })
+        .in('id', toUnassign)
+
+      if (unassignErr) {
+        setError('Failed to unassign episodes: ' + unassignErr.message)
+        console.error(unassignErr)
+        setSaving(false)
+        return
+      }
+    }
+
+    // Assign new episodes
+    const toAssign = Array.from(newEpisodeIds).filter(id => !currentEpisodeIds.has(id))
+    if (toAssign.length > 0) {
+      const { error: assignErr } = await supabase
+        .from('videos')
+        .update({ series_id: editingData.id })
+        .in('id', toAssign)
+
+      if (assignErr) {
+        setError('Failed to assign episodes: ' + assignErr.message)
+        console.error(assignErr)
+        setSaving(false)
+        return
+      }
+    }
+
+    setSuccess(true)
+    setSeries(
+      series.map(s =>
+        s.id === editingData.id
+          ? {
+              ...s,
+              title: editingData.title,
+              description: editingData.description || undefined,
+              backdrop_url: editingData.backdrop_url || undefined,
+              cover_art_url: editingData.cover_art_url || undefined,
+              trailer_url: editingData.trailer_url || undefined,
+            }
+          : s
+      )
+    )
+    setTimeout(() => closeEdit(), 1500)
 
     setSaving(false)
   }
@@ -360,6 +486,87 @@ export default function AdminSeriesPage() {
                   placeholder="https://..."
                   className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
                 />
+              </div>
+
+              {/* Episodes Section */}
+              <div className="border-t border-gray-700 pt-6">
+                <label className="block text-white font-semibold mb-4">Episodes</label>
+
+                {/* Add Episode Dropdown */}
+                <div className="flex gap-2 mb-4">
+                  <div className="flex-1">
+                    <select
+                      value={selectedVideoId}
+                      onChange={e => setSelectedVideoId(e.target.value)}
+                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    >
+                      <option value="">Select an episode to add...</option>
+                      {allVideos
+                        .filter(v => !editingData.episodes.some(e => e.id === v.id))
+                        .map(video => (
+                          <option key={video.id} value={video.id}>
+                            {video.season_number && video.episode_number
+                              ? `S${video.season_number}E${video.episode_number} - ${video.title}`
+                              : video.title}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+                  <button
+                    onClick={() => addEpisode(selectedVideoId)}
+                    disabled={!selectedVideoId}
+                    className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                  >
+                    <Plus className="w-4 h-4" />
+                    Add
+                  </button>
+                </div>
+
+                {/* Episodes List */}
+                {editingData.episodes.length > 0 ? (
+                  <div className="space-y-2 bg-gray-800 rounded border border-gray-700 p-4">
+                    {editingData.episodes.map((episode, index) => (
+                      <div
+                        key={episode.id}
+                        draggable
+                        onDragStart={() => setDraggedEpisode(index)}
+                        onDragOver={e => e.preventDefault()}
+                        onDrop={() => {
+                          if (draggedEpisode !== null && draggedEpisode !== index) {
+                            moveEpisode(draggedEpisode, index)
+                            setDraggedEpisode(null)
+                          }
+                        }}
+                        className={`flex items-center gap-3 p-3 bg-gray-700 rounded cursor-move transition ${
+                          draggedEpisode === index ? 'opacity-50' : ''
+                        }`}
+                      >
+                        <GripVertical className="w-4 h-4 text-gray-500 flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white text-sm truncate font-semibold">
+                            {episode.season_number && episode.episode_number
+                              ? `S${episode.season_number}E${episode.episode_number}`
+                              : `#${index + 1}`}
+                            {' - '}
+                            {episode.title}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => removeEpisode(episode.id)}
+                          className="p-2 text-red-400 hover:bg-red-600/20 rounded transition flex-shrink-0"
+                          title="Remove episode"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-400 text-sm p-4 bg-gray-800 rounded border border-gray-700">
+                    No episodes added yet. Select an episode from the dropdown above.
+                  </p>
+                )}
+                <p className="text-gray-400 text-xs mt-2">Drag episodes to reorder them</p>
               </div>
             </div>
 

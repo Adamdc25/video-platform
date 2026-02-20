@@ -176,79 +176,80 @@ export default function SeriesPage() {
               <div className="space-y-12">
                 <section>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-{series.map((seriesItem) => (
-  <div
-    key={seriesItem.id}
-    onMouseEnter={() => setHoveredSeriesId(seriesItem.id)}
-    onMouseLeave={() => setHoveredSeriesId(null)}
-    className="group cursor-pointer relative"
-  >
-    <Link
-      href={`/series/${seriesItem.slug}`}
-      className="block overflow-hidden rounded-lg hover:scale-105 transition-transform duration-300"
-    >
-      {/* Series Card */}
-      <div className="relative aspect-video bg-gray-800 overflow-hidden">
-        {seriesItem.videos && seriesItem.videos.length > 0 && (
-          <>
-            {/* Thumbnail Image */}
-            <img
-              src={seriesItem.videos[0].thumbnail_url || ''}
-              alt={seriesItem.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-            />
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
-            {/* Play Icon */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <Play className="w-12 h-12 text-white fill-white" />
-            </div>
-          </>
-        )}
-      </div>
-      {/* Series Info */}
-      <div className="mt-2">
-        <p className="text-white font-semibold text-sm line-clamp-2 group-hover:text-teal-400 transition-colors">
-          {seriesItem.title}
-        </p>
-      </div>
-    </Link>
+                    {series.map((seriesItem) => (
+                      <div
+                        key={seriesItem.id}
+                        onMouseEnter={() => setHoveredSeriesId(seriesItem.id)}
+                        onMouseLeave={() => setHoveredSeriesId(null)}
+                        className="group cursor-pointer relative"
+                      >
+                        <Link
+                          href={`/series/${seriesItem.slug}`}
+                          className="block overflow-hidden rounded-lg hover:scale-105 transition-transform duration-300"
+                        >
+                          {/* Series Card */}
+                          <div className="relative aspect-video bg-gray-800 overflow-hidden">
+                            {seriesItem.videos && seriesItem.videos.length > 0 && (
+                              <>
+                                {/* Thumbnail Image */}
+                                <img
+                                  src={seriesItem.videos[0].thumbnail_url || ''}
+                                  alt={seriesItem.title}
+                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                                />
+                                {/* Overlay */}
+                                <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors" />
+                                {/* Play Icon */}
+                                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                  <Play className="w-12 h-12 text-white fill-white" />
+                                </div>
+                              </>
+                            )}
+                          </div>
+                          {/* Series Info */}
+                          <div className="mt-2">
+                            <p className="text-white font-semibold text-sm line-clamp-2 group-hover:text-teal-400 transition-colors">
+                              {seriesItem.title}
+                            </p>
+                          </div>
+                        </Link>
 
-    {/* Hover Preview Card */}
-    {hoveredSeriesId === seriesItem.id && (
-      <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
-        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
-          {/* Preview Image */}
-          <div className="relative h-54 bg-gray-800">
-            <img
-              src={seriesItem.videos?.[0]?.thumbnail_url || ''}
-              alt={seriesItem.title}
-              className="w-full h-full object-contain"
-            />
-          </div>
+                        {/* Hover Preview Card */}
+                        {hoveredSeriesId === seriesItem.id && (
+                          <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                            <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                              {/* Preview Image */}
+                              <div className="relative h-54 bg-gray-800">
+                                <img
+                                  src={seriesItem.videos?.[0]?.thumbnail_url || ''}
+                                  alt={seriesItem.title}
+                                  className="w-full h-full object-contain"
+                                />
+                              </div>
 
-          {/* Preview Info */}
-          <div className="p-6">
-            <h2 className="text-2xl font-bold text-white mb-2">{seriesItem.title}</h2>
-            {seriesItem.description && (
-              <p className="text-gray-300 text-sm mb-4 line-clamp-3">{seriesItem.description}</p>
-            )}
+                              {/* Preview Info */}
+                              <div className="p-6">
+                                <h2 className="text-2xl font-bold text-white mb-2">{seriesItem.title}</h2>
+                                {seriesItem.description && (
+                                  <p className="text-gray-300 text-sm mb-4 line-clamp-3">{seriesItem.description}</p>
+                                )}
 
-            {/* Watch Now Button */}
-            {seriesItem.videos && seriesItem.videos.length > 0 && (
-              <Link
-                href={`/series/${seriesItem.slug}`}
-                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
-              >
-                <Play className="w-5 h-5 fill-black" />
-                View Series
-              </Link>
-            )}
-          </div>
-        </div>
-      </div>
-    )}
-  </div>
+                                {/* Watch Now Button */}
+                                {seriesItem.videos && seriesItem.videos.length > 0 && (
+                                  <Link
+                                    href={`/series/${seriesItem.slug}`}
+                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                  >
+                                    <Play className="w-5 h-5 fill-black" />
+                                    View Series
+                                  </Link>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </section>
               </div>
