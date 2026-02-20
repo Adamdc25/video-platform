@@ -51,42 +51,20 @@ export default function WatchPage() {
 
       // Fetch all episodes from the same series
       if (videoData.series_id) {
-        const { data: seriesData, error: seriesError } = await supabase
-          .from('series')
-          .select(`
-            id,
-            title,
-            videos (
-              id,
-              title,
-              description,
-              video_url,
-              thumbnail_url,
-              duration_seconds,
-              episode_number,
-              season_number,
-              slug,
-              view_count,
-              is_published,
-              published_at
-            )
-          `)
-          .eq('id', videoData.series_id)
-          .single()
+        const { data: episodesData, error: episodesError } = await supabase
+          .from('videos')
+          .select('*')
+          .eq('series_id', videoData.series_id)
+          .eq('is_published', true)
+          .order('season_number', { ascending: true })
+          .order('episode_number', { ascending: true })
 
-        console.log('Series data:', seriesData)
-        console.log('Series error:', seriesError)
+        console.log('Episodes data:', episodesData)
+        console.log('Episodes error:', episodesError)
 
-        if (seriesData?.videos) {
-          console.log('Raw episodes:', seriesData.videos)
-          // Sort episodes by season and episode number
-          const sorted = (seriesData.videos as Video[]).sort(
-            (a: Video, b: Video) =>
-              (a.season_number || 0) - (b.season_number || 0) ||
-              (a.episode_number || 0) - (b.episode_number || 0)
-          )
-          console.log('Sorted episodes:', sorted)
-          setSeriesEpisodes(sorted)
+        if (episodesData) {
+          console.log('Raw episodes:', episodesData)
+          setSeriesEpisodes(episodesData as Video[])
         }
       } else {
         console.log('No series_id found for this video')
