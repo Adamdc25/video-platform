@@ -175,41 +175,39 @@ export default function SeriesDetailPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-gray-800/40 to-gray-900/40" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent" />
 
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <button
-                  onClick={() => setShowTrailer(true)}
-                  className="group relative w-20 h-20 flex items-center justify-center bg-white/30 hover:bg-white/50 rounded-full transition-all duration-300 backdrop-blur-sm"
-                >
-                  <Play className="w-8 h-8 text-white fill-white ml-1" />
-                  <span className="absolute text-xs text-white mt-24 opacity-0 group-hover:opacity-100 transition">
-                    Play Trailer
+              {/* Hero Content */}
+              <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
+                {/* Back Button + Featured Badge */}
+                <div className="pt-8 flex items-center justify-between">
+                  <Link
+                    href="/series"
+                    className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                    Back to Series
+                  </Link>
+                  <span className="inline-block bg-teal-500 text-black px-4 py-2 rounded-full text-sm font-semibold">
+                    Series Detail
                   </span>
-                </button>
-              </div>
+                </div>
 
-              {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-between p-8">
-                <Link
-                  href="/series"
-                  className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors w-fit"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                  Back to Series
-                </Link>
-
-                <div className="max-w-2xl">
+                {/* Series Title and Info */}
+                <div className="max-w-2xl pb-80">
                   <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
                     {seriesData.title}
                   </h1>
+
                   <p className="text-gray-300 mb-4">
-                    2026 · Highly Rated · {Object.keys(episodesBySeason).length} Season · English
+                    2026 · {Object.keys(episodesBySeason).length} Season · English
                   </p>
+
                   {seriesData.description && (
                     <p className="text-gray-300 text-lg mb-8 max-w-xl">
                       {seriesData.description}
                     </p>
                   )}
+
+                  {/* Watch Now Button */}
                   {seriesData.videos && seriesData.videos.length > 0 && (
                     <Link
                       href={`/watch/${seriesData.videos[0].slug}`}
@@ -221,6 +219,17 @@ export default function SeriesDetailPage() {
                   )}
                 </div>
               </div>
+
+              {/* Play Trailer Button - Center Overlay */}
+              <button
+                onClick={() => setShowTrailer(true)}
+                className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group relative w-20 h-20 flex items-center justify-center bg-white/30 hover:bg-white/50 rounded-full transition-all duration-300 backdrop-blur-sm z-10"
+              >
+                <Play className="w-8 h-8 text-white fill-white ml-1" />
+                <span className="absolute text-xs text-white mt-24 opacity-0 group-hover:opacity-100 transition">
+                  Play Trailer
+                </span>
+              </button>
             </>
           ) : (
             /* Trailer Video Player */
