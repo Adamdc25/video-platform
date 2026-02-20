@@ -161,17 +161,19 @@ export default function SeriesDetailPage() {
         <div className="relative h-screen overflow-hidden bg-gray-900">
           {/* Thumbnail/Backdrop (shows initially, fades to trailer) */}
           {!showTrailer ? (
-            <div className="relative w-full h-full">
+            <>
               {/* Background Image */}
-              <img
-                src={heroImage}
-                alt={seriesData.title}
-                className="w-full h-full object-cover"
-              />
+              <div className="absolute inset-0">
+                <img
+                  src={heroImage}
+                  alt={seriesData.title}
+                  className="w-full h-full object-contain"
+                />
+              </div>
 
               {/* Gradient overlays */}
-              <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-900 opacity-50" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40" />
+              <div className="absolute inset-0 bg-gradient-to-br from-gray-800/40 to-gray-900/40" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent" />
 
               {/* Play Button Overlay */}
               <div className="absolute inset-0 flex items-center justify-center">
@@ -219,7 +221,7 @@ export default function SeriesDetailPage() {
                   )}
                 </div>
               </div>
-            </div>
+            </>
           ) : (
             /* Trailer Video Player */
             <div className="relative w-full h-full bg-black flex items-center justify-center">
