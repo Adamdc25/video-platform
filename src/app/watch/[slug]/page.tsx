@@ -46,37 +46,50 @@ export default function WatchPage() {
       }
 
       setVideo(videoData)
+      console.log('Current video:', videoData)
+      console.log('Video series_id:', videoData.series_id)
 
       // Fetch all episodes from the same series
-      const { data: seriesData } = await supabase
-        .from('series')
-        .select(`
-          videos (
+      if (videoData.series_id) {
+        const { data: seriesData, error: seriesError } = await supabase
+          .from('series')
+          .select(`
             id,
             title,
-            description,
-            video_url,
-            thumbnail_url,
-            duration_seconds,
-            episode_number,
-            season_number,
-            slug,
-            view_count,
-            is_published,
-            published_at
-          )
-        `)
-        .eq('id', videoData.series_id)
-        .single()
+            videos (
+              id,
+              title,
+              description,
+              video_url,
+              thumbnail_url,
+              duration_seconds,
+              episode_number,
+              season_number,
+              slug,
+              view_count,
+              is_published,
+              published_at
+            )
+          `)
+          .eq('id', videoData.series_id)
+          .single()
 
-      if (seriesData?.videos) {
-        // Sort episodes by season and episode number
-        const sorted = (seriesData.videos as Video[]).sort(
-          (a: Video, b: Video) =>
-            (a.season_number || 0) - (b.season_number || 0) ||
-            (a.episode_number || 0) - (b.episode_number || 0)
-        )
-        setSeriesEpisodes(sorted)
+        console.log('Series data:', seriesData)
+        console.log('Series error:', seriesError)
+
+        if (seriesData?.videos) {
+          console.log('Raw episodes:', seriesData.videos)
+          // Sort episodes by season and episode number
+          const sorted = (seriesData.videos as Video[]).sort(
+            (a: Video, b: Video) =>
+              (a.season_number || 0) - (b.season_number || 0) ||
+              (a.episode_number || 0) - (b.episode_number || 0)
+          )
+          console.log('Sorted episodes:', sorted)
+          setSeriesEpisodes(sorted)
+        }
+      } else {
+        console.log('No series_id found for this video')
       }
 
       // Update basic view count
