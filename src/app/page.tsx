@@ -272,15 +272,13 @@ export default function HomePage() {
               )}
 
               {/* Watch Now Button */}
-              {currentFeatured.videos && currentFeatured.videos.length > 0 && (
-                <Link
-                  href={`/watch/${currentFeatured.videos[0].slug}`}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
-                >
-                  <Play className="w-6 h-6 fill-black" />
-                  Watch Now
-                </Link>
-              )}
+              <Link
+                href={`/series/${currentFeatured.slug}`}
+                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+              >
+                <Play className="w-6 h-6 fill-black" />
+                Watch Now
+              </Link>
             </div>
           </div>
 
@@ -400,15 +398,13 @@ export default function HomePage() {
                             )}
 
                             {/* Watch Now Button */}
-                            {series.videos && series.videos.length > 0 && (
-                              <Link
-                                href={`/watch/${series.videos[0].slug}`}
-                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
-                              >
-                                <Play className="w-5 h-5 fill-black" />
-                                Watch Now
-                              </Link>
-                            )}
+                            <Link
+                              href={`/series/${series.slug}`}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                            >
+                              <Play className="w-5 h-5 fill-black" />
+                              View Series
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -499,15 +495,13 @@ export default function HomePage() {
                             )}
 
                             {/* Watch Now Button */}
-                            {series.videos && series.videos.length > 0 && (
-                              <Link
-                                href={`/watch/${series.videos[0].slug}`}
-                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
-                              >
-                                <Play className="w-5 h-5 fill-black" />
-                                Watch Now
-                              </Link>
-                            )}
+                            <Link
+                              href={`/series/${series.slug}`}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                            >
+                              <Play className="w-5 h-5 fill-black" />
+                              View Series
+                            </Link>
                           </div>
                         </div>
                       </div>
@@ -572,15 +566,13 @@ export default function HomePage() {
                                   )}
 
                                   {/* Watch Now Button */}
-                                  {series.videos && series.videos.length > 0 && (
-                                    <Link
-                                      href={`/watch/${series.videos[0].slug}`}
-                                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
-                                    >
-                                      <Play className="w-5 h-5 fill-black" />
-                                      Watch Now
-                                    </Link>
-                                  )}
+                                  <Link
+                                    href={`/series/${series.slug}`}
+                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                  >
+                                    <Play className="w-5 h-5 fill-black" />
+                                    View Series
+                                  </Link>
                                 </div>
                               </div>
                             </div>
