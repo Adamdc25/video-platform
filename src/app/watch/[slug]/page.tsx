@@ -48,8 +48,11 @@ export default function WatchPage() {
       setVideo(videoData)
 
       // Fetch all episodes from the same series
+      let seriesData: any = null
+
+      // First, try to fetch by series_id if it exists
       if (videoData.series_id) {
-        const { data: seriesData } = await supabase
+        const result = await supabase
           .from('series')
           .select(`
             id,
@@ -73,19 +76,72 @@ export default function WatchPage() {
           .eq('id', videoData.series_id)
           .single()
 
-        if (seriesData?.videos) {
-          // Sort episodes by season and episode number
-          const sorted = (seriesData.videos as Video[]).sort(
-            (a: Video, b: Video) =>
-              (a.season_number || 0) - (b.season_number || 0) ||
-              (a.episode_number || 0) - (b.episode_number || 0)
-          )
-          setSeriesEpisodes(sorted)
+        seriesData = result.data
+      }
 
-          // If series has a trailer and video doesn't, use series trailer
-          if (seriesData.trailer_url && !videoData.trailer_url) {
-            setVideo(prev => prev ? { ...prev, trailer_url: seriesData.trailer_url } : null)
-          }
+      // If no series found yet, try to find it by fetching all series and matching this video
+      if (!seriesData) {
+        const { data: allSeries } = await supabase
+          .from('series')
+          .select(`
+            id,
+            title,
+            trailer_url,
+            videos (
+              id,
+              title,
+              slug
+            )
+          `)
+
+        // Find the series that contains this video
+        const matchedSeries = allSeries?.find(s =>
+          s.videos?.some(v => v.slug === slug)
+        )
+
+        if (matchedSeries) {
+          // Now fetch the full series data with all episodes
+          const { data: fullSeriesData } = await supabase
+            .from('series')
+            .select(`
+              id,
+              trailer_url,
+              videos (
+                id,
+                title,
+                description,
+                video_url,
+                thumbnail_url,
+                duration_seconds,
+                episode_number,
+                season_number,
+                slug,
+                view_count,
+                is_published,
+                published_at,
+                trailer_url
+              )
+            `)
+            .eq('id', matchedSeries.id)
+            .single()
+
+          seriesData = fullSeriesData
+        }
+      }
+
+      // Process and set the episodes
+      if (seriesData?.videos) {
+        // Sort episodes by season and episode number
+        const sorted = (seriesData.videos as Video[]).sort(
+          (a: Video, b: Video) =>
+            (a.season_number || 0) - (b.season_number || 0) ||
+            (a.episode_number || 0) - (b.episode_number || 0)
+        )
+        setSeriesEpisodes(sorted)
+
+        // If series has a trailer and video doesn't, use series trailer
+        if (seriesData.trailer_url && !videoData.trailer_url) {
+          setVideo(prev => prev ? { ...prev, trailer_url: seriesData.trailer_url } : null)
         }
       }
 
