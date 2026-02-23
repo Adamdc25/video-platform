@@ -400,8 +400,12 @@ export default function HomePage() {
 
                             {/* View Series Button */}
                             <button
-                              onClick={() => {}}
-                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
+                              onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                window.location.href = `/series/${series.slug}`
+                              }}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                             >
                               <Play className="w-5 h-5 fill-black" />
                               View Series
@@ -498,8 +502,12 @@ export default function HomePage() {
 
                             {/* View Series Button */}
                             <button
-                              onClick={() => {}}
-                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
+                              onClick={(e) => {
+                                e.preventDefault()
+                                e.stopPropagation()
+                                window.location.href = `/series/${series.slug}`
+                              }}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                             >
                               <Play className="w-5 h-5 fill-black" />
                               View Series
@@ -570,8 +578,12 @@ export default function HomePage() {
 
                                   {/* View Series Button */}
                                   <button
-                                    onClick={() => {}}
-                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
+                                    onClick={(e) => {
+                                      e.preventDefault()
+                                      e.stopPropagation()
+                                      window.location.href = `/series/${series.slug}`
+                                    }}
+                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                                   >
                                     <Play className="w-5 h-5 fill-black" />
                                     View Series
