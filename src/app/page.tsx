@@ -402,7 +402,7 @@ export default function HomePage() {
                             {/* Watch Now Button */}
                             {series.videos && series.videos.length > 0 && (
                               <Link
-                                href={`/watch/${series.videos[0].slug}`}
+                                href={`/series/${series.slug}`}
                                 className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                               >
                                 <Play className="w-5 h-5 fill-black" />
@@ -501,7 +501,7 @@ export default function HomePage() {
                             {/* Watch Now Button */}
                             {series.videos && series.videos.length > 0 && (
                               <Link
-                                href={`/watch/${series.videos[0].slug}`}
+                                href={`/series/${series.slug}`}
                                 className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                               >
                                 <Play className="w-5 h-5 fill-black" />
@@ -574,7 +574,7 @@ export default function HomePage() {
                                   {/* Watch Now Button */}
                                   {series.videos && series.videos.length > 0 && (
                                     <Link
-                                      href={`/watch/${series.videos[0].slug}`}
+                                      href={`/series/${series.slug}`}
                                       className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                                     >
                                       <Play className="w-5 h-5 fill-black" />
