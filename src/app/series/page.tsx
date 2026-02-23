@@ -111,7 +111,10 @@ export default function SeriesPage() {
 
       {/* Hero Section */}
       {featuredSeries && (
-        <div className="relative h-screen overflow-hidden">
+        <Link
+          href={`/series/${featuredSeries.slug}`}
+          className="block relative h-screen overflow-hidden hover:opacity-90 transition-opacity"
+        >
           {/* Background Image */}
           <div className="absolute inset-0">
             {featuredSeries.videos && featuredSeries.videos.length > 0 && (
@@ -144,17 +147,20 @@ export default function SeriesPage() {
                 2026 · 18+ · {featuredSeries.videos?.length ? Math.max(...(featuredSeries.videos.map(v => v.season_number || 1))) : 1} Season · English
               </p>
 
-              {/* Watch Now Button */}
-              <Link
-                href={`/watch/${featuredSeries.videos?.[0]?.slug || ''}`}
+              {/* Watch Now Button - Styled as button to override Link */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.location.href = `/watch/${featuredSeries.videos?.[0]?.slug || ''}`
+                }}
                 className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
               >
                 <Play className="w-6 h-6 fill-black" />
                 Watch Now
-              </Link>
+              </button>
             </div>
           </div>
-        </div>
+        </Link>
       )}
 
       {/* Content Section */}
