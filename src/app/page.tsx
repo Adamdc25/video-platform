@@ -398,14 +398,14 @@ export default function HomePage() {
                               <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
                             )}
 
-                            {/* Watch Now Button */}
-                            <Link
-                              href={`/series/${series.slug}`}
-                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                            {/* View Series Button */}
+                            <button
+                              onClick={() => {}}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
                             >
                               <Play className="w-5 h-5 fill-black" />
                               View Series
-                            </Link>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -496,14 +496,14 @@ export default function HomePage() {
                               <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
                             )}
 
-                            {/* Watch Now Button */}
-                            <Link
-                              href={`/series/${series.slug}`}
-                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                            {/* View Series Button */}
+                            <button
+                              onClick={() => {}}
+                              className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
                             >
                               <Play className="w-5 h-5 fill-black" />
                               View Series
-                            </Link>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -568,14 +568,14 @@ export default function HomePage() {
                                     <p className="text-gray-300 text-sm mb-4 line-clamp-3">{series.description}</p>
                                   )}
 
-                                  {/* Watch Now Button */}
-                                  <Link
-                                    href={`/series/${series.slug}`}
-                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                  {/* View Series Button */}
+                                  <button
+                                    onClick={() => {}}
+                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center pointer-events-auto"
                                   >
                                     <Play className="w-5 h-5 fill-black" />
                                     View Series
-                                  </Link>
+                                  </button>
                                 </div>
                               </div>
                             </div>
