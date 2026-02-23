@@ -347,11 +347,12 @@ export default function HomePage() {
             <div className="relative">
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 5).map((series, index) => (
-                  <div
+                  <Link
                     key={series.id}
+                    href={`/series/${series.slug}`}
                     onMouseEnter={() => setHoveredTopSeriesId(series.id)}
                     onMouseLeave={() => setHoveredTopSeriesId(null)}
-                    className="group cursor-pointer relative"
+                    className="group cursor-pointer relative block"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
@@ -409,7 +410,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </Link>
                 ))}
               </div>
 
@@ -449,11 +450,12 @@ export default function HomePage() {
               {/* Main Grid - First 12 Series */}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
                 {allSeries.slice(0, 12).map(series => (
-                  <div
+                  <Link
                     key={series.id}
+                    href={`/series/${series.slug}`}
                     onMouseEnter={() => setHoveredAllSeriesId(series.id)}
                     onMouseLeave={() => setHoveredAllSeriesId(null)}
-                    className="group cursor-pointer relative"
+                    className="group cursor-pointer relative block"
                   >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                       {/* Series Cover/Thumbnail */}
@@ -506,7 +508,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </Link>
                 ))}
               </div>
 
@@ -520,11 +522,12 @@ export default function HomePage() {
                   <div className="relative">
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
                       {allSeries.slice(12 + allSeriesCarouselIndex, 12 + allSeriesCarouselIndex + 4).map(series => (
-                        <div
+                        <Link
                           key={series.id}
+                          href={`/series/${series.slug}`}
                           onMouseEnter={() => setHoveredMoreSeriesId(series.id)}
                           onMouseLeave={() => setHoveredMoreSeriesId(null)}
-                          className="group cursor-pointer relative"
+                          className="group cursor-pointer relative block"
                         >
                           <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
                             {/* Series Cover/Thumbnail */}
@@ -577,7 +580,7 @@ export default function HomePage() {
                               </div>
                             </div>
                           )}
-                        </div>
+                        </Link>
                       ))}
                     </div>
 
