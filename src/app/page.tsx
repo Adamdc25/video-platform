@@ -202,7 +202,7 @@ export default function HomePage() {
   }
 
   const handleNextTopSeries = () => {
-    const maxIndex = Math.max(0, topSeriesByViews.length - 2)
+    const maxIndex = Math.max(0, topSeriesByViews.length - 4)
     setTopSeriesCarouselIndex(prev => Math.min(maxIndex, prev + 1))
   }
 
@@ -347,15 +347,15 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="grid grid-cols-2 gap-3 sm:gap-6">
-                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 2).map((series, index) => (
-                  <Link
-                    key={series.id}
-                    href={`/series/${series.slug}`}
-                    onMouseEnter={() => setHoveredTopSeriesId(series.id)}
-                    onMouseLeave={() => setHoveredTopSeriesId(null)}
-                    className="group cursor-pointer relative"
-                  >
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
+                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 4).map((series, index) => (
+                  <div key={series.id} className={index >= 2 ? 'hidden sm:block' : ''}>
+                    <Link
+                      href={`/series/${series.slug}`}
+                      onMouseEnter={() => setHoveredTopSeriesId(series.id)}
+                      onMouseLeave={() => setHoveredTopSeriesId(null)}
+                      className="group cursor-pointer relative"
+                    >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
@@ -380,10 +380,10 @@ export default function HomePage() {
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card (hidden on mobile) */}
+                    {/* Hover Preview Card */}
                     {hoveredTopSeriesId === series.id && (
-                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
                             <img
@@ -414,7 +414,8 @@ export default function HomePage() {
                         </div>
                       </div>
                     )}
-                  </Link>
+                    </Link>
+                  </div>
                 ))}
               </div>
 
@@ -422,16 +423,16 @@ export default function HomePage() {
               {topSeriesCarouselIndex > 0 && (
                 <button
                   onClick={handlePrevTopSeries}
-                  className="absolute -left-3 sm:-left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-10"
+                  className="absolute left-0 sm:-left-6 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 sm:p-3 rounded-full transition-colors z-10"
                 >
                   <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               )}
 
-              {topSeriesCarouselIndex < topSeriesByViews.length - 2 && (
+              {topSeriesCarouselIndex < topSeriesByViews.length - 4 && (
                 <button
                   onClick={handleNextTopSeries}
-                  className="absolute -right-3 sm:-right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-10"
+                  className="absolute right-0 sm:-right-6 top-1/2 transform -translate-y-1/2 bg-black/70 hover:bg-black/90 text-white p-2 sm:p-3 rounded-full transition-colors z-10"
                 >
                   <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
@@ -480,10 +481,10 @@ export default function HomePage() {
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card (hidden on mobile) */}
+                    {/* Hover Preview Card */}
                     {hoveredAllSeriesId === series.id && (
-                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
                             <img
@@ -554,10 +555,10 @@ export default function HomePage() {
                             {series.title}
                           </h3>
 
-                          {/* Hover Preview Card (hidden on mobile) */}
+                          {/* Hover Preview Card */}
                           {hoveredMoreSeriesId === series.id && (
-                            <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                              <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                            <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                              <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                 {/* Preview Image */}
                                 <div className="relative h-54 bg-gray-800">
                                   <img
