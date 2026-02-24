@@ -208,7 +208,7 @@ export default function SeriesDetailPage() {
                   )}
                   {seriesData.videos && seriesData.videos.length > 0 && (
                     <Link
-                      href={`/watch/${seriesData.videos[0].slug}`}
+                      href={`/viewer/${seriesData.videos[0].slug}`}
                       className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
                     >
                       <Play className="w-6 h-6 fill-black" />
@@ -270,7 +270,7 @@ export default function SeriesDetailPage() {
                     {episodes.map((episode) => (
                       <Link
                         key={episode.id}
-                        href={`/watch/${episode.slug}`}
+                        href={`/viewer/${episode.slug}`}
                         className="group flex gap-4 p-4 rounded-lg hover:bg-gray-800/50 transition-colors"
                       >
                         <div className="relative w-40 h-24 flex-shrink-0 rounded-lg overflow-hidden">
