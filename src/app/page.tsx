@@ -380,10 +380,10 @@ export default function HomePage() {
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card (hidden on mobile) */}
+                    {/* Hover Preview Card */}
                     {hoveredTopSeriesId === series.id && (
-                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
                             <img
@@ -481,10 +481,10 @@ export default function HomePage() {
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card (hidden on mobile) */}
+                    {/* Hover Preview Card */}
                     {hoveredAllSeriesId === series.id && (
-                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                        <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                        <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
                             <img
@@ -555,10 +555,10 @@ export default function HomePage() {
                             {series.title}
                           </h3>
 
-                          {/* Hover Preview Card (hidden on mobile) */}
+                          {/* Hover Preview Card */}
                           {hoveredMoreSeriesId === series.id && (
-                            <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
-                              <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
+                            <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                              <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                 {/* Preview Image */}
                                 <div className="relative h-54 bg-gray-800">
                                   <img
