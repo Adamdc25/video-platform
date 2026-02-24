@@ -227,7 +227,7 @@ export default function HomePage() {
 
       {/* Featured Carousel */}
       {featuredSeries.length > 0 && currentFeatured && (
-        <div className="relative h-screen sm:h-[600px] md:h-screen overflow-hidden group">
+        <div className="relative h-[480px] sm:h-[600px] md:h-screen overflow-hidden group">
           {/* Background Image */}
           <div className="absolute inset-0">
             <img
@@ -256,7 +256,7 @@ export default function HomePage() {
             </div>
 
             {/* Series Title and Info */}
-            <div className="max-w-2xl pb-20 sm:pb-40 md:pb-80">
+            <div className="max-w-2xl pb-12 sm:pb-40 md:pb-80">
               <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
                 {currentFeatured.title}
               </h1>
