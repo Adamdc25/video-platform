@@ -347,15 +347,15 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="grid grid-cols-2 gap-3 sm:gap-6">
-                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 2).map((series, index) => (
-                  <Link
-                    key={series.id}
-                    href={`/series/${series.slug}`}
-                    onMouseEnter={() => setHoveredTopSeriesId(series.id)}
-                    onMouseLeave={() => setHoveredTopSeriesId(null)}
-                    className="group cursor-pointer relative"
-                  >
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6">
+                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 4).map((series, index) => (
+                  <div key={series.id} className={index >= 2 ? 'hidden sm:block' : ''}>
+                    <Link
+                      href={`/series/${series.slug}`}
+                      onMouseEnter={() => setHoveredTopSeriesId(series.id)}
+                      onMouseLeave={() => setHoveredTopSeriesId(null)}
+                      className="group cursor-pointer relative"
+                    >
                     <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-[9/16] mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
@@ -414,7 +414,8 @@ export default function HomePage() {
                         </div>
                       </div>
                     )}
-                  </Link>
+                    </Link>
+                  </div>
                 ))}
               </div>
 
