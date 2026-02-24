@@ -137,7 +137,7 @@ export default function ViewerPage() {
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -149,7 +149,7 @@ export default function ViewerPage() {
           <h1 className="text-2xl font-bold text-white mb-4">Video Not Found</h1>
           <Link
             href={seriesSlug ? `/series/${seriesSlug}` : '/series'}
-            className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300"
+            className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300"
           >
             <ArrowLeft className="w-5 h-5" />
             Back to Series
@@ -190,7 +190,7 @@ export default function ViewerPage() {
             <p className="text-gray-300 mb-8">Playing next episode in a moment...</p>
             <Link
               href={`/viewer/${nextEpisode.slug}`}
-              className="inline-flex items-center gap-3 bg-teal-500 hover:bg-teal-600 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+              className="inline-flex items-center gap-3 bg-brand-500 hover:bg-brand-600 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
             >
               <Play className="w-6 h-6 fill-black" />
               Play Next Episode

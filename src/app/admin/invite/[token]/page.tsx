@@ -153,7 +153,7 @@ export default function AcceptInvitePage() {
         <div className="bg-gray-900 rounded-lg p-8 text-center">
           {status === 'loading' && (
             <>
-              <Loader2 className="w-12 h-12 text-teal-500 animate-spin mx-auto mb-4" />
+              <Loader2 className="w-12 h-12 text-brand-500 animate-spin mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-white mb-2">
                 Checking invite...
               </h2>
@@ -162,7 +162,7 @@ export default function AcceptInvitePage() {
 
           {status === 'valid' && !user && (
             <>
-              <Shield className="w-12 h-12 text-teal-500 mx-auto mb-4" />
+              <Shield className="w-12 h-12 text-brand-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-white mb-2">
                 Admin Invite
               </h2>
@@ -177,7 +177,7 @@ export default function AcceptInvitePage() {
               <div className="space-y-3">
                 <Link
                   href={`/auth/login?redirect=/admin/invite/${token}`}
-                  className="block w-full px-6 py-3 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-lg transition-colors"
+                  className="block w-full px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white font-semibold rounded-lg transition-colors"
                 >
                   Log In to Accept
                 </Link>
@@ -193,7 +193,7 @@ export default function AcceptInvitePage() {
 
           {status === 'accepting' && (
             <>
-              <Loader2 className="w-12 h-12 text-teal-500 animate-spin mx-auto mb-4" />
+              <Loader2 className="w-12 h-12 text-brand-500 animate-spin mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-white mb-2">
                 Setting up your admin access...
               </h2>
@@ -259,7 +259,7 @@ export default function AcceptInvitePage() {
               </p>
               <Link
                 href="/admin"
-                className="inline-block px-6 py-3 bg-teal-500 hover:bg-teal-400 text-white font-semibold rounded-lg transition-colors"
+                className="inline-block px-6 py-3 bg-brand-500 hover:bg-brand-400 text-white font-semibold rounded-lg transition-colors"
               >
                 Go to Admin Dashboard
               </Link>

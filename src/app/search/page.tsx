@@ -60,7 +60,7 @@ export default function SearchPage() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search videos..."
-                className="w-full bg-gray-900 border border-gray-700 text-white pl-12 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full bg-gray-900 border border-gray-700 text-white pl-12 pr-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent"
               />
             </div>
           </div>
@@ -68,7 +68,7 @@ export default function SearchPage() {
           {/* Results */}
           {loading ? (
             <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
             </div>
           ) : videos.length === 0 ? (
             <div className="text-center py-16">

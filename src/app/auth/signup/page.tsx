@@ -55,8 +55,8 @@ export default function SignupPage() {
       <div className="min-h-screen flex items-center justify-center bg-black px-4">
         <div className="max-w-md w-full">
           <div className="bg-gray-900 border border-gray-800 rounded-xl p-8 shadow-xl text-center">
-            <div className="w-16 h-16 bg-teal-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Check className="w-8 h-8 text-teal-400" />
+            <div className="w-16 h-16 bg-brand-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Check className="w-8 h-8 text-brand-400" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-2">Check Your Email</h1>
             <p className="text-gray-400 mb-6">
@@ -65,7 +65,7 @@ export default function SignupPage() {
             </p>
             <Link
               href="/auth/login"
-              className="inline-block w-full py-3 px-4 bg-teal-500 text-white rounded-lg font-medium hover:bg-teal-400 transition"
+              className="inline-block w-full py-3 px-4 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-400 transition"
             >
               Back to Login
             </Link>
@@ -117,7 +117,7 @@ export default function SignupPage() {
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
                   placeholder="Your name"
                   required
                 />
@@ -135,7 +135,7 @@ export default function SignupPage() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+                  className="w-full pl-10 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
                   placeholder="you@example.com"
                   required
                 />
@@ -153,7 +153,7 @@ export default function SignupPage() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-12 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent transition"
+                  className="w-full pl-10 pr-12 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition"
                   placeholder="••••••••"
                   minLength={6}
                   required
@@ -173,7 +173,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 bg-teal-500 text-white rounded-lg font-medium hover:bg-teal-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              className="w-full py-3 px-4 bg-brand-500 text-white rounded-lg font-medium hover:bg-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
               {loading ? (
                 <span className="flex items-center justify-center">
@@ -192,15 +192,15 @@ export default function SignupPage() {
           {/* Terms */}
           <p className="mt-6 text-center text-xs text-gray-500">
             By creating an account, you agree to our{' '}
-            <Link href="/terms" className="text-teal-400 hover:underline">Terms of Service</Link>
+            <Link href="/terms" className="text-brand-400 hover:underline">Terms of Service</Link>
             {' '}and{' '}
-            <Link href="/privacy" className="text-teal-400 hover:underline">Privacy Policy</Link>
+            <Link href="/privacy" className="text-brand-400 hover:underline">Privacy Policy</Link>
           </p>
 
           {/* Login Link */}
           <p className="mt-4 text-center text-gray-400">
             Already have an account?{' '}
-            <Link href="/auth/login" className="text-teal-400 hover:text-teal-300 font-medium transition">
+            <Link href="/auth/login" className="text-brand-400 hover:text-brand-300 font-medium transition">
               Sign in
             </Link>
           </p>

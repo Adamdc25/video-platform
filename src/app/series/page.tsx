@@ -99,7 +99,7 @@ export default function SeriesPage() {
       <div className="min-h-screen bg-black">
         <Navbar />
         <div className="flex items-center justify-center h-[500px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
         </div>
       </div>
     )
@@ -137,7 +137,7 @@ export default function SeriesPage() {
               </h1>
 
               {/* New Release Label */}
-              <p className="text-teal-400 font-semibold lg:mb-4">New Release</p>
+              <p className="text-brand-400 font-semibold lg:mb-4">New Release</p>
 
               {/* Metadata */}
               <p className="text-gray-300 mb-8">
@@ -147,7 +147,7 @@ export default function SeriesPage() {
               {/* Watch Now Button */}
               <Link
                 href={`/watch/${featuredSeries.videos?.[0]?.slug || ''}`}
-                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
               >
                 <Play className="w-6 h-6 fill-black" />
                 Watch Now
@@ -208,7 +208,7 @@ export default function SeriesPage() {
                           </div>
                           {/* Series Info */}
                           <div className="mt-2">
-                            <p className="text-white font-semibold text-sm line-clamp-2 group-hover:text-teal-400 transition-colors">
+                            <p className="text-white font-semibold text-sm line-clamp-2 group-hover:text-brand-400 transition-colors">
                               {seriesItem.title}
                             </p>
                           </div>
@@ -238,7 +238,7 @@ export default function SeriesPage() {
                                 {seriesItem.videos && seriesItem.videos.length > 0 && (
                                   <Link
                                     href={`/series/${seriesItem.slug}`}
-                                    className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                    className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                                   >
                                     <Play className="w-5 h-5 fill-black" />
                                     View Series

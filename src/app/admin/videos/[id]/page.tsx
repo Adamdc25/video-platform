@@ -410,8 +410,8 @@ export default function EditVideoPage() {
             {trailerUrl ? (
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-teal-100 rounded-lg">
-                    <PlayCircle className="w-6 h-6 text-teal-600" />
+                  <div className="p-2 bg-brand-100 rounded-lg">
+                    <PlayCircle className="w-6 h-6 text-brand-600" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">Trailer uploaded</p>
@@ -419,7 +419,7 @@ export default function EditVideoPage() {
                       href={trailerUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-teal-600 hover:underline"
+                      className="text-sm text-brand-600 hover:underline"
                     >
                       View trailer
                     </a>

@@ -211,7 +211,7 @@ export default function WatchPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -224,7 +224,7 @@ export default function WatchPage() {
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Video Not Found</h1>
             <p className="text-gray-400 mb-6">The video you're looking for doesn't exist or has been removed.</p>
-            <Link href="/" className="text-teal-400 hover:text-teal-300">← Back to Home</Link>
+            <Link href="/" className="text-brand-400 hover:text-brand-300">← Back to Home</Link>
           </div>
         </div>
       </div>
@@ -292,7 +292,7 @@ export default function WatchPage() {
             {/* Watch Now Button */}
             <button
               onClick={handleWatchNow}
-              className="flex items-center gap-2 sm:gap-3 bg-teal-500 hover:bg-teal-400 text-white px-5 sm:px-8 py-2 sm:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg transition-colors mb-4 sm:mb-6"
+              className="flex items-center gap-2 sm:gap-3 bg-brand-500 hover:bg-brand-400 text-white px-5 sm:px-8 py-2 sm:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg transition-colors mb-4 sm:mb-6"
             >
               <Play className="w-4 h-4 sm:w-6 sm:h-6" fill="white" />
               Watch Now
@@ -304,7 +304,7 @@ export default function WatchPage() {
                 onClick={toggleWatchlist}
                 className={`w-9 h-9 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-colors flex-shrink-0 ${
                   inWatchlist
-                    ? 'bg-teal-500 text-white'
+                    ? 'bg-brand-500 text-white'
                     : 'bg-gray-800/80 text-gray-300 hover:bg-gray-700'
                 }`}
                 title={inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
@@ -377,7 +377,7 @@ export default function WatchPage() {
             >
               Episodes
               {activeTab === 'episodes' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-500" />
               )}
             </button>
             <button
@@ -390,7 +390,7 @@ export default function WatchPage() {
             >
               Details
               {activeTab === 'details' && (
-                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-500" />
               )}
             </button>
             {video.trailer_url && (
@@ -404,7 +404,7 @@ export default function WatchPage() {
               >
                 Trailer
                 {activeTab === 'trailer' && (
-                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-teal-500" />
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-500" />
                 )}
               </button>
             )}
@@ -450,7 +450,7 @@ export default function WatchPage() {
                   </div>
                 )}
                 {/* Now Playing Badge */}
-                <div className="absolute top-2 left-2 bg-teal-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                <div className="absolute top-2 left-2 bg-brand-500 text-white text-xs font-semibold px-2 py-1 rounded">
                   Now Playing
                 </div>
               </div>
@@ -491,7 +491,7 @@ export default function WatchPage() {
                     </div>
                   </div>
                 </div>
-                <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1 group-hover:text-brand-400 transition-colors">
                   {episode.season_number ? `S${episode.season_number} ` : ''}{episode.episode_number ? `E${episode.episode_number}. ` : ''}{episode.title}
                 </h3>
                 {episode.description && (

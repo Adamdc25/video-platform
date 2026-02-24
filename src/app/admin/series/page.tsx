@@ -288,7 +288,7 @@ export default function AdminSeriesPage() {
     return (
       <div className="p-8 bg-black min-h-screen">
         <div className="flex items-center justify-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
         </div>
       </div>
     )
@@ -304,7 +304,7 @@ export default function AdminSeriesPage() {
       {/* Series Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {series.map(s => (
-          <div key={s.id} className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden hover:border-teal-500 transition flex flex-col">
+          <div key={s.id} className="bg-gray-900 rounded-lg border border-gray-700 overflow-hidden hover:border-brand-500 transition flex flex-col">
             {/* Image Preview */}
             <div className="relative h-40 bg-gray-800 flex items-center justify-center overflow-hidden flex-shrink-0">
               {s.backdrop_url ? (
@@ -320,7 +320,7 @@ export default function AdminSeriesPage() {
                 </div>
               )}
               {s.featured && (
-                <div className="absolute top-2 right-2 bg-teal-500 text-black px-2 py-1 rounded text-xs font-bold">
+                <div className="absolute top-2 right-2 bg-brand-500 text-black px-2 py-1 rounded text-xs font-bold">
                   FEATURED
                 </div>
               )}
@@ -357,7 +357,7 @@ export default function AdminSeriesPage() {
               <div className="flex gap-2 mt-auto">
                 <button
                   onClick={() => openEdit(s)}
-                  className="flex-1 flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-700 text-white py-2 rounded font-semibold transition text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white py-2 rounded font-semibold transition text-sm"
                 >
                   <Edit2 className="w-4 h-4" />
                   Edit
@@ -379,7 +379,7 @@ export default function AdminSeriesPage() {
       {/* Edit Modal */}
       {editingId && editingData && (
         <div className="fixed inset-0 bg-black/75 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-lg border border-teal-500 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-gray-900 rounded-lg border border-brand-500 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             {/* Header */}
             <div className="sticky top-0 bg-gray-950 border-b border-gray-700 p-6 flex items-center justify-between">
               <div>
@@ -413,7 +413,7 @@ export default function AdminSeriesPage() {
                   value={editingData.title}
                   onChange={e => setEditingData({ ...editingData, title: e.target.value })}
                   placeholder="Enter series name"
-                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
                 />
               </div>
 
@@ -425,7 +425,7 @@ export default function AdminSeriesPage() {
                   onChange={e => setEditingData({ ...editingData, description: e.target.value })}
                   placeholder="Enter series description"
                   rows={3}
-                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 resize-none"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500 resize-none"
                 />
               </div>
 
@@ -438,7 +438,7 @@ export default function AdminSeriesPage() {
                   value={editingData.backdrop_url}
                   onChange={e => setEditingData({ ...editingData, backdrop_url: e.target.value })}
                   placeholder="https://..."
-                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
                 />
                 {editingData.backdrop_url && (
                   <div className="mt-3 border border-gray-700 rounded overflow-hidden h-32">
@@ -461,7 +461,7 @@ export default function AdminSeriesPage() {
                   value={editingData.cover_art_url}
                   onChange={e => setEditingData({ ...editingData, cover_art_url: e.target.value })}
                   placeholder="https://..."
-                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
                 />
                 {editingData.cover_art_url && (
                   <div className="mt-3 border border-gray-700 rounded overflow-hidden h-40 w-32">
@@ -484,7 +484,7 @@ export default function AdminSeriesPage() {
                   value={editingData.trailer_url}
                   onChange={e => setEditingData({ ...editingData, trailer_url: e.target.value })}
                   placeholder="https://..."
-                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm"
+                  className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500 text-sm"
                 />
               </div>
 
@@ -498,7 +498,7 @@ export default function AdminSeriesPage() {
                     <select
                       value={selectedVideoId}
                       onChange={e => setSelectedVideoId(e.target.value)}
-                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded focus:outline-none focus:ring-2 focus:ring-brand-500"
                     >
                       <option value="">Select an episode to add...</option>
                       {allVideos
@@ -515,7 +515,7 @@ export default function AdminSeriesPage() {
                   <button
                     onClick={() => addEpisode(selectedVideoId)}
                     disabled={!selectedVideoId}
-                    className="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded font-semibold transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
                   >
                     <Plus className="w-4 h-4" />
                     Add
@@ -581,7 +581,7 @@ export default function AdminSeriesPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-6 py-2 bg-teal-600 text-white rounded font-semibold hover:bg-teal-700 disabled:opacity-50 transition"
+                className="px-6 py-2 bg-brand-600 text-white rounded font-semibold hover:bg-brand-700 disabled:opacity-50 transition"
               >
                 {saving ? 'Saving...' : 'Save Changes'}
               </button>

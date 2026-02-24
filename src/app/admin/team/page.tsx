@@ -163,7 +163,7 @@ export default function AdminTeamPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -191,7 +191,7 @@ export default function AdminTeamPage() {
         {/* Generate Invite Section */}
         <div className="bg-gray-900 rounded-lg p-6 mb-8">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <UserPlus className="w-5 h-5 text-teal-500" />
+            <UserPlus className="w-5 h-5 text-brand-500" />
             Invite New Admin
           </h2>
 
@@ -205,14 +205,14 @@ export default function AdminTeamPage() {
                 value={newInviteEmail}
                 onChange={(e) => setNewInviteEmail(e.target.value)}
                 placeholder="teammate@example.com"
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-teal-500"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-brand-500"
               />
             </div>
 
             <button
               onClick={generateInviteLink}
               disabled={generating}
-              className="px-6 py-3 bg-teal-500 hover:bg-teal-400 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
+              className="px-6 py-3 bg-brand-500 hover:bg-brand-400 disabled:bg-gray-600 text-white font-semibold rounded-lg transition-colors"
             >
               {generating ? 'Generating...' : 'Generate Invite Link'}
             </button>
@@ -295,7 +295,7 @@ export default function AdminTeamPage() {
         {/* Team Members */}
         <div className="bg-gray-900 rounded-lg p-6">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-            <Users className="w-5 h-5 text-teal-500" />
+            <Users className="w-5 h-5 text-brand-500" />
             Admin Team ({teamMembers.length})
           </h2>
 
@@ -306,8 +306,8 @@ export default function AdminTeamPage() {
                 className="flex items-center justify-between p-4 bg-gray-800 rounded-lg"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-teal-500/20 rounded-full flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-teal-500" />
+                  <div className="w-10 h-10 bg-brand-500/20 rounded-full flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-brand-500" />
                   </div>
                   <div>
                     <p className="text-white font-medium">

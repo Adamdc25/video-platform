@@ -57,7 +57,7 @@ export default function WatchlistPage() {
             <p className="text-gray-400 mb-6">Keep track of videos you want to watch later</p>
             <Link
               href="/auth/login"
-              className="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-400 transition-colors"
+              className="inline-block bg-brand-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-400 transition-colors"
             >
               Sign In
             </Link>
@@ -77,7 +77,7 @@ export default function WatchlistPage() {
 
           {loading ? (
             <div className="flex items-center justify-center h-64">
-              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
             </div>
           ) : videos.length === 0 ? (
             <div className="text-center py-16">
@@ -88,7 +88,7 @@ export default function WatchlistPage() {
               </p>
               <Link
                 href="/"
-                className="inline-block bg-teal-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-400 transition-colors"
+                className="inline-block bg-brand-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-400 transition-colors"
               >
                 Browse Videos
               </Link>

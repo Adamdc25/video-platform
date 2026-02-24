@@ -112,7 +112,7 @@ export default function SeriesDetailPage() {
       <div className="min-h-screen bg-black">
         <Navbar />
         <div className="flex items-center justify-center h-[500px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
         </div>
       </div>
     )
@@ -125,7 +125,7 @@ export default function SeriesDetailPage() {
         <div className="flex items-center justify-center h-[500px]">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-white mb-4">Series not found</h1>
-            <Link href="/series" className="text-teal-400 hover:text-teal-300">
+            <Link href="/series" className="text-brand-400 hover:text-brand-300">
               Back to Series
             </Link>
           </div>
@@ -188,7 +188,7 @@ export default function SeriesDetailPage() {
               <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-8">
                 <Link
                   href="/series"
-                  className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors w-fit text-xs sm:text-sm"
+                  className="inline-flex items-center gap-2 text-white hover:text-brand-400 transition-colors w-fit text-xs sm:text-sm"
                 >
                   <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                   Back to Series
@@ -209,7 +209,7 @@ export default function SeriesDetailPage() {
                   {seriesData.videos && seriesData.videos.length > 0 && (
                     <Link
                       href={`/viewer/${seriesData.videos[0].slug}`}
-                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-xs sm:text-sm md:text-base"
+                      className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-xs sm:text-sm md:text-base"
                     >
                       <Play className="w-4 h-4 sm:w-6 sm:h-6 fill-black" />
                       Watch Now
@@ -295,7 +295,7 @@ export default function SeriesDetailPage() {
                               </p>
                             )}
                           </div>
-                          <h3 className="text-white font-semibold text-xs sm:text-base mb-1 sm:mb-2 group-hover:text-teal-400 transition-colors truncate sm:line-clamp-none">
+                          <h3 className="text-white font-semibold text-xs sm:text-base mb-1 sm:mb-2 group-hover:text-brand-400 transition-colors truncate sm:line-clamp-none">
                             {episode.title}
                           </h3>
                           {episode.description && (
