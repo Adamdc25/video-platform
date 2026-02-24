@@ -9,9 +9,9 @@ interface LogoProps {
 
 export default function Logo({ size = 'md', showText = true }: LogoProps) {
   const sizes = {
-    sm: { icon: 32, text: 'text-sm' },
-    md: { icon: 40, text: 'text-lg' },
-    lg: { icon: 56, text: 'text-2xl' },
+    sm: { icon: 40, text: 'text-sm' },
+    md: { icon: 48, text: 'text-lg' },
+    lg: { icon: 64, text: 'text-2xl' },
   }
 
   const { icon, text } = sizes[size]
@@ -21,7 +21,7 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
       {/* AEON LIBRARY Logo Image */}
       <div className="relative flex-shrink-0" style={{ width: icon, height: icon }}>
         <Image
-          src="https://video-stream-cdn.b-cdn.net/Logos/1.png"
+          src="https://video-stream-cdn.b-cdn.net/Logos/Untitled%20design%20(1).png"
           alt="AEON LIBRARY"
           fill
           className="object-contain"
