@@ -156,7 +156,7 @@ export default function SeriesDetailPage() {
 
       {/* Hero Section - Netflix Style */}
       {seriesData && (
-        <div className="relative h-screen overflow-hidden bg-gray-900">
+        <div className="relative h-screen sm:h-[600px] md:h-screen overflow-hidden bg-gray-900">
           {/* Thumbnail/Backdrop (shows initially, fades to trailer) */}
           {!showTrailer ? (
             <div className="relative w-full h-full">
@@ -171,13 +171,13 @@ export default function SeriesDetailPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
 
-              {/* Play Button Overlay */}
-              <div className="absolute inset-0 flex items-center justify-center">
+              {/* Play Button Overlay (hidden on mobile) */}
+              <div className="hidden sm:flex absolute inset-0 items-center justify-center">
                 <button
                   onClick={() => setShowTrailer(true)}
-                  className="group relative w-20 h-20 flex items-center justify-center bg-white/30 hover:bg-white/50 rounded-full transition-all duration-300 backdrop-blur-sm"
+                  className="group relative w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center bg-white/30 hover:bg-white/50 rounded-full transition-all duration-300 backdrop-blur-sm"
                 >
-                  <Play className="w-8 h-8 text-white fill-white ml-1" />
+                  <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white fill-white ml-1" />
                   <span className="absolute text-xs text-white mt-24 opacity-0 group-hover:opacity-100 transition">
                     Play Trailer
                   </span>
@@ -185,33 +185,33 @@ export default function SeriesDetailPage() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-between p-8">
+              <div className="absolute inset-0 flex flex-col justify-between p-4 sm:p-8">
                 <Link
                   href="/series"
-                  className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors w-fit"
+                  className="inline-flex items-center gap-2 text-white hover:text-teal-400 transition-colors w-fit text-xs sm:text-sm"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                   Back to Series
                 </Link>
 
                 <div className="max-w-2xl">
-                  <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
                     {seriesData.title}
                   </h1>
-                  <p className="text-gray-300 mb-4">
+                  <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-4">
                     2026 · Highly Rated · {Object.keys(episodesBySeason).length} Season · English
                   </p>
                   {seriesData.description && (
-                    <p className="text-gray-300 text-lg mb-8 max-w-xl">
+                    <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg mb-4 sm:mb-8 max-w-xl line-clamp-2 sm:line-clamp-3">
                       {seriesData.description}
                     </p>
                   )}
                   {seriesData.videos && seriesData.videos.length > 0 && (
                     <Link
                       href={`/viewer/${seriesData.videos[0].slug}`}
-                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-5 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-xs sm:text-sm md:text-base"
                     >
-                      <Play className="w-6 h-6 fill-black" />
+                      <Play className="w-4 h-4 sm:w-6 sm:h-6 fill-black" />
                       Watch Now
                     </Link>
                   )}
@@ -257,49 +257,49 @@ export default function SeriesDetailPage() {
       )}
 
       {/* Episodes Section */}
-      <div className="relative bg-black pb-16 pt-8">
+      <div className="relative bg-black pb-12 sm:pb-16 pt-6 sm:pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {seriesData.videos && seriesData.videos.length > 0 ? (
-            <div className="space-y-12">
+            <div className="space-y-8 sm:space-y-12">
               {Object.entries(episodesBySeason).map(([season, episodes]) => (
                 <section key={season}>
-                  <h2 className="text-2xl font-semibold text-white mb-6">
+                  <h2 className="text-lg sm:text-2xl font-semibold text-white mb-4 sm:mb-6">
                     Season {season}
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-2 sm:space-y-4">
                     {episodes.map((episode) => (
                       <Link
                         key={episode.id}
                         href={`/viewer/${episode.slug}`}
-                        className="group flex gap-4 p-4 rounded-lg hover:bg-gray-800/50 transition-colors"
+                        className="group flex gap-2 sm:gap-4 p-2 sm:p-4 rounded-lg hover:bg-gray-800/50 transition-colors"
                       >
-                        <div className="relative w-40 h-24 flex-shrink-0 rounded-lg overflow-hidden">
+                        <div className="relative w-24 h-16 sm:w-40 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
                           <img
                             src={episode.thumbnail_url || ''}
                             alt={episode.title}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                            <Play className="w-8 h-8 text-white fill-white" />
+                          <div className="hidden sm:flex absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors items-center justify-center opacity-0 group-hover:opacity-100">
+                            <Play className="w-6 h-6 sm:w-8 sm:h-8 text-white fill-white" />
                           </div>
                         </div>
 
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between mb-2">
-                            <p className="text-gray-400 text-sm">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2 mb-1 sm:mb-2">
+                            <p className="text-gray-400 text-xs sm:text-sm whitespace-nowrap">
                               Season {episode.season_number} · Episode {episode.episode_number}
                             </p>
                             {episode.duration && (
-                              <p className="text-gray-400 text-sm">
+                              <p className="text-gray-400 text-xs sm:text-sm whitespace-nowrap">
                                 {Math.floor(episode.duration / 60)}m {episode.duration % 60}s
                               </p>
                             )}
                           </div>
-                          <h3 className="text-white font-semibold text-lg mb-2 group-hover:text-teal-400 transition-colors">
+                          <h3 className="text-white font-semibold text-xs sm:text-base mb-1 sm:mb-2 group-hover:text-teal-400 transition-colors truncate sm:line-clamp-none">
                             {episode.title}
                           </h3>
                           {episode.description && (
-                            <p className="text-gray-400 text-sm line-clamp-2">
+                            <p className="text-gray-400 text-xs sm:text-sm line-clamp-2">
                               {episode.description}
                             </p>
                           )}

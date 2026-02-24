@@ -236,9 +236,9 @@ export default function WatchPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <div className="relative pt-16 min-h-[400px]">
+      <div className="relative pt-14 sm:pt-16 min-h-[350px] sm:min-h-[400px]">
         {/* Background - Thumbnail or Trailer Video */}
-        <div className="absolute inset-0 pt-16 overflow-hidden">
+        <div className="absolute inset-0 pt-14 sm:pt-16 overflow-hidden">
           {/* Thumbnail (shows initially, fades out when trailer plays) */}
           {video.thumbnail_url && (
             <img
@@ -275,16 +275,16 @@ export default function WatchPage() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-6">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-12 pb-4 sm:pb-6">
           <div className="max-w-2xl">
             {/* Title */}
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 sm:mb-4">
               {video.title}
             </h1>
 
             {/* Description */}
             {video.description && (
-              <p className="text-gray-300 text-lg mb-6 line-clamp-3">
+              <p className="text-gray-300 text-xs sm:text-sm md:text-base lg:text-lg mb-4 sm:mb-6 line-clamp-2 sm:line-clamp-3">
                 {video.description}
               </p>
             )}
@@ -292,37 +292,37 @@ export default function WatchPage() {
             {/* Watch Now Button */}
             <button
               onClick={handleWatchNow}
-              className="flex items-center gap-3 bg-teal-500 hover:bg-teal-400 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors mb-6"
+              className="flex items-center gap-2 sm:gap-3 bg-teal-500 hover:bg-teal-400 text-white px-5 sm:px-8 py-2 sm:py-4 rounded-lg font-semibold text-sm sm:text-base md:text-lg transition-colors mb-4 sm:mb-6"
             >
-              <Play className="w-6 h-6" fill="white" />
+              <Play className="w-4 h-4 sm:w-6 sm:h-6" fill="white" />
               Watch Now
             </button>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button
                 onClick={toggleWatchlist}
-                className={`w-12 h-12 rounded-lg flex items-center justify-center transition-colors ${
+                className={`w-9 h-9 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center transition-colors flex-shrink-0 ${
                   inWatchlist
                     ? 'bg-teal-500 text-white'
                     : 'bg-gray-800/80 text-gray-300 hover:bg-gray-700'
                 }`}
                 title={inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
               >
-                {inWatchlist ? <Check className="w-6 h-6" /> : <Plus className="w-6 h-6" />}
+                {inWatchlist ? <Check className="w-4 h-4 sm:w-6 sm:h-6" /> : <Plus className="w-4 h-4 sm:w-6 sm:h-6" />}
               </button>
               <button
-                className="w-12 h-12 bg-gray-800/80 text-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+                className="w-9 h-9 sm:w-12 sm:h-12 bg-gray-800/80 text-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors flex-shrink-0"
                 title="Like"
               >
-                <ThumbsUp className="w-6 h-6" />
+                <ThumbsUp className="w-4 h-4 sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={handleShare}
-                className="w-12 h-12 bg-gray-800/80 text-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors"
+                className="w-9 h-9 sm:w-12 sm:h-12 bg-gray-800/80 text-gray-300 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors flex-shrink-0"
                 title="Share"
               >
-                <Share2 className="w-6 h-6" />
+                <Share2 className="w-4 h-4 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
@@ -364,12 +364,12 @@ export default function WatchPage() {
       ) : null}
 
       {/* Tabs */}
-      <div className="border-b border-gray-800">
+      <div className="border-b border-gray-800 overflow-x-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-8">
+          <div className="flex gap-4 sm:gap-8 min-w-min sm:min-w-0">
             <button
               onClick={() => setActiveTab('episodes')}
-              className={`py-4 font-semibold transition-colors relative ${
+              className={`py-3 sm:py-4 font-semibold transition-colors relative text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === 'episodes'
                   ? 'text-white'
                   : 'text-gray-400 hover:text-gray-300'
@@ -382,7 +382,7 @@ export default function WatchPage() {
             </button>
             <button
               onClick={() => setActiveTab('details')}
-              className={`py-4 font-semibold transition-colors relative ${
+              className={`py-3 sm:py-4 font-semibold transition-colors relative text-xs sm:text-sm whitespace-nowrap ${
                 activeTab === 'details'
                   ? 'text-white'
                   : 'text-gray-400 hover:text-gray-300'
@@ -396,7 +396,7 @@ export default function WatchPage() {
             {video.trailer_url && (
               <button
                 onClick={() => setActiveTab('trailer')}
-                className={`py-4 font-semibold transition-colors relative ${
+                className={`py-3 sm:py-4 font-semibold transition-colors relative text-xs sm:text-sm whitespace-nowrap ${
                   activeTab === 'trailer'
                     ? 'text-white'
                     : 'text-gray-400 hover:text-gray-300'
@@ -413,11 +413,11 @@ export default function WatchPage() {
       </div>
 
       {/* Tab Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
         {activeTab === 'trailer' && video.trailer_url ? (
           /* Trailer Tab */
           <div className="max-w-4xl">
-            <h2 className="text-2xl font-bold text-white mb-6">Trailer</h2>
+            <h2 className="text-lg sm:text-2xl font-bold text-white mb-4 sm:mb-6">Trailer</h2>
             <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
               <video
                 src={video.trailer_url}
@@ -428,16 +428,16 @@ export default function WatchPage() {
                 poster={video.thumbnail_url || undefined}
               />
             </div>
-            <p className="text-gray-400 mt-4">
+            <p className="text-gray-400 text-xs sm:text-sm mt-3 sm:mt-4">
               Watch the trailer for {video.title}
             </p>
           </div>
         ) : activeTab === 'episodes' ? (
           /* Episodes Grid */
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
             {/* Current Video Card */}
             <div className="group">
-              <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-3">
+              <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-2 sm:mb-3">
                 {video.thumbnail_url ? (
                   <img
                     src={video.thumbnail_url}
@@ -446,7 +446,7 @@ export default function WatchPage() {
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
-                    <Play className="w-12 h-12 text-gray-600" />
+                    <Play className="w-8 h-8 sm:w-12 sm:h-12 text-gray-600" />
                   </div>
                 )}
                 {/* Now Playing Badge */}
@@ -454,14 +454,14 @@ export default function WatchPage() {
                   Now Playing
                 </div>
               </div>
-              <h3 className="text-white font-semibold mb-1">
+              <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1">
                 {video.episode_number ? `E${video.episode_number}. ` : ''}{video.title}
               </h3>
               {video.description && (
-                <p className="text-gray-400 text-sm line-clamp-2 mb-1">{video.description}</p>
+                <p className="text-gray-400 text-xs sm:text-sm line-clamp-2 mb-0.5 sm:mb-1">{video.description}</p>
               )}
               {video.duration_seconds && (
-                <p className="text-gray-500 text-sm">{formatDuration(video.duration_seconds)}</p>
+                <p className="text-gray-500 text-xs sm:text-sm">{formatDuration(video.duration_seconds)}</p>
               )}
             </div>
 
@@ -472,7 +472,7 @@ export default function WatchPage() {
                 href={`/watch/${episode.slug}`}
                 className="group"
               >
-                <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-3">
+                <div className="relative aspect-video bg-gray-800 rounded-lg overflow-hidden mb-2 sm:mb-3">
                   {episode.thumbnail_url ? (
                     <img
                       src={episode.thumbnail_url}
@@ -481,24 +481,24 @@ export default function WatchPage() {
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center">
-                      <Play className="w-12 h-12 text-gray-600" />
+                      <Play className="w-8 h-8 sm:w-12 sm:h-12 text-gray-600" />
                     </div>
                   )}
-                  {/* Hover Play Button */}
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  {/* Hover Play Button (hidden on mobile) */}
+                  <div className="hidden sm:flex absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity items-center justify-center">
                     <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center">
                       <Play className="w-6 h-6 text-black ml-1" fill="black" />
                     </div>
                   </div>
                 </div>
-                <h3 className="text-white font-semibold mb-1 group-hover:text-teal-400 transition-colors">
+                <h3 className="text-white font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1 group-hover:text-teal-400 transition-colors">
                   {episode.season_number ? `S${episode.season_number} ` : ''}{episode.episode_number ? `E${episode.episode_number}. ` : ''}{episode.title}
                 </h3>
                 {episode.description && (
-                  <p className="text-gray-400 text-sm line-clamp-2 mb-1">{episode.description}</p>
+                  <p className="text-gray-400 text-xs sm:text-sm line-clamp-2 mb-0.5 sm:mb-1">{episode.description}</p>
                 )}
                 {episode.duration_seconds && (
-                  <p className="text-gray-500 text-sm">{formatDuration(episode.duration_seconds)}</p>
+                  <p className="text-gray-500 text-xs sm:text-sm">{formatDuration(episode.duration_seconds)}</p>
                 )}
               </Link>
             ))}
@@ -506,32 +506,32 @@ export default function WatchPage() {
         ) : (
           /* Details Tab */
           <div className="max-w-3xl">
-            <h2 className="text-2xl font-bold text-white mb-4">{video.title}</h2>
+            <h2 className="text-lg sm:text-2xl font-bold text-white mb-3 sm:mb-4">{video.title}</h2>
 
             {video.description && (
-              <div className="mb-6">
-                <h3 className="text-gray-400 font-semibold mb-2">Description</h3>
-                <p className="text-gray-300 whitespace-pre-wrap">{video.description}</p>
+              <div className="mb-4 sm:mb-6">
+                <h3 className="text-gray-400 font-semibold text-xs sm:text-sm mb-2">Description</h3>
+                <p className="text-gray-300 text-xs sm:text-sm whitespace-pre-wrap">{video.description}</p>
               </div>
             )}
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6">
               {video.season_number && (
                 <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Season</h3>
-                  <p className="text-white">{video.season_number}</p>
+                  <h3 className="text-gray-400 font-semibold text-xs sm:text-sm mb-1">Season</h3>
+                  <p className="text-white text-xs sm:text-sm">{video.season_number}</p>
                 </div>
               )}
               {video.episode_number && (
                 <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Episode</h3>
-                  <p className="text-white">{video.episode_number}</p>
+                  <h3 className="text-gray-400 font-semibold text-xs sm:text-sm mb-1">Episode</h3>
+                  <p className="text-white text-xs sm:text-sm">{video.episode_number}</p>
                 </div>
               )}
               {video.duration_seconds && (
                 <div>
-                  <h3 className="text-gray-400 font-semibold mb-1">Duration</h3>
-                  <p className="text-white">{Math.floor(video.duration_seconds / 60)} minutes</p>
+                  <h3 className="text-gray-400 font-semibold text-xs sm:text-sm mb-1">Duration</h3>
+                  <p className="text-white text-xs sm:text-sm">{Math.floor(video.duration_seconds / 60)} minutes</p>
                 </div>
               )}
             </div>
