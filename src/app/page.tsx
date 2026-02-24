@@ -340,7 +340,7 @@ export default function HomePage() {
 
       {/* Top 10 Series (Vertical Layout - Carousel) */}
       {topSeriesByViews.length > 0 && (
-        <div className="relative bg-transparent pb-12 sm:pb-16 pt-0 mt-[-150px] sm:mt-[-300px] z-20">
+        <div className="relative bg-transparent pb-12 sm:pb-16 pt-0 mt-[-50px] sm:mt-[-150px] md:mt-[-300px] z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="mb-6 sm:mb-8">
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Top 10 Series</h2>
