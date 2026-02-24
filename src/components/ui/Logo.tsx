@@ -19,13 +19,12 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
   return (
     <div className="flex items-center gap-3">
       {/* AEON LIBRARY Logo Image */}
-      <div className="relative flex-shrink-0">
+      <div className="relative flex-shrink-0" style={{ width: icon, height: icon }}>
         <Image
           src="https://video-stream-cdn.b-cdn.net/Logos/1.png"
           alt="AEON LIBRARY"
-          width={icon}
-          height={icon}
-          className="w-auto h-auto"
+          fill
+          className="object-contain"
           priority
         />
       </div>
