@@ -1,7 +1,8 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { useParams, useRouter } from 'next/navigation'
+import { useParams } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import VideoPlayer from '@/components/video/VideoPlayer'
 import { ArrowLeft } from 'lucide-react'
@@ -9,7 +10,6 @@ import type { Video, WatchProgress } from '@/types/database'
 
 export default function ViewerPage() {
   const params = useParams()
-  const router = useRouter()
   const slug = params.slug as string
   const videoPlayerRef = useRef<HTMLDivElement>(null)
 
@@ -99,10 +99,6 @@ export default function ViewerPage() {
       }, { onConflict: 'user_id,video_id' })
   }
 
-  const handleBack = () => {
-    router.back()
-  }
-
   if (loading) {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
@@ -116,13 +112,13 @@ export default function ViewerPage() {
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Video Not Found</h1>
-          <button
-            onClick={handleBack}
+          <Link
+            href="/series"
             className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300"
           >
             <ArrowLeft className="w-5 h-5" />
-            Back
-          </button>
+            Back to Series
+          </Link>
         </div>
       </div>
     )
@@ -131,13 +127,13 @@ export default function ViewerPage() {
   return (
     <div className="fixed inset-0 bg-black z-50">
       {/* Back Button */}
-      <button
-        onClick={handleBack}
+      <Link
+        href="/series"
         className="absolute top-4 left-4 z-50 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white px-4 py-2 rounded-lg transition-colors backdrop-blur-sm"
       >
         <ArrowLeft className="w-5 h-5" />
-        Back
-      </button>
+        Back to Series
+      </Link>
 
       {/* Video Player */}
       <div ref={videoPlayerRef} className="w-full h-full">
