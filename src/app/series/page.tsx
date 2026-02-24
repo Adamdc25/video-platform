@@ -124,9 +124,9 @@ export default function SeriesPage() {
           </div>
 
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-br from-gray-800 to-gray-900" />
+          <div className="absolute inset-0 bg-gradient-to-br from-gray-800/30 to-gray-900/50" />
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
 
           {/* Hero Content */}
           <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
