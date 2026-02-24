@@ -211,7 +211,7 @@ export default function HomePage() {
       <div className="min-h-screen bg-black">
         <Navbar />
         <div className="flex items-center justify-center h-[500px]">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
         </div>
         <Footer />
       </div>
@@ -250,7 +250,7 @@ export default function HomePage() {
           <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-16 sm:pt-0">
             {/* Featured Badge */}
             <div className="pt-2 sm:pt-8">
-              <span className="inline-block bg-teal-500 text-black px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
+              <span className="inline-block bg-brand-500 text-black px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
                 Featured Series
               </span>
             </div>
@@ -275,7 +275,7 @@ export default function HomePage() {
               {currentFeatured.videos && currentFeatured.videos.length > 0 && (
                 <Link
                   href={`/watch/${currentFeatured.videos[0].slug}`}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base"
+                  className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base"
                 >
                   <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-black" />
                   Watch Now
@@ -307,7 +307,7 @@ export default function HomePage() {
                     key={index}
                     onClick={() => setCurrentFeaturedIndex(index)}
                     className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${
-                      index === currentFeaturedIndex ? 'bg-teal-500 w-6 sm:w-8' : 'bg-white/50'
+                      index === currentFeaturedIndex ? 'bg-brand-500 w-6 sm:w-8' : 'bg-white/50'
                     }`}
                   />
                 ))}
@@ -321,7 +321,7 @@ export default function HomePage() {
                     onClick={() => setCurrentFeaturedIndex(index)}
                     className={`relative overflow-hidden rounded-lg transition-all duration-300 ${
                       index === currentFeaturedIndex
-                        ? 'w-24 h-14 ring-2 ring-teal-500'
+                        ? 'w-24 h-14 ring-2 ring-brand-500'
                         : 'w-20 h-11 opacity-70 hover:opacity-100'
                     }`}
                   >
@@ -370,13 +370,13 @@ export default function HomePage() {
                       </div>
 
                       {/* Rank Badge */}
-                      <div className="absolute top-2 left-2 bg-teal-500 text-black px-3 py-1 rounded-full text-lg font-bold">
+                      <div className="absolute top-2 left-2 bg-brand-500 text-black px-3 py-1 rounded-full text-lg font-bold">
                         #{topSeriesCarouselIndex + index + 1}
                       </div>
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm mt-1 sm:mt-2">
+                    <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-1 text-xs sm:text-sm mt-1 sm:mt-2">
                       {series.title}
                     </h3>
 
@@ -404,7 +404,7 @@ export default function HomePage() {
                             {series.videos && series.videos.length > 0 && (
                               <Link
                                 href={`/series/${series.slug}`}
-                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                               >
                                 <Play className="w-5 h-5 fill-black" />
                                 Watch Now
@@ -477,7 +477,7 @@ export default function HomePage() {
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm">
+                    <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-1 text-xs sm:text-sm">
                       {series.title}
                     </h3>
 
@@ -505,7 +505,7 @@ export default function HomePage() {
                             {series.videos && series.videos.length > 0 && (
                               <Link
                                 href={`/series/${series.slug}`}
-                                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                               >
                                 <Play className="w-5 h-5 fill-black" />
                                 Watch Now
@@ -551,7 +551,7 @@ export default function HomePage() {
                           </div>
 
                           {/* Series Info */}
-                          <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm">
+                          <h3 className="font-semibold text-white group-hover:text-brand-400 transition-colors line-clamp-1 text-xs sm:text-sm">
                             {series.title}
                           </h3>
 
@@ -579,7 +579,7 @@ export default function HomePage() {
                                   {series.videos && series.videos.length > 0 && (
                                     <Link
                                       href={`/series/${series.slug}`}
-                                      className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
+                                      className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors w-full justify-center"
                                     >
                                       <Play className="w-5 h-5 fill-black" />
                                       Watch Now

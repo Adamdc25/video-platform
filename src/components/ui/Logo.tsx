@@ -16,11 +16,11 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
 
   return (
     <div className="flex items-center gap-3">
-      {/* TMJ-style Logo Icon */}
+      {/* AEON LIBRARY Logo Icon */}
       <div className="relative" style={{ width: icon, height: icon }}>
         {/* Glow effect */}
         <div
-          className="absolute inset-0 bg-teal-400/30 rounded-lg blur-md"
+          className="absolute inset-0 bg-brand-400/30 rounded-lg blur-md"
           style={{ transform: 'scale(1.2)' }}
         />
 
@@ -34,8 +34,8 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
           {/* Background with gradient */}
           <defs>
             <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2DD4BF" />
-              <stop offset="100%" stopColor="#0D9488" />
+              <stop offset="0%" stopColor="#49BBA6" />
+              <stop offset="100%" stopColor="#2b6964" />
             </linearGradient>
             <filter id="glow">
               <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
@@ -84,14 +84,14 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
           {/* Accent line */}
           <path
             d="M32 14H38"
-            stroke="#2DD4BF"
+            stroke="#49BBA6"
             strokeWidth="2"
             strokeLinecap="round"
             opacity="0.6"
           />
           <path
             d="M35 11V17"
-            stroke="#2DD4BF"
+            stroke="#49BBA6"
             strokeWidth="2"
             strokeLinecap="round"
             opacity="0.6"
@@ -102,8 +102,8 @@ export default function Logo({ size = 'md', showText = true }: LogoProps) {
       {/* Text */}
       {showText && (
         <div className={`font-semibold ${text}`}>
-          <span className="text-white">DISCOVER</span>
-          <span className="text-teal-400 ml-1">TMJ</span>
+          <span className="text-white">AEON</span>
+          <span className="text-brand-400 ml-1">LIBRARY</span>
         </div>
       )}
     </div>

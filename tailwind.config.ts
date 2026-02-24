@@ -9,7 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Custom brand colors - update these to match your brand
+        // Custom brand colors - updated to match new brand
+        brand: {
+          50: '#e8faf7',
+          100: '#d1f5f0',
+          200: '#a3eae1',
+          300: '#75dfd2',
+          400: '#49BBA6',
+          500: '#49BBA6',
+          600: '#3a9285',
+          700: '#2b6964',
+          800: '#1c4043',
+          900: '#0d2122',
+        },
         primary: {
           50: '#eff6ff',
           100: '#dbeafe',

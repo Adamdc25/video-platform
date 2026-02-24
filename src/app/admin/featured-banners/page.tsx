@@ -171,7 +171,7 @@ export default function FeaturedBannersPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -186,7 +186,7 @@ export default function FeaturedBannersPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <h1 className="text-3xl font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-8 h-8 text-teal-500" />
+              <Sparkles className="w-8 h-8 text-brand-500" />
               Home Page Banners
             </h1>
           </div>
@@ -248,7 +248,7 @@ export default function FeaturedBannersPage() {
                           const series = allSeries.find(s => s.id === e.target.value)
                           if (series) handleSelectSeries(slotIndex, series)
                         }}
-                        className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-teal-500 focus:outline-none"
+                        className="w-full px-3 py-2 bg-gray-700 text-white rounded border border-gray-600 focus:border-brand-500 focus:outline-none"
                       >
                         <option value="">Select a series...</option>
                         {allSeries.map(series => (
@@ -269,7 +269,7 @@ export default function FeaturedBannersPage() {
                     value={bannerImages[slotIndex] || ''}
                     onChange={(e) => handleImageUrlChange(slotIndex, e.target.value)}
                     disabled={!featuredBanners[slotIndex]}
-                    className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded border border-gray-600 focus:border-teal-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded border border-gray-600 focus:border-brand-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   />
                   <p className="text-gray-500 text-xs mt-1">From Bunny CDN or other sources</p>
                 </div>
@@ -305,7 +305,7 @@ export default function FeaturedBannersPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 px-6 py-3 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors"
+            className="flex-1 px-6 py-3 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <Save className="w-5 h-5" />
             <span>{saving ? 'Saving...' : 'Save Banners'}</span>

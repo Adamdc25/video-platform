@@ -116,7 +116,7 @@ export default function HeroImagesManagementPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -131,7 +131,7 @@ export default function HeroImagesManagementPage() {
               <ArrowLeft className="w-5 h-5" />
             </Link>
             <h1 className="text-3xl font-bold text-white flex items-center gap-2">
-              <ImageIcon className="w-8 h-8 text-teal-500" />
+              <ImageIcon className="w-8 h-8 text-brand-500" />
               Hero Image Management
             </h1>
           </div>
@@ -150,7 +150,7 @@ export default function HeroImagesManagementPage() {
               placeholder="Search series..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-teal-500 focus:outline-none"
+              className="w-full pl-10 pr-4 py-2 bg-gray-800 text-white rounded-lg border border-gray-700 focus:border-brand-500 focus:outline-none"
             />
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function HeroImagesManagementPage() {
                     placeholder="Paste hero image URL..."
                     value={heroImages[series.id] || ''}
                     onChange={(e) => handleUrlChange(series.id, e.target.value)}
-                    className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded border border-gray-600 focus:border-teal-500 focus:outline-none"
+                    className="w-full px-3 py-2 bg-gray-700 text-white text-sm rounded border border-gray-600 focus:border-brand-500 focus:outline-none"
                   />
                   <p className="text-gray-500 text-xs mt-1">From Bunny CDN or other sources</p>
                 </div>
@@ -226,7 +226,7 @@ export default function HeroImagesManagementPage() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex-1 px-6 py-3 bg-teal-600 hover:bg-teal-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors"
+            className="flex-1 px-6 py-3 bg-brand-600 hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <Save className="w-5 h-5" />
             <span>{saving ? 'Saving...' : 'Save All Changes'}</span>

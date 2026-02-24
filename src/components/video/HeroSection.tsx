@@ -99,7 +99,7 @@ export default function HeroSection({ video, userId, inWatchlist: initialInWatch
             <button
               onClick={toggleWatchlist}
               disabled={isLoading}
-              className="w-12 h-12 bg-teal-500 hover:bg-teal-400 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
+              className="w-12 h-12 bg-brand-500 hover:bg-brand-400 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
               title={inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
             >
               {inWatchlist ? (

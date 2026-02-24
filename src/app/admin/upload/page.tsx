@@ -311,8 +311,8 @@ export default function UploadVideoPage() {
             ) : (
               <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center">
-                  <div className="p-2 bg-teal-100 rounded-lg mr-4">
-                    <PlayCircle className="w-6 h-6 text-teal-600" />
+                  <div className="p-2 bg-brand-100 rounded-lg mr-4">
+                    <PlayCircle className="w-6 h-6 text-brand-600" />
                   </div>
                   <div>
                     <p className="font-medium text-gray-900">{trailerFile.name}</p>

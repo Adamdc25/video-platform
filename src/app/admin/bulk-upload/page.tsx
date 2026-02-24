@@ -224,7 +224,7 @@ export default function BulkUploadPage() {
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <Link href="/admin" className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 mb-4">
+          <Link href="/admin" className="inline-flex items-center gap-2 text-brand-400 hover:text-brand-300 mb-4">
             <ArrowLeft className="w-4 h-4" />
             Back to Admin
           </Link>
@@ -235,7 +235,7 @@ export default function BulkUploadPage() {
         {/* Upload Section */}
         <div className="bg-gray-900 rounded-lg border border-gray-800 p-8 mb-8">
           <div className="flex items-center gap-4 mb-4">
-            <FileSpreadsheet className="w-8 h-8 text-teal-500" />
+            <FileSpreadsheet className="w-8 h-8 text-brand-500" />
             <div>
               <h2 className="text-xl font-semibold text-white">CSV File Upload</h2>
               <p className="text-sm text-gray-400">Upload a CSV file with video data, series info, and asset URLs</p>
@@ -254,7 +254,7 @@ export default function BulkUploadPage() {
             <div className="flex gap-4">
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-black px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 <Upload className="w-5 h-5" />
                 Choose CSV File
@@ -289,7 +289,7 @@ export default function BulkUploadPage() {
                     <div>
                       <h3 className="font-semibold text-white">{row.title}</h3>
                       {row.series_name && (
-                        <p className="text-sm text-teal-400">Series: {row.series_name}</p>
+                        <p className="text-sm text-brand-400">Series: {row.series_name}</p>
                       )}
                     </div>
                     <div className="flex items-center gap-2">
@@ -310,7 +310,7 @@ export default function BulkUploadPage() {
             <button
               onClick={importCSVData}
               disabled={importing || importComplete}
-              className="w-full bg-teal-500 hover:bg-teal-600 disabled:bg-gray-700 text-black disabled:text-gray-400 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              className="w-full bg-brand-500 hover:bg-brand-600 disabled:bg-gray-700 text-black disabled:text-gray-400 px-6 py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
             >
               {importing ? (
                 <>

@@ -143,7 +143,7 @@ export default function Top10ManagementPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-teal-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-500"></div>
       </div>
     )
   }
@@ -196,7 +196,7 @@ export default function Top10ManagementPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="flex items-center gap-2 bg-teal-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-teal-400 disabled:opacity-50 transition"
+                className="flex items-center gap-2 bg-brand-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-400 disabled:opacity-50 transition"
               >
                 <Save className="w-5 h-5" />
                 {saving ? 'Saving...' : 'Save Top 10'}
@@ -230,7 +230,7 @@ export default function Top10ManagementPage() {
                       <select
                         value={series?.id || ''}
                         onChange={(e) => handleSelectSeries(index, e.target.value)}
-                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                       >
                         <option value="">-- Select a series --</option>
                         {getAvailableSeries(index).map((s) => (
@@ -254,7 +254,7 @@ export default function Top10ManagementPage() {
                         placeholder="https://example.com/image.jpg"
                         value={thumbnailUrls[index] || ''}
                         onChange={(e) => handleThumbnailUrlChange(index, e.target.value)}
-                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-teal-500 placeholder-gray-600"
+                        className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 placeholder-gray-600"
                       />
                     </div>
 

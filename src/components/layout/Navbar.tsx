@@ -52,7 +52,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center flex-shrink-0">
             <Logo size="md" showText={false} />
             <span className="text-white font-semibold text-xs sm:text-sm md:text-lg ml-1 sm:ml-2 hidden sm:block">
-              DISCOVER<span className="text-teal-400 ml-1">TMJ</span>
+              DISCOVER<span className="text-brand-400 ml-1">TMJ</span>
             </span>
           </Link>
 
@@ -86,7 +86,7 @@ export default function Navbar() {
               <>
                 <button
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="w-9 h-9 sm:w-10 sm:h-10 bg-teal-500 rounded-full flex items-center justify-center hover:bg-teal-400 transition-colors"
+                  className="w-9 h-9 sm:w-10 sm:h-10 bg-brand-500 rounded-full flex items-center justify-center hover:bg-brand-400 transition-colors"
                   aria-label="User menu"
                 >
                   <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -97,7 +97,7 @@ export default function Navbar() {
                     <div className="px-3 sm:px-4 py-2 border-b border-gray-800">
                       <p className="text-xs sm:text-sm text-white truncate">{user.email}</p>
                       {isAdmin && (
-                        <span className="text-xs text-teal-400">Admin</span>
+                        <span className="text-xs text-brand-400">Admin</span>
                       )}
                     </div>
 
@@ -125,7 +125,7 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/auth/login"
-                className="w-9 h-9 sm:w-10 sm:h-10 bg-teal-500 rounded-full flex items-center justify-center hover:bg-teal-400 transition-colors"
+                className="w-9 h-9 sm:w-10 sm:h-10 bg-brand-500 rounded-full flex items-center justify-center hover:bg-brand-400 transition-colors"
                 aria-label="Login"
               >
                 <User className="w-4 h-4 sm:w-5 sm:h-5 text-white" />

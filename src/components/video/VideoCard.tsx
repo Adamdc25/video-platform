@@ -44,7 +44,7 @@ export default function VideoCard({ video, showDescription = true, priority = fa
       </div>
 
       {/* Title */}
-      <h3 className="text-white font-medium text-sm mb-1 line-clamp-1 group-hover:text-teal-400 transition-colors">
+      <h3 className="text-white font-medium text-sm mb-1 line-clamp-1 group-hover:text-brand-400 transition-colors">
         {video.title}
       </h3>
 
