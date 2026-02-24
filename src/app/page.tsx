@@ -349,8 +349,9 @@ export default function HomePage() {
             <div className="relative">
               <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 2).map((series, index) => (
-                  <div
+                  <Link
                     key={series.id}
+                    href={`/series/${series.slug}`}
                     onMouseEnter={() => setHoveredTopSeriesId(series.id)}
                     onMouseLeave={() => setHoveredTopSeriesId(null)}
                     className="group cursor-pointer relative"
@@ -413,7 +414,7 @@ export default function HomePage() {
                         </div>
                       </div>
                     )}
-                  </div>
+                  </Link>
                 ))}
               </div>
 
