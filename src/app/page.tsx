@@ -198,12 +198,12 @@ export default function HomePage() {
   }
 
   const handlePrevTopSeries = () => {
-    setTopSeriesCarouselIndex(prev => Math.max(0, prev - 5))
+    setTopSeriesCarouselIndex(prev => Math.max(0, prev - 1))
   }
 
   const handleNextTopSeries = () => {
-    const maxIndex = Math.max(0, topSeriesByViews.length - 5)
-    setTopSeriesCarouselIndex(prev => Math.min(maxIndex, prev + 5))
+    const maxIndex = Math.max(0, topSeriesByViews.length - 2)
+    setTopSeriesCarouselIndex(prev => Math.min(maxIndex, prev + 1))
   }
 
   if (loading) {
@@ -347,8 +347,8 @@ export default function HomePage() {
             </div>
 
             <div className="relative">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
-                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 5).map((series, index) => (
+              <div className="grid grid-cols-2 gap-3 sm:gap-6">
+                {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 2).map((series, index) => (
                   <div
                     key={series.id}
                     onMouseEnter={() => setHoveredTopSeriesId(series.id)}
@@ -421,18 +421,18 @@ export default function HomePage() {
               {topSeriesCarouselIndex > 0 && (
                 <button
                   onClick={handlePrevTopSeries}
-                  className="absolute -left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                  className="absolute -left-3 sm:-left-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-10"
                 >
-                  <ChevronLeft className="w-6 h-6" />
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               )}
 
-              {topSeriesCarouselIndex < topSeriesByViews.length - 5 && (
+              {topSeriesCarouselIndex < topSeriesByViews.length - 2 && (
                 <button
                   onClick={handleNextTopSeries}
-                  className="absolute -right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors"
+                  className="absolute -right-3 sm:-right-6 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-colors z-10"
                 >
-                  <ChevronRight className="w-6 h-6" />
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
                 </button>
               )}
             </div>
