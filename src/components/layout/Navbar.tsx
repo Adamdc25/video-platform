@@ -52,7 +52,7 @@ export default function Navbar() {
           <Link href="/" className="flex items-center flex-shrink-0">
             <Logo size="md" showText={false} />
             <span className="text-white font-semibold text-xs sm:text-sm md:text-lg ml-1 sm:ml-2 hidden sm:block">
-              DISCOVER<span className="text-brand-400 ml-1">TMJ</span>
+              AEON<span className="text-brand-400 ml-1">LIBRARY</span>
             </span>
           </Link>
 
