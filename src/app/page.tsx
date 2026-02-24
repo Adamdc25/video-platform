@@ -227,7 +227,7 @@ export default function HomePage() {
 
       {/* Featured Carousel */}
       {featuredSeries.length > 0 && currentFeatured && (
-        <div className="relative h-screen overflow-hidden group">
+        <div className="relative h-screen sm:h-[600px] md:h-screen overflow-hidden group">
           {/* Background Image */}
           <div className="absolute inset-0">
             <img
@@ -247,26 +247,26 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/30 to-transparent" />
 
           {/* Hero Content */}
-          <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between">
+          <div className="relative h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-16 sm:pt-0">
             {/* Featured Badge */}
-            <div className="pt-8">
-              <span className="inline-block bg-teal-500 text-black px-4 py-2 rounded-full text-sm font-semibold">
+            <div className="pt-2 sm:pt-8">
+              <span className="inline-block bg-teal-500 text-black px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-semibold">
                 Featured Series
               </span>
             </div>
 
             {/* Series Title and Info */}
-            <div className="max-w-2xl pb-80">
-              <h1 className="text-5xl md:text-6xl font-bold text-white mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
+            <div className="max-w-2xl pb-20 sm:pb-40 md:pb-80">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 sm:mb-4 italic" style={{ fontFamily: 'Georgia, serif' }}>
                 {currentFeatured.title}
               </h1>
 
-              <p className="text-gray-300 mb-4">
+              <p className="text-gray-300 text-xs sm:text-sm mb-2 sm:mb-4">
                 2026 · Highly Rated
               </p>
 
               {currentFeatured.description && (
-                <p className="text-gray-300 text-lg mb-8 max-w-xl">
+                <p className="text-gray-300 text-sm sm:text-base md:text-lg mb-4 sm:mb-8 max-w-xl line-clamp-2 sm:line-clamp-3">
                   {currentFeatured.description}
                 </p>
               )}
@@ -275,9 +275,9 @@ export default function HomePage() {
               {currentFeatured.videos && currentFeatured.videos.length > 0 && (
                 <Link
                   href={`/watch/${currentFeatured.videos[0].slug}`}
-                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-8 py-3 rounded-lg font-semibold transition-colors"
+                  className="inline-flex items-center gap-2 bg-teal-500 hover:bg-teal-600 text-black px-6 sm:px-8 py-2 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base"
                 >
-                  <Play className="w-6 h-6 fill-black" />
+                  <Play className="w-5 h-5 sm:w-6 sm:h-6 fill-black" />
                   Watch Now
                 </Link>
               )}
@@ -289,32 +289,32 @@ export default function HomePage() {
             <>
               <button
                 onClick={handlePrevFeatured}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition-colors z-10"
+                className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 sm:p-3 rounded-full transition-colors z-10"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               <button
                 onClick={handleNextFeatured}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-3 rounded-full transition-colors z-10"
+                className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/80 text-white p-2 sm:p-3 rounded-full transition-colors z-10"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
 
               {/* Carousel Indicators */}
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-1 sm:gap-2 z-10">
                 {featuredSeries.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentFeaturedIndex(index)}
-                    className={`w-2 h-2 rounded-full transition-all ${
-                      index === currentFeaturedIndex ? 'bg-teal-500 w-8' : 'bg-white/50'
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${
+                      index === currentFeaturedIndex ? 'bg-teal-500 w-6 sm:w-8' : 'bg-white/50'
                     }`}
                   />
                 ))}
               </div>
 
-              {/* Thumbnail Carousel - Bottom Right */}
-              <div className="absolute bottom-64 right-8 flex flex-nowrap gap-2 z-20 w-max">
+              {/* Thumbnail Carousel - Bottom Right (hidden on mobile, shown on sm+) */}
+              <div className="hidden sm:flex absolute bottom-40 sm:bottom-32 md:bottom-64 right-4 sm:right-8 flex-nowrap gap-2 z-20 w-max">
                 {featuredSeries.map((series, index) => (
                   <button
                     key={series.id}
@@ -340,14 +340,14 @@ export default function HomePage() {
 
       {/* Top 10 Series (Vertical Layout - Carousel) */}
       {topSeriesByViews.length > 0 && (
-        <div className="relative bg-transparent pb-16 pt-0 mt-[-300px] z-20">
+        <div className="relative bg-transparent pb-12 sm:pb-16 pt-0 mt-[-150px] sm:mt-[-300px] z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="mb-8">
-              <h2 className="text-3xl font-bold text-white mb-2">Top 10 Series</h2>
+            <div className="mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">Top 10 Series</h2>
             </div>
 
             <div className="relative">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
                 {topSeriesByViews.slice(topSeriesCarouselIndex, topSeriesCarouselIndex + 5).map((series, index) => (
                   <div
                     key={series.id}
@@ -375,13 +375,13 @@ export default function HomePage() {
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm mt-2">
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm mt-1 sm:mt-2">
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card */}
+                    {/* Hover Preview Card (hidden on mobile) */}
                     {hoveredTopSeriesId === series.id && (
-                      <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
                         <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
@@ -441,17 +441,17 @@ export default function HomePage() {
       )}
 
       {/* All Series Grid (Horizontal Layout) */}
-      <div className="relative bg-black pb-4 pt-4">
+      <div className="relative bg-black pb-4 pt-4 sm:pb-8 sm:pt-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-8">
-            <h2 className="text-3xl font-bold text-white mb-2">All Series</h2>
-            <p className="text-gray-400">Browse all available series and episodes</p>
+          <div className="mb-6 sm:mb-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2">All Series</h2>
+            <p className="text-gray-400 text-xs sm:text-sm">Browse all available series and episodes</p>
           </div>
 
           {allSeries.length > 0 ? (
             <>
               {/* Main Grid - First 12 Series */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 mb-12">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
                 {allSeries.slice(0, 12).map(series => (
                   <div
                     key={series.id}
@@ -459,7 +459,7 @@ export default function HomePage() {
                     onMouseLeave={() => setHoveredAllSeriesId(null)}
                     className="group cursor-pointer relative"
                   >
-                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
+                    <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-2 sm:mb-3">
                       {/* Series Cover/Thumbnail */}
                       <img
                         src={series.cover_art_url || series.thumbnail_url || ''}
@@ -467,20 +467,20 @@ export default function HomePage() {
                         className="w-full h-full object-contain transition-transform duration-300"
                       />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      {/* Overlay (hidden on mobile) */}
+                      <div className="hidden sm:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                         <Play className="w-12 h-12 text-white fill-white" />
                       </div>
                     </div>
 
                     {/* Series Info */}
-                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
+                    <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm">
                       {series.title}
                     </h3>
 
-                    {/* Hover Preview Card */}
+                    {/* Hover Preview Card (hidden on mobile) */}
                     {hoveredAllSeriesId === series.id && (
-                      <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                      <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
                         <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
@@ -519,12 +519,12 @@ export default function HomePage() {
               {/* Carousel for remaining series (13+) */}
               {allSeries.length > 12 && (
                 <div>
-                  <div className="mb-6">
-                    <h3 className="text-2xl font-bold text-white mb-2">More Series</h3>
+                  <div className="mb-4 sm:mb-6">
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">More Series</h3>
                   </div>
 
                   <div className="relative">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-6">
                       {allSeries.slice(12 + allSeriesCarouselIndex, 12 + allSeriesCarouselIndex + 4).map(series => (
                         <div
                           key={series.id}
@@ -532,7 +532,7 @@ export default function HomePage() {
                           onMouseLeave={() => setHoveredMoreSeriesId(null)}
                           className="group cursor-pointer relative"
                         >
-                          <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-3">
+                          <div className="relative overflow-hidden rounded-lg bg-gray-900 aspect-video mb-2 sm:mb-3">
                             {/* Series Cover/Thumbnail */}
                             <img
                               src={series.cover_art_url || series.thumbnail_url || ''}
@@ -540,20 +540,20 @@ export default function HomePage() {
                               className="w-full h-full object-contain transition-transform duration-300"
                             />
 
-                            {/* Overlay */}
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                            {/* Overlay (hidden on mobile) */}
+                            <div className="hidden sm:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
                               <Play className="w-12 h-12 text-white fill-white" />
                             </div>
                           </div>
 
                           {/* Series Info */}
-                          <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-sm">
+                          <h3 className="font-semibold text-white group-hover:text-teal-400 transition-colors line-clamp-1 text-xs sm:text-sm">
                             {series.title}
                           </h3>
 
-                          {/* Hover Preview Card */}
+                          {/* Hover Preview Card (hidden on mobile) */}
                           {hoveredMoreSeriesId === series.id && (
-                            <div className="absolute -top-2 -left-32 z-50 pointer-events-auto">
+                            <div className="hidden lg:block absolute -top-2 -left-32 z-50 pointer-events-auto">
                               <div className="bg-gray-900 rounded-lg overflow-hidden w-96 shadow-2xl">
                                 {/* Preview Image */}
                                 <div className="relative h-54 bg-gray-800">
