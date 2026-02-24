@@ -1,15 +1,16 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import VideoPlayer from '@/components/video/VideoPlayer'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, Play } from 'lucide-react'
 import type { Video, WatchProgress } from '@/types/database'
 
 export default function ViewerPage() {
   const params = useParams()
+  const router = useRouter()
   const slug = params.slug as string
   const videoPlayerRef = useRef<HTMLDivElement>(null)
 
@@ -17,6 +18,10 @@ export default function ViewerPage() {
   const [watchProgress, setWatchProgress] = useState<WatchProgress | null>(null)
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState<any>(null)
+  const [seriesSlug, setSeriesSlug] = useState<string>('')
+  const [seriesEpisodes, setSeriesEpisodes] = useState<Video[]>([])
+  const [videoEnded, setVideoEnded] = useState(false)
+  const [nextEpisode, setNextEpisode] = useState<Video | null>(null)
 
   const supabase = createClient()
 
@@ -38,6 +43,34 @@ export default function ViewerPage() {
       }
 
       setVideo(videoData)
+
+      // Fetch series information
+      const { data: seriesData } = await supabase
+        .from('series')
+        .select('slug, videos (id, title, slug, episode_number, season_number, is_published)')
+        .eq('id', videoData.series_id)
+        .single()
+
+      if (seriesData) {
+        setSeriesSlug(seriesData.slug)
+
+        // Sort episodes and filter published ones
+        const episodes = (seriesData.videos as Video[])
+          .filter(ep => ep.is_published)
+          .sort(
+            (a, b) =>
+              (a.season_number || 0) - (b.season_number || 0) ||
+              (a.episode_number || 0) - (b.episode_number || 0)
+          )
+
+        setSeriesEpisodes(episodes)
+
+        // Find next episode
+        const currentIndex = episodes.findIndex(ep => ep.id === videoData.id)
+        if (currentIndex !== -1 && currentIndex < episodes.length - 1) {
+          setNextEpisode(episodes[currentIndex + 1])
+        }
+      }
 
       // Update basic view count
       await supabase
@@ -97,6 +130,8 @@ export default function ViewerPage() {
         completed: true,
         last_watched: new Date().toISOString(),
       }, { onConflict: 'user_id,video_id' })
+
+    setVideoEnded(true)
   }
 
   if (loading) {
@@ -113,7 +148,7 @@ export default function ViewerPage() {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-white mb-4">Video Not Found</h1>
           <Link
-            href="/series"
+            href={seriesSlug ? `/series/${seriesSlug}` : '/series'}
             className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -128,7 +163,7 @@ export default function ViewerPage() {
     <div className="fixed inset-0 bg-black z-50">
       {/* Back Button */}
       <Link
-        href="/series"
+        href={seriesSlug ? `/series/${seriesSlug}` : '/series'}
         className="absolute top-4 left-4 z-50 flex items-center gap-2 bg-black/60 hover:bg-black/80 text-white px-4 py-2 rounded-lg transition-colors backdrop-blur-sm"
       >
         <ArrowLeft className="w-5 h-5" />
@@ -146,6 +181,23 @@ export default function ViewerPage() {
           onEnded={handleVideoEnded}
         />
       </div>
+
+      {/* Play Next Episode Overlay */}
+      {videoEnded && nextEpisode && (
+        <div className="absolute inset-0 bg-black/60 flex items-center justify-center z-50">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-2">Episode Complete!</h2>
+            <p className="text-gray-300 mb-8">Playing next episode in a moment...</p>
+            <Link
+              href={`/viewer/${nextEpisode.slug}`}
+              className="inline-flex items-center gap-3 bg-teal-500 hover:bg-teal-600 text-black px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+            >
+              <Play className="w-6 h-6 fill-black" />
+              Play Next Episode
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
