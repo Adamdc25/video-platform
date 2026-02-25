@@ -364,15 +364,15 @@ export default function HomePage() {
                         className="w-full h-full object-contain transition-transform duration-300"
                       />
 
-                      {/* Overlay */}
-                      <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                        <Play className="w-12 h-12 text-white fill-white" />
-                      </div>
-
                       {/* Rank Badge */}
                       <div className="absolute top-2 left-2 bg-brand-500 text-black px-3 py-1 rounded-full text-lg font-bold">
                         #{topSeriesCarouselIndex + index + 1}
                       </div>
+                    </div>
+
+                    {/* Overlay - positioned outside overflow-hidden container */}
+                    <div className="absolute top-0 left-0 right-0 aspect-[9/16] rounded-lg bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                      <Play className="w-12 h-12 text-white fill-white" />
                     </div>
 
                     {/* Series Info */}
@@ -382,7 +382,7 @@ export default function HomePage() {
 
                     {/* Hover Preview Card */}
                     {hoveredTopSeriesId === series.id && (
-                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                      <div className="absolute left-0 -top-2 z-50 pointer-events-auto w-full sm:w-96">
                         <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
@@ -469,11 +469,11 @@ export default function HomePage() {
                         alt={series.title}
                         className="w-full h-full object-contain transition-transform duration-300"
                       />
+                    </div>
 
-                      {/* Overlay (hidden on mobile) */}
-                      <div className="hidden sm:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
-                        <Play className="w-12 h-12 text-white fill-white" />
-                      </div>
+                    {/* Overlay (hidden on mobile) - positioned outside overflow-hidden container */}
+                    <div className="hidden sm:flex absolute top-0 left-0 right-0 aspect-video rounded-lg bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center pointer-events-none">
+                      <Play className="w-12 h-12 text-white fill-white" />
                     </div>
 
                     {/* Series Info */}
@@ -483,7 +483,7 @@ export default function HomePage() {
 
                     {/* Hover Preview Card */}
                     {hoveredAllSeriesId === series.id && (
-                      <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                      <div className="absolute left-0 -top-2 z-50 pointer-events-auto w-full sm:w-96">
                         <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                           {/* Preview Image */}
                           <div className="relative h-54 bg-gray-800">
@@ -543,11 +543,11 @@ export default function HomePage() {
                               alt={series.title}
                               className="w-full h-full object-contain transition-transform duration-300"
                             />
+                          </div>
 
-                            {/* Overlay (hidden on mobile) */}
-                            <div className="hidden sm:flex absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center">
-                              <Play className="w-12 h-12 text-white fill-white" />
-                            </div>
+                          {/* Overlay (hidden on mobile) - positioned outside overflow-hidden container */}
+                          <div className="hidden sm:flex absolute top-0 left-0 right-0 aspect-video rounded-lg bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 items-center justify-center pointer-events-none">
+                            <Play className="w-12 h-12 text-white fill-white" />
                           </div>
 
                           {/* Series Info */}
@@ -557,7 +557,7 @@ export default function HomePage() {
 
                           {/* Hover Preview Card */}
                           {hoveredMoreSeriesId === series.id && (
-                            <div className="absolute left-0 sm:-left-32 -top-2 z-50 pointer-events-auto w-full sm:w-96">
+                            <div className="absolute left-0 -top-2 z-50 pointer-events-auto w-full sm:w-96">
                               <div className="bg-gray-900 rounded-lg overflow-hidden shadow-2xl">
                                 {/* Preview Image */}
                                 <div className="relative h-54 bg-gray-800">
