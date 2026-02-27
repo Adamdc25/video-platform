@@ -2,5 +2,5 @@
 
 export function TestComponent() {
   console.log('[TestComponent] Rendering!')
-  return null
+  return <div style={{display: 'none'}}>TEST</div>
 }
