@@ -52,11 +52,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-black">
       <head>
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="Video Platform" />
-      </head>
       <body className="min-h-screen bg-black text-white">
         {children}
         <PWAInstall />
@@ -64,6 +59,15 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Inject manifest link if not already present
+              if (!document.querySelector('link[rel="manifest"]')) {
+                const link = document.createElement('link');
+                link.rel = 'manifest';
+                link.href = '/manifest.json';
+                document.head.appendChild(link);
+              }
+
+              // Register service worker
               if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('/sw.js')
                   .then(reg => console.log('Service Worker registered'))
