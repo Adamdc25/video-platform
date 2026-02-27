@@ -8,10 +8,18 @@ const withPWA = require('next-pwa')({
   fallbacks: {
     document: '/offline.html',
   },
-  cacheOnFrontEndNav: true,
-  aggressiveFrontEndNavCaching: true,
-  reloadOnOnline: true,
-  swcMinify: true,
+  runtimeCaching: [
+    {
+      urlPattern: /^https:\/\/.*/,
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'offlineCache',
+        expiration: {
+          maxEntries: 200,
+        },
+      },
+    },
+  ],
 })
 
 const nextConfig = {
