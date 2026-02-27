@@ -1,0 +1,88 @@
+{
+  "name": "Video Platform",
+  "short_name": "VidPlatform",
+  "description": "Your custom video streaming platform",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192x192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512x512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/screenshot1.png",
+      "sizes": "540x720",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshots/screenshot2.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Search Videos",
+      "short_name": "Search",
+      "description": "Search for videos on the platform",
+      "url": "/search",
+      "icons": [
+        {
+          "src": "/icons/search-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "My Watchlist",
+      "short_name": "Watchlist",
+      "description": "View your watchlist",
+      "url": "/watchlist",
+      "icons": [
+        {
+          "src": "/icons/watchlist-icon.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "categories": ["video", "entertainment"],
+  "share_target": {
+    "action": "/share",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
+}
