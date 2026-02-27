@@ -45,6 +45,25 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="bg-black">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              console.log('[PWARegister] Inline script running');
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                  .then(reg => console.log('✓ SW registered:', reg.scope))
+                  .catch(err => {
+                    console.error('✗ SW registration failed:', err.message);
+                    return navigator.serviceWorker.register('/sw-simple.js', { scope: '/' })
+                      .then(reg => console.log('✓ Fallback SW registered:', reg.scope))
+                      .catch(err2 => console.error('✗ Fallback SW failed:', err2.message));
+                  });
+              }
+            `,
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-black text-white">
         <PWARegister />
         {children}
