@@ -4,7 +4,10 @@ import { useEffect } from 'react'
 
 export function PWARegister() {
   useEffect(() => {
+    console.log('[PWARegister] useEffect running, window:', typeof window !== 'undefined', 'navigator.serviceWorker:', 'serviceWorker' in navigator)
+
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      console.log('[PWARegister] Attempting to register /sw.js...')
       // Try the complex next-pwa SW first
       navigator.serviceWorker
         .register('/sw.js', { scope: '/' })
@@ -13,7 +16,8 @@ export function PWARegister() {
           console.log('  - Status:', registration.active ? 'active' : registration.installing ? 'installing' : 'pending')
         })
         .catch(error => {
-          console.error('✗ Failed to register sw.js:', error)
+          console.error('✗ Failed to register sw.js:', error.message || error)
+          console.error('  Full error:', error)
           console.log('  Attempting fallback to simple SW...')
 
           // Fallback to simple SW
