@@ -1,7 +1,5 @@
 const CACHE_NAME = 'video-platform-v1'
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
@@ -11,11 +9,13 @@ const ASSETS_TO_CACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
-        console.log('Some assets failed to cache:', err)
-        // Don't fail install if some assets can't be cached
-        return Promise.resolve()
+      // Cache static assets but don't require them to succeed
+      ASSETS_TO_CACHE.forEach((url) => {
+        cache.add(url).catch(() => {
+          console.log('Failed to cache:', url)
+        })
       })
+      return Promise.resolve()
     })
   )
   self.skipWaiting()
@@ -44,6 +44,9 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
+  const url = new URL(event.request.url)
+  const isNavigate = event.request.mode === 'navigate'
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       // Return cached response if available
@@ -59,12 +62,11 @@ self.addEventListener('fetch', (event) => {
             return response
           }
 
-          // Cache successful responses for certain routes
-          const url = new URL(event.request.url)
+          // Cache HTML pages and certain assets
           if (
-            url.pathname === '/' ||
-            url.pathname.startsWith('/api/') ||
-            url.pathname.startsWith('/icons/')
+            isNavigate ||
+            url.pathname.startsWith('/icons/') ||
+            url.pathname.startsWith('/_next/static/')
           ) {
             const responseToCache = response.clone()
             caches.open(CACHE_NAME).then((cache) => {
@@ -75,11 +77,16 @@ self.addEventListener('fetch', (event) => {
           return response
         })
         .catch(() => {
-          // Return a fallback response if offline
-          if (event.request.mode === 'navigate') {
-            return caches.match('/') || new Response('Offline')
+          // Return offline page for navigation requests
+          if (isNavigate) {
+            return new Response(
+              '<html><body><h1>You are offline</h1><p>This page is not available offline.</p></body></html>',
+              { headers: { 'Content-Type': 'text/html' } }
+            )
           }
-          return new Response('Offline')
+          return new Response('Resource not available offline', {
+            headers: { 'Content-Type': 'text/plain' },
+          })
         })
     })
   )
