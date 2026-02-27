@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next'
-import Script from 'next/script'
 import './globals.css'
 import { PWARegister } from '@/components/PWARegister'
 
@@ -50,7 +49,6 @@ export default function RootLayout({
       <body className="min-h-screen bg-black text-white">
         <PWARegister />
         {children}
-        <Script src="/register-sw.js" />
       </body>
     </html>
   )
