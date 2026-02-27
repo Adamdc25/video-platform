@@ -3,6 +3,8 @@
 import { useEffect } from 'react'
 
 export function PWARegister() {
+  console.log('[PWARegister] Component render')
+
   useEffect(() => {
     console.log('[PWARegister] useEffect running, window:', typeof window !== 'undefined', 'navigator.serviceWorker:', 'serviceWorker' in navigator)
 
