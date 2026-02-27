@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
+import { PWARegister } from '@/components/PWARegister'
 
 export const metadata: Metadata = {
   title: 'Video Platform',
@@ -45,6 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-black">
       <body className="min-h-screen bg-black text-white">
+        <PWARegister />
         {children}
       </body>
     </html>
