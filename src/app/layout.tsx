@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
-import { PWARegister } from '@/components/PWARegister'
 
 export const metadata: Metadata = {
   title: 'Video Platform',
@@ -45,9 +44,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="bg-black">
-      <head />
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/service-worker.js')
+                  .then(reg => console.log('SW registered'))
+                  .catch(err => console.log('SW registration failed:', err))
+              }
+            `
+          }}
+        />
+      </head>
       <body className="min-h-screen bg-black text-white">
-        <PWARegister />
         {children}
       </body>
     </html>
