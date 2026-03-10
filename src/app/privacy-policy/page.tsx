@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Privacy Policy',
-  description: 'Privacy Policy for TheMannaJourney and DiscoverTMJ',
+  title: 'Privacy Policy - Aeon Library',
+  description: 'Privacy Policy for Aeon Library and Covenant Advisory CIC',
 }
 
 export default function PrivacyPolicyPage() {
@@ -10,6 +10,7 @@ export default function PrivacyPolicyPage() {
       <div className="bg-gradient-to-b from-gray-900 to-black py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-2">Privacy Policy</h1>
+          <p className="text-gray-500 mb-2">Aeon Library | Covenant Advisory CIC</p>
           <p className="text-gray-400">Last updated: March 2025</p>
         </div>
       </div>
@@ -20,7 +21,7 @@ export default function PrivacyPolicyPage() {
           {/* Introduction */}
           <div className="mb-8">
             <p className="text-gray-300 mb-4">
-              This Privacy Policy explains how COVENANT ADVISORY CIC ("we," "us," or "our"), the company that owns and operates DiscoverTMJ.com, TheMannaJourney.com, and the TMJ mobile application (together, the "Service"), collects, uses, shares, and protects your personal information. DiscoverTMJ.com is also known as The Manna Journey.
+              This Privacy Policy explains how COVENANT ADVISORY CIC ("we," "us," or "our"), the company that owns and operates the Aeon Library platform and mobile application (together, the "Service"), collects, uses, shares, and protects your personal information.
             </p>
             <p className="text-gray-300">
               By accessing or using the Service, you agree to this Privacy Policy and our Terms of Use. If you do not agree, please do not use the Service.
@@ -36,7 +37,7 @@ export default function PrivacyPolicyPage() {
               <p>Edgware, HA8 8PG</p>
               <p>United Kingdom</p>
               <p className="mt-2">D-U-N-S® Number: 225846532</p>
-              <p>Email: support@themannajourney.com</p>
+              <p>Email: support@aeonlibrary.com</p>
               <p className="mt-4 text-sm">We are the data controller of your personal data and are responsible for how it is processed under the UK General Data Protection Regulation (UK GDPR) and other applicable laws.</p>
             </div>
           </section>
@@ -48,7 +49,7 @@ export default function PrivacyPolicyPage() {
             </p>
             <p className="text-gray-300 font-semibold mb-2">This Policy applies to:</p>
             <ul className="list-disc list-inside text-gray-300 space-y-2">
-              <li>Visitors to our websites and apps</li>
+              <li>Visitors to our platform and apps</li>
               <li>Clients, subscribers, and service users</li>
               <li>Suppliers and operational partners</li>
             </ul>
@@ -145,7 +146,7 @@ export default function PrivacyPolicyPage() {
               <li>You used our services and have not opted out</li>
             </ul>
             <p className="text-gray-300 mt-4">
-              You may opt out at any time by emailing support@themannajourney.com or following unsubscribe links.
+              You may opt out at any time by emailing support@aeonlibrary.com or following unsubscribe links.
             </p>
             <p className="text-gray-300 mt-2">
               We do not share your data with third parties for marketing unless we have your explicit consent.
@@ -155,12 +156,8 @@ export default function PrivacyPolicyPage() {
           <section className="mb-8">
             <h2 className="text-2xl font-bold text-white mb-4">10. Data Sharing</h2>
             <p className="text-gray-300 mb-4">We may share your personal data with:</p>
-            <p className="text-gray-300 font-semibold mb-2">Internal Third Parties</p>
-            <p className="text-gray-300 mb-4">
-              Business units and departments for service delivery
-            </p>
-            <p className="text-gray-300 font-semibold mb-2">External Third Parties</p>
             <ul className="list-disc list-inside text-gray-300 space-y-2 mb-4">
+              <li>Internal Third Parties – Business units and departments for service delivery</li>
               <li>IT and hosting providers (e.g., WPEngine, Mailchimp)</li>
               <li>Analytics tools (e.g., Google Analytics, Hotjar, Woopra)</li>
               <li>Advertising platforms (e.g., Facebook Ads, Google Ads, where consented)</li>
@@ -228,7 +225,7 @@ export default function PrivacyPolicyPage() {
               <li>Withdraw consent at any time</li>
             </ul>
             <p className="text-gray-300 mt-4">
-              To exercise your rights, email support@themannajourney.com. We may need to verify your identity.
+              To exercise your rights, email support@aeonlibrary.com. We may need to verify your identity.
             </p>
           </section>
 
@@ -266,7 +263,7 @@ export default function PrivacyPolicyPage() {
               <p>20 Broadfields Avenue</p>
               <p>Edgware, HA8 8PG</p>
               <p>United Kingdom</p>
-              <p className="mt-2">Email: support@themannajourney.com</p>
+              <p className="mt-2">Email: support@aeonlibrary.com</p>
               <p className="mt-2">D-U-N-S® Number: 225846532</p>
             </div>
           </section>
@@ -302,7 +299,7 @@ export default function PrivacyPolicyPage() {
 
           {/* Footer */}
           <div className="border-t border-gray-800 pt-8 mt-12 text-center text-gray-500">
-            <p>©2025 themannajourney. All Rights Reserved.</p>
+            <p>©2025 Aeon Library | Covenant Advisory CIC. All Rights Reserved.</p>
           </div>
         </div>
       </div>
