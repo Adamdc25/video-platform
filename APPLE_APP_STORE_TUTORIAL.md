@@ -59,7 +59,7 @@ This was already done, but verify everything is installed.
 2. Select **New App**
 3. Choose:
    - **Platform**: iOS (select this checkbox)
-   - **Name**: "Discover TMJ"
+   - **Name**: "Aeon Library"
    - **Primary Language**: English
    - **Bundle ID**: Select **Create new Bundle ID**
 
@@ -69,10 +69,10 @@ A Bundle ID uniquely identifies your app. Follow exactly:
 
 1. In the Bundle ID dropdown, select **Create new Bundle ID**
 2. A form appears with fields:
-   - **App Name**: "Discover TMJ"
+   - **App Name**: "Aeon Library"
    - **Bundle ID Suffix**: Leave the prefix as-is, for suffix enter: `app`
 
-   *(This creates `com.discovertmj.app` which matches your config)*
+   *(This creates `com.aeonlibrary.app` which matches your config)*
 
 3. Click **Continue**
 
@@ -81,7 +81,7 @@ A Bundle ID uniquely identifies your app. Follow exactly:
 Fill in these fields:
 
 - **SKU**: Enter `DISCOVERTMJ001` (unique identifier for Apple's system)
-- **Full Bundle ID**: Should show `com.discovertmj.app` (auto-filled)
+- **Full Bundle ID**: Should show `com.aeonlibrary.app` (auto-filled)
 - Click **Create**
 
 **You should now see your app in "My Apps"**
@@ -105,7 +105,7 @@ On your Mac:
 2. Top menu: **Keychain Access** → **Certificate Assistant** → **Request a Certificate from a Certificate Authority**
 3. Fill in:
    - **User Email Address**: Your Apple developer account email
-   - **Common Name**: "Discover TMJ"
+   - **Common Name**: "Aeon Library"
    - **CA Email Address**: Leave blank
    - **Request is**: Select "Saved to disk"
 4. Click **Continue**
@@ -123,7 +123,7 @@ On your Mac:
 7. Click **Download** to download the certificate
 8. **Double-click the downloaded `.cer` file** to install it (Keychain opens automatically)
 
-**Success**: You should see the certificate in Keychain with "Discover TMJ" in its name.
+**Success**: You should see the certificate in Keychain with "Aeon Library" in its name.
 
 ---
 
@@ -138,8 +138,8 @@ This tells Apple which devices can run your app during testing.
 3. Select **App IDs**
 4. Choose **App**
 5. Register new App ID:
-   - **Description**: "Discover TMJ App"
-   - **Bundle ID**: Select "Explicit" and enter `com.discovertmj.app`
+   - **Description**: "Aeon Library App"
+   - **Bundle ID**: Select "Explicit" and enter `com.aeonlibrary.app`
    - **Capabilities**: Scroll down and enable:
      - Network Extension (if you need it - usually not for video apps)
      - Push Notifications (optional)
@@ -152,11 +152,11 @@ This tells Apple which devices can run your app during testing.
 2. Click **+** (plus icon) to create new profile
 3. Select **App Store**
 4. Click **Continue**
-5. Select App ID: Choose `com.discovertmj.app`
+5. Select App ID: Choose `com.aeonlibrary.app`
 6. Click **Continue**
-7. Select Certificate: Choose the "Discover TMJ" certificate you created
+7. Select Certificate: Choose the "Aeon Library" certificate you created
 8. Click **Continue**
-9. Name: Enter `Discover TMJ Production`
+9. Name: Enter `Aeon Library Production`
 10. Click **Continue**
 11. Click **Download** to download the profile
 12. **Double-click the `.mobileprovision` file** to install it
@@ -182,8 +182,8 @@ This opens your iOS project in Xcode.
 
 In Xcode:
 
-1. In the left sidebar, click **Discover TMJ** (the blue project icon at top)
-2. In the main panel, under **PROJECT** section (not TARGETS), select **Discover TMJ**
+1. In the left sidebar, click **Aeon Library** (the blue project icon at top)
+2. In the main panel, under **PROJECT** section (not TARGETS), select **Aeon Library**
 3. Go to the **General** tab
 4. Scroll down to **Signing & Capabilities**
 
@@ -200,7 +200,7 @@ In Xcode:
 
 1. Still in **General** tab
 2. Find **Identity** section
-3. **Bundle Identifier** should show: `com.discovertmj.app`
+3. **Bundle Identifier** should show: `com.aeonlibrary.app`
 4. **Version**: Set to `1.0.0`
 5. **Build**: Set to `1`
 
@@ -267,15 +267,15 @@ Make screenshots more engaging:
 ### Step 7.1: Back to App Store Connect
 
 1. Go to https://appstoreconnect.apple.com
-2. Click **My Apps** → **Discover TMJ**
+2. Click **My Apps** → **Aeon Library**
 
 ### Step 7.2: Fill in App Information
 
 Click **App Information** section:
 
-1. **Name**: "Discover TMJ" (50 chars max)
+1. **Name**: "Aeon Library" (50 chars max)
 2. **Subtitle**: "Watch Your Content" (30 chars max - optional)
-3. **Bundle ID**: Should auto-fill with `com.discovertmj.app`
+3. **Bundle ID**: Should auto-fill with `com.aeonlibrary.app`
 4. Click **Save** if anything changed
 
 ### Step 7.3: Write Description
@@ -299,7 +299,7 @@ Back in your app, click **Manage App Information** or find **Description** secti
 
 1. **Description** (4000 chars max):
    ```
-   Discover TMJ is your go-to platform for streaming premium video content.
+   Aeon Library is your go-to platform for streaming premium video content.
 
    Features:
    - Stream high-quality videos
@@ -345,7 +345,7 @@ Look for **Age Rating Questionnaire**:
 
 ### Step 8.1: Find Versions Section
 
-In App Store Connect, click **Discover TMJ** → Look for **Versions** or **App Store** tab.
+In App Store Connect, click **Aeon Library** → Look for **Versions** or **App Store** tab.
 
 ### Step 8.2: Add Screenshots
 
@@ -414,7 +414,7 @@ In the Organizer:
 ### Step 10.1: Verify Upload
 
 1. Go back to https://appstoreconnect.apple.com
-2. Click **Discover TMJ**
+2. Click **Aeon Library**
 3. Look for **Build** section (should show your new build)
 
 ### Step 10.2: Set Build for Testing
@@ -497,7 +497,7 @@ Common reasons:
 ### "Archive failed - Couldn't sign the app"
 
 **Solution**:
-1. Check that bundle ID is exactly `com.discovertmj.app`
+1. Check that bundle ID is exactly `com.aeonlibrary.app`
 2. Uncheck and recheck "Automatically manage signing"
 3. Make sure certificate is in Keychain (check Keychain Access app)
 
@@ -530,7 +530,7 @@ Common reasons:
 
 Once approved:
 
-1. **Your app appears in App Store** (search for "Discover TMJ")
+1. **Your app appears in App Store** (search for "Aeon Library")
 2. **Users can download for free** (it's free tier)
 3. **You get a link to share**: App Store link in your app's page
 4. **Monitor in App Store Connect**:

@@ -24,7 +24,7 @@ Use this checklist to ensure your app is ready for submission to Apple App Store
 - [ ] App doesn't use deprecated APIs
 
 ### Content & Branding
-- [ ] App name finalized: "Discover TMJ"
+- [ ] App name finalized: "Aeon Library"
 - [ ] App icon created (1024×1024 PNG)
 - [ ] Splash screen designed (512×512 PNG)
 - [ ] App description written (compelling but concise)
@@ -63,7 +63,7 @@ Use this checklist to ensure your app is ready for submission to Apple App Store
 ## iOS-Specific Checklist
 
 ### Xcode Configuration
-- [ ] Bundle ID set to: `com.discovertmj.app`
+- [ ] Bundle ID set to: `com.aeonlibrary.app`
 - [ ] Team ID selected
 - [ ] Version number updated (e.g., 1.0.0)
 - [ ] Build number incremented (e.g., 1)
@@ -122,7 +122,7 @@ Use this checklist to ensure your app is ready for submission to Apple App Store
 ## Android-Specific Checklist
 
 ### Android Studio Configuration
-- [ ] Application ID: `com.discovertmj.app`
+- [ ] Application ID: `com.aeonlibrary.app`
 - [ ] Version Code incremented (e.g., 1, 2, 3...)
 - [ ] Version Name set (e.g., 1.0.0)
 - [ ] Min SDK Level: 24 (Android 7.0)
@@ -143,7 +143,7 @@ Use this checklist to ensure your app is ready for submission to Apple App Store
 
 ### Google Play Console Setup
 - [ ] App created in Google Play Console
-- [ ] Title set: "Discover TMJ" (max 50 chars)
+- [ ] Title set: "Aeon Library" (max 50 chars)
 - [ ] Short description prepared (max 80 chars)
 - [ ] Full description written (max 4000 chars)
 - [ ] Screenshots uploaded (2-8)
@@ -270,5 +270,5 @@ Use this checklist to ensure your app is ready for submission to Apple App Store
 ---
 
 **Last Updated**: 2024
-**App**: Discover TMJ
-**Package**: com.discovertmj.app
+**App**: Aeon Library
+**Package**: com.aeonlibrary.app

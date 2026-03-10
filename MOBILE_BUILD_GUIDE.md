@@ -115,8 +115,8 @@ Main Capacitor configuration:
 
 ```typescript
 {
-  appId: 'com.discovertmj.app',      // Unique package identifier
-  appName: 'Discover TMJ',           // Display name
+  appId: 'com.aeonlibrary.app',      // Unique package identifier
+  appName: 'Aeon Library',           // Display name
   webDir: 'out',                     // Capacitor uses this directory
   server: {
     url: 'https://discover-tmj...',  // Can point to URL or local
@@ -417,5 +417,5 @@ Before each app store submission:
 ---
 
 **Last Updated**: 2024
-**App**: Discover TMJ
+**App**: Aeon Library
 **Framework**: Next.js 14 + Capacitor

@@ -55,10 +55,10 @@ This opens Xcode with your iOS project.
 ### 2. Configure App in Xcode
 
 In Xcode:
-1. Select "Discover TMJ" project in the sidebar
-2. Select the "Discover TMJ" target
+1. Select "Aeon Library" project in the sidebar
+2. Select the "Aeon Library" target
 3. Go to **General** tab:
-   - **Identity**: Verify Bundle ID (`com.discovertmj.app`)
+   - **Identity**: Verify Bundle ID (`com.aeonlibrary.app`)
    - **Version**: Set to your app version (e.g., 1.0.0)
    - **Build**: Set to build number (auto-incremented)
    - **Minimum Deployments**: iOS 13.0 or higher
@@ -73,7 +73,7 @@ In Xcode:
 
 **Option B: Manual Signing (Required for App Store)**
 1. Go to [Apple Developer Portal](https://developer.apple.com)
-2. Create an App ID matching `com.discovertmj.app`
+2. Create an App ID matching `com.aeonlibrary.app`
 3. Create a Certificate (Signing Identity) - iOS App Distribution
 4. Create a Provisioning Profile for App Store distribution
 5. Download and import both into Xcode
@@ -83,8 +83,8 @@ In Xcode:
 1. Go to [App Store Connect](https://appstoreconnect.apple.com)
 2. Create a new app:
    - **Platform**: iOS
-   - **Name**: "Discover TMJ"
-   - **Bundle ID**: `com.discovertmj.app`
+   - **Name**: "Aeon Library"
+   - **Bundle ID**: `com.aeonlibrary.app`
    - **SKU**: Unique identifier (e.g., `discovertmj-001`)
 3. Fill in required information:
    - **Category**: Entertainment or Education
@@ -134,12 +134,12 @@ This opens Android Studio with your project.
 ### 2. Configure App in Android Studio
 
 1. In `android/app/build.gradle`, verify:
-   - `applicationId` = `com.discovertmj.app`
+   - `applicationId` = `com.aeonlibrary.app`
    - `versionCode` = unique integer (incremented per release)
    - `versionName` = "1.0.0"
 
 2. In `android/app/src/main/AndroidManifest.xml`, verify:
-   - `package` = `com.discovertmj.app`
+   - `package` = `com.aeonlibrary.app`
 
 ### 3. Create a Signing Keystore
 
@@ -208,13 +208,13 @@ Or for APK (older method):
 
 1. Go to [Google Play Console](https://play.google.com/console)
 2. Create a new app:
-   - **Name**: "Discover TMJ"
+   - **Name**: "Aeon Library"
    - **Default language**: English
    - **Category**: Entertainment or Education
    - **Content rating**: Complete questionnaire
 
 3. Fill in store listing:
-   - **Title**: "Discover TMJ" (max 50 characters)
+   - **Title**: "Aeon Library" (max 50 characters)
    - **Short description**: Max 80 characters
    - **Full description**: Max 4000 characters
    - **Screenshots**: 2-8 images (1080x1920 recommended)
@@ -349,5 +349,5 @@ For issues with:
 ---
 
 **Last Updated**: 2024
-**App Package**: com.discovertmj.app
-**App Name**: Discover TMJ
+**App Package**: com.aeonlibrary.app
+**App Name**: Aeon Library

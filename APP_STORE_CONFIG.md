@@ -74,8 +74,8 @@ cd android
    npx cap open ios
    ```
 
-2. In Xcode, select the "Discover TMJ" project
-3. Select the "Discover TMJ" target
+2. In Xcode, select the "Aeon Library" project
+3. Select the "Aeon Library" target
 4. Go to **Signing & Capabilities** tab
 
 5. For **Debug** configuration:
@@ -105,9 +105,9 @@ cd android
 1. In Developer Portal, navigate to **Provisioning Profiles**
 2. Click **+** to create new profile
 3. Select **App Store**
-4. Select App ID: `com.discovertmj.app`
+4. Select App ID: `com.aeonlibrary.app`
 5. Select the Distribution Certificate you created
-6. Name it: `Discover TMJ Production`
+6. Name it: `Aeon Library Production`
 7. Download the profile
 8. Double-click to install
 
@@ -115,7 +115,7 @@ cd android
 
 ```bash
 # In Xcode
-1. Select "Discover TMJ" target
+1. Select "Aeon Library" target
 2. Set version (General tab) - must be higher than last upload
 3. Select "Any iOS Device (arm64)" as build destination
 4. Product > Archive
@@ -275,4 +275,4 @@ Use these metrics to:
 ---
 
 **Last Updated**: 2024
-**Package**: com.discovertmj.app
+**Package**: com.aeonlibrary.app

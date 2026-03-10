@@ -1,8 +1,8 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.discovertmj.app',
-  appName: 'Discover TMJ',
+  appId: 'com.aeonlibrary.app',
+  appName: 'Aeon Library',
   webDir: 'out',
   server: {
     // Load from Vercel (always up-to-date, requires internet)
@@ -33,7 +33,7 @@ const config: CapacitorConfig = {
   ios: {
     contentInset: 'automatic',
     preferredContentMode: 'mobile',
-    scheme: 'Discover TMJ'
+    scheme: 'Aeon Library'
   },
   android: {
     backgroundColor: '#000000',
