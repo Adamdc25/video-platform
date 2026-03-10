@@ -12,7 +12,11 @@
     "cap:open:ios": "npx cap open ios",
     "cap:open:android": "npx cap open android",
     "cap:run:ios": "npx cap run ios",
-    "cap:run:android": "npx cap run android"
+    "cap:run:android": "npx cap run android",
+    "release:build": "bash ./scripts/build-release.sh",
+    "release:ios": "bash ./scripts/build-release.sh --ios",
+    "release:android": "bash ./scripts/build-release.sh --android",
+    "release:both": "bash ./scripts/build-release.sh --all"
   },
   "dependencies": {
     "@capacitor/android": "^8.0.2",
