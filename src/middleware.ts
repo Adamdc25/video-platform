@@ -35,7 +35,17 @@ export async function middleware(req: NextRequest) {
     }
   )
 
-  await supabase.auth.getSession()
+  try {
+    await Promise.race([
+      supabase.auth.getSession(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Auth timeout')), 5000)
+      )
+    ])
+  } catch (error) {
+    // Continue even if auth check fails or times out
+    console.error('Auth middleware error:', error)
+  }
 
   return res
 }
