@@ -60,22 +60,25 @@ export default function SeriesPage() {
               published_at
             )
           `)
-          .eq('videos.is_published', true)
           .order('created_at', { ascending: false })
 
         if (error) throw error
 
         // Filter to only series that have at least one published episode
-        const seriesWithEpisodes = (data || []).filter(s => s.videos && s.videos.length > 0)
+        const seriesWithEpisodes = (data || []).filter(s =>
+          s.videos && s.videos.some(v => v.is_published)
+        )
 
-        // Sort episodes within each series by season and episode number
+        // Sort episodes within each series by season and episode number, filtering only published videos
         const sortedSeries = seriesWithEpisodes.map(s => ({
           ...s,
-          videos: (s.videos || []).sort(
-            (a, b) =>
-              (a.season_number || 0) - (b.season_number || 0) ||
-              (a.episode_number || 0) - (b.episode_number || 0)
-          )
+          videos: (s.videos || [])
+            .filter(v => v.is_published)
+            .sort(
+              (a, b) =>
+                (a.season_number || 0) - (b.season_number || 0) ||
+                (a.episode_number || 0) - (b.episode_number || 0)
+            )
         }))
 
         setSeries(sortedSeries)
