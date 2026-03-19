@@ -20,7 +20,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://app.discovertmj.com/privacy-policy"
+                  href="https://discover-tmj-streaming.vercel.app/privacy-policy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -30,7 +30,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://app.discovertmj.com/terms-and-conditions"
+                  href="https://discover-tmj-streaming.vercel.app/terms-and-conditions"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -40,7 +40,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://app.discovertmj.com/cookies-policy"
+                  href="https://discover-tmj-streaming.vercel.app/cookies-policy"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -57,7 +57,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="https://app.discovertmj.com/ad-choices"
+                  href="https://discover-tmj-streaming.vercel.app/ad-choices"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -67,7 +67,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://app.discovertmj.com/community-guidelines"
+                  href="https://discover-tmj-streaming.vercel.app/community-guidelines"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -77,7 +77,7 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="https://app.discovertmj.com/end-user-licence-agreement"
+                  href="https://discover-tmj-streaming.vercel.app/end-user-licence-agreement"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-white transition-colors"
@@ -177,7 +177,7 @@ export default function Footer() {
       <div className="border-t border-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <p className="text-gray-500 text-sm">
-            ©2026 The Manna Journey. All Rights Reserved.
+            ©2025 Aeon Library | Covenant Advisory CIC. All Rights Reserved.
           </p>
         </div>
       </div>
