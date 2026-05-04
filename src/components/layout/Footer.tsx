@@ -143,7 +143,7 @@ export default function Footer() {
           {/* Download App Section */}
           <div>
             <h3 className="text-white font-semibold text-lg mb-4">Download App</h3>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-2">
               <a
                 href="https://apps.apple.com/app/discover-tmj/id6746241681"
                 target="_blank"
@@ -151,9 +151,9 @@ export default function Footer() {
                 className="hover:opacity-80 transition-opacity"
               >
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Download_on_the_App_Store_Badge.svg/200px-Download_on_the_App_Store_Badge.svg.png"
+                  src="/images/app-store/app-store-badge.svg"
                   alt="Download on the App Store"
-                  className="h-10"
+                  className="h-12"
                 />
               </a>
               <a
@@ -163,9 +163,9 @@ export default function Footer() {
                 className="hover:opacity-80 transition-opacity"
               >
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/200px-Google_Play_Store_badge_EN.svg.png"
+                  src="/images/app-store/google-play-badge.svg"
                   alt="Get it on Google Play"
-                  className="h-10"
+                  className="h-12"
                 />
               </a>
             </div>
